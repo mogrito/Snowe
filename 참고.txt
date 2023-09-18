@@ -1,0 +1,19 @@
+https://github1s.com/yujinaa/spring_project/blob/master/keepingBox/src/main/resources/mappers/board/BoardMapper.xml
+예약조회(블로그 -
+https://velog.io/@yujinaa/spring-%ED%8C%80%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%9B%B9%EC%82%AC%EC%9D%B4%ED%8A%B8-%EC%A0%9C%EC%9E%91-13.-%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80-1%EC%98%88%EC%95%BD%EB%82%B4%EC%97%AD%EC%A1%B0%ED%9A%8C
+)
+
+예약사이트 DB참고
+https://velog.io/@jeong11/finalproject-dbsql
+
+
+기차표 예약 
+https://kimcoder.tistory.com/65
+
+
+예약
+https://github1s.com/wjddyd66/Project/blob/master/BomAir_ver_Final/src/main/java/pack/controller/Air_infoController.java
+
+
+달력예약
+https://cordingmonster.tistory.com/138

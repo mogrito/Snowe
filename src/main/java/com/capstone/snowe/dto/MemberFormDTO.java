@@ -10,5 +10,6 @@ import lombok.NoArgsConstructor;
 public class MemberFormDTO {
     private  String email;
     private  String username;
-    private  String password;
+    private  String pw;
+    private  String rrn;
 }

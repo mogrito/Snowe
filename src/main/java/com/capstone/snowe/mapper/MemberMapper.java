@@ -26,11 +26,7 @@ public interface MemberMapper {
      */
     void update(MemberRequest params);
 
-    /**
-     * 회원 정보 삭제 (회원 탈퇴)
-     * @param loginId - PK
-     */
-    void deleteById(String loginId);
+
 
     /**
      * 회원 수 카운팅 (ID 중복 체크)

@@ -58,5 +58,4 @@ public class MemberService {
     public int countMemberByLoginId(final String loginId) {
         return memberMapper.countByLoginId(loginId);
     }
-
 }

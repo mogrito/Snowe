@@ -21,9 +21,9 @@ public class MemberController {
     private final MemberService memberService;
 
     // 로그인 페이지
-    @GetMapping("/login")
+    @GetMapping("/")
     public String openLogin() {
-        return "member/login";
+        return "members/login";
     }
 
     // 회원 정보 저장 (회원가입)

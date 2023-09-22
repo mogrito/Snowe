@@ -52,6 +52,7 @@ public class MemberController {
     @GetMapping("/member-count")
     @ResponseBody
     public int countMemberByLoginId(@RequestParam final String loginId) {
+        System.out.println(loginId);
         return memberService.countMemberByLoginId(loginId);
     }
 

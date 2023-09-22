@@ -17,7 +17,7 @@ public class MemberRequest {
     private String password;        // 비밀번호
     private String name;            // 이름
     private String gender;          // 성별
-    private LocalDate birthday;     // 생년월일
+    private String birthday;     // 생년월일
 
     public void encodingPassword(PasswordEncoder passwordEncoder) {
         if (StringUtils.isEmpty(password)) {

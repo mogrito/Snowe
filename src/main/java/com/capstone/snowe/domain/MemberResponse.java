@@ -12,7 +12,7 @@ public class MemberResponse {
     private String password;               // 비밀번호
     private String name;                   // 이름
     private String gender;                 // 성별
-    private LocalDate birthday;            // 생년월일
+    private String birthday;            // 생년월일
     private LocalDateTime createdDate;     // 생성일시
     private LocalDateTime modifiedDate;    // 최종 수정일시
 

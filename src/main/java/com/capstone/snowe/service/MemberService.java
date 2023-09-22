@@ -24,6 +24,7 @@ public class MemberService {
     @Transactional
     public String saveMember(final MemberRequest params) {
         params.encodingPassword(passwordEncoder);
+        System.out.println(params);
         memberMapper.save(params);
         return params.getLoginId();
     }

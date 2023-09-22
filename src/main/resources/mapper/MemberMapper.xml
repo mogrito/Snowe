@@ -10,13 +10,12 @@
       , name
       , gender
       , birthday
-      , delete_yn
       , created_date
       , modified_date
     </sql>
 
     <!-- 회원 정보 저장 (회원가입) -->
-    <insert id="insertMember" parameterType="com.capstone.snowe.domain.MemberRequest">
+    <insert id="save" parameterType="com.capstone.snowe.domain.MemberRequest">
         INSERT INTO member (
         <include refid="memberColumns" />
         ) VALUES (
@@ -24,7 +23,7 @@
         , #{password}
         , #{name}
         , #{gender}
-        , TO_DATE(#{birthday},'YYYY-MM-DD')
+        , #{birthday}
         , SYSDATE
         , NULL
         )

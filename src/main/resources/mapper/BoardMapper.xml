@@ -3,27 +3,48 @@
 
 <mapper namespace="com.capstone.snowe.mapper.BoardMapper">
 
+    <!-- 게시글목록 조회기능 -->
+    <!-- 나중에 뭐.. 추천이나 댓글기능도 당연히 달아야함-->
     <select id = "getBoardList" resultType="com.capstone.snowe.dto.BoardDTO">
         SELECT
-                BOARD_ID,
-                ID,
+                BNO,
+                USERNAME,
                 BOARD_TITLE,
                 CONTENT,
                 POST_DATE
         FROM
                 BOARD
+        ORDER BY BNO
     </select>
 
-    <insert id = "addBoard" parameterType="int">
-        INSERT INTO BOARD
-            VALUES (
-                    #{BOARD_ID},
-                    #{ID},
-                    #{BOARD_TITLE},
-                    #{CONTENT},
-                    SYSDATE
-                   )
+    <!-- 게시글 저장 -->
+    <insert id = "addBoard" parameterType="com.capstone.snowe.dto.BoardDTO">
+        INSERT INTO BOARD (
+                           BNO,
+                           BOARD_TITLE,
+                           USERNAME,
+                           CONTENT,
+                           POST_DATE
+                            )
+                VALUES (
+                        BNO_SEQ.NEXTVAL,
+                        #{BOARD_TITLE},
+                        #{USERNAME},
+                        #{CONTENT},
+                        SYSDATE
+                        )
     </insert>
+
+    <select id = "getBoardView" parameterType="int" resultType="com.capstone.snowe.dto.BoardDTO">
+        SELECT BNO,
+               USERNAME,
+               BOARD_TITLE,
+               CONTENT,
+               POST_DATE
+        FROM BOARD
+        WHERE BNO = #{BNO}
+    </select>
+
 
 
 </mapper>

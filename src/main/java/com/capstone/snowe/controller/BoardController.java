@@ -7,9 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -17,33 +21,50 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
-    @GetMapping (value = "/board/main")
+    /* 게시글 목록 조회기능 */
+    @GetMapping (value = "/board/list")
     public String home(Model model) {
 
         List<BoardDTO> boardList = boardService.getBoardList();
 //        System.out.println(boardList.);
         model.addAttribute("boardList", boardList);
-
-        return "board/boardMain";
+        System.out.println(boardList);
+        return "board/list";
     }
 
-    @GetMapping(value = "/board/boardWrite")
+
+    /* 게시글 작성 페이지로 이동 */
+    @GetMapping(value = "/board/write")
     public String boardWrite() {
-        return "board/boardWrite";
+        return "board/write";
     }
-    @PostMapping(value ="/board/boardSave")
-    public String add(BindingResult result, RedirectAttributes rea) throws Exception {
+    /* 게시글 insert문 실행 */
+    @PostMapping(value ="/board/add")
+    public String add(@Valid BoardDTO boardDTO, BindingResult result, RedirectAttributes rea) throws Exception {
         if (result.hasErrors()) {
             rea.addAllAttributes(result.getModel());
-            return "redirect:list";
+            return "redirect:/board/list";
         }
+//        boardService.addBoard(boardDTO);
 
-        if (this.boardService.addBoard(new BoardDTO()) == 1) {
+        int output = this.boardService.addBoard(boardDTO);
+
+        if (output > 0) {
             rea.addFlashAttribute("message", "신규 등록 완료");
-            return "redirect:list";
+            return "redirect:/board/list";
         } else {
             rea.addFlashAttribute("message", "신규 등록 실패!");
-            return "redirect:list";
+            return "redirect:/board/list";
         }
     }
+
+    /* 게시글 상세보기 기능 */
+    @GetMapping(value = "/board/view/{bno}")
+    public String getBoardView(@PathVariable int bno, Model model) throws Exception {
+        BoardDTO board = boardService.getBoardView(bno);
+        model.addAttribute("board", board);
+
+        return "board/view";
+    }
+
 }

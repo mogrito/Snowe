@@ -1,14 +1,15 @@
 package com.capstone.snowe.service;
 
 import com.capstone.snowe.dto.BoardDTO;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 
 public interface BoardService {
 
-    List<BoardDTO> getBoardList();
+    List<BoardDTO> getBoardList();      //게시글 목록 조회
 
-    int addBoard(BoardDTO boardDTO);
+    int addBoard(BoardDTO boardDTO);    //게시글 작성
+    
+    BoardDTO getBoardView(int bno);       //게시글 상세조회
 }

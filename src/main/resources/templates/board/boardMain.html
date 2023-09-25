@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,32 +25,40 @@
 </head>
 <body>
 
-<h1>게시판</h1>
 <p>
     <a href="/board/boardWrite">게시글 작성</a>
 </p>
-<table>
-    <tr>
-        <th>번호</th>
-        <th>제목</th>
-        <th>작성자</th>
-        <th>내용</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>첫 번째 게시물</td>
-        <td>작성자1</td>
-        <td>첫 번째 게시물 내용입니다.</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>두 번째 게시물</td>
-        <td>작성자2</td>
-        <td>두 번째 게시물 내용입니다.</td>
-    </tr>
-    <!-- 필요한 만큼 게시물을 추가할 수 있습니다. -->
-</table>
-<br>
+
+<!--<a th:href="add">[신규]</a>-->
+<a th:text="${boardList}">
+
+
+</a>
+
+<form id = "boardList" name = "boardList" method="get">
+<!--    <input type = "hidden" name = "bno"/>-->
+
+    <table border="1">
+        <thead>
+        <tr>
+            <td>게시글번호</td>
+            <td>이름</td>
+            <td>제목</td>
+            <td>내용</td>
+            <td>작성일자</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each = "result:${boardList}">
+            <td th:text="${result.getBOARD_ID()}"></td>
+            <td th:text="${result.getID()}"></td>
+            <td th:text="${result.getBOARD_TITLE()}"></td>
+            <td th:text="${result.getCONTENT()}"></td>
+            <td th:text="${result.getPOST_DATE()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</form>
 
 
 </body>

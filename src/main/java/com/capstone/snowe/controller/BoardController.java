@@ -6,16 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 import java.util.List;
 
+/* 리액트, 부트 연동 */
+//@CrossOrigin
+//@RestController
 @Controller
 public class BoardController {
     @Autowired
@@ -26,7 +26,7 @@ public class BoardController {
     public String home(Model model) {
 
         List<BoardDTO> boardList = boardService.getBoardList();
-//        System.out.println(boardList.);
+        System.out.println("안녕");
         model.addAttribute("boardList", boardList);
         System.out.println(boardList);
         return "board/list";
@@ -61,10 +61,30 @@ public class BoardController {
     /* 게시글 상세보기 기능 */
     @GetMapping(value = "/board/view/{bno}")
     public String getBoardView(@PathVariable int bno, Model model) throws Exception {
-        BoardDTO board = boardService.getBoardView(bno);
+        BoardDTO board = boardService.getBoardNo(bno);
         model.addAttribute("board", board);
 
         return "board/view";
     }
+
+    /* 게시글 수정 페이지로 이동 후 페이지 수정 */
+    @GetMapping(value = "/board/editPage")
+    public String editPage(@RequestParam(value="BNO", required = false, defaultValue = "0")int bno, Model model) throws Exception {
+
+        BoardDTO board = boardService.getBoardNo(bno);      // 수정할 게시글을 특정하기 위해 bno가져오기
+        model.addAttribute("board", board);     //
+        System.out.println("테스트" + board);
+        return "board/editPage";
+    }
+    /* 게시글 수정하기 */
+    @PostMapping(value = "/board/edit")
+    public String edit(@ModelAttribute("BoardDTO")@Valid BoardDTO boardDTO) throws Exception {
+
+        boardService.editBoard(boardDTO);
+
+        return "redirect:/board/list";
+    }
+
+
 
 }

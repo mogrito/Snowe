@@ -22,13 +22,17 @@ public class BoardServiceImpl implements BoardService {
 
     @Override       //게시글 작성
     public int addBoard(BoardDTO boardDTO) {
-
         return this.boardMapper.addBoard(boardDTO);
     }
 
     @Override       //게시글 상세조회
-    public BoardDTO getBoardView(int bno) {
-        return this.boardMapper.getBoardView(bno);
+    public BoardDTO getBoardNo(int bno) {
+        return this.boardMapper.getBoardNo(bno);
+    }
+
+    @Override       //게시글 수정
+    public int editBoard(BoardDTO boardDTO) {
+        return this.boardMapper.editBoard(boardDTO);
     }
 
 

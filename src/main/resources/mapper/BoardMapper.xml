@@ -35,7 +35,8 @@
                         )
     </insert>
 
-    <select id = "getBoardView" parameterType="int" resultType="com.capstone.snowe.dto.BoardDTO">
+    <!-- 게시글 상세보기, 게시글 번호 가져오기 -->
+    <select id = "getBoardNo" parameterType="int" resultType="com.capstone.snowe.dto.BoardDTO">
         SELECT BNO,
                USERNAME,
                BOARD_TITLE,
@@ -45,6 +46,13 @@
         WHERE BNO = #{BNO}
     </select>
 
+    <!-- 게시글 수정 -->
+    <update id = "editBoard" parameterType="com.capstone.snowe.dto.BoardDTO">
+        UPDATE BOARD
+           SET BOARD_TITLE = #{BOARD_TITLE},
+               CONTENT = #{CONTENT}
+         WHERE BNO = #{BNO}
+    </update>
 
 
 </mapper>

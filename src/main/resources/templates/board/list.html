@@ -4,24 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>게시판</title>
-<!--    <style>-->
-<!--        /* 간단한 CSS 스타일링을 추가할 수 있습니다. */-->
-<!--        body {-->
-<!--            font-family: Arial, sans-serif;-->
-<!--        }-->
-<!--        table {-->
-<!--            border-collapse: collapse;-->
-<!--            width: 100%;-->
-<!--        }-->
-<!--        th, td {-->
-<!--            border: 1px solid #dddddd;-->
-<!--            padding: 8px;-->
-<!--            text-align: left;-->
-<!--        }-->
-<!--        th {-->
-<!--            background-color: #f2f2f2;-->
-<!--        }-->
-<!--    </style>-->
+    <!--    <style>-->
+    <!--        /* 간단한 CSS 스타일링을 추가할 수 있습니다. */-->
+    <!--        body {-->
+    <!--            font-family: Arial, sans-serif;-->
+    <!--        }-->
+    <!--        table {-->
+    <!--            border-collapse: collapse;-->
+    <!--            width: 100%;-->
+    <!--        }-->
+    <!--        th, td {-->
+    <!--            border: 1px solid #dddddd;-->
+    <!--            padding: 8px;-->
+    <!--            text-align: left;-->
+    <!--        }-->
+    <!--        th {-->
+    <!--            background-color: #f2f2f2;-->
+    <!--        }-->
+    <!--    </style>-->
 </head>
 <body>
 
@@ -30,13 +30,13 @@
 </p>
 
 <!--<a th:href="add">[신규]</a>-->
-<a th:text="${boardList}">
+<!--<a th:text="${boardList}">-->
 
 
 </a>
 
 <form id = "boardList" name = "boardList" method="get">
-<!--    <input type = "hidden" name = "bno"/>-->
+    <!--    <input type = "hidden" name = "bno"/>-->
 
     <table border="1">
         <thead>
@@ -57,7 +57,7 @@
             <td th:text="${result.CONTENT}"></td>
             <td th:text="${#dates.format(result.POST_DATE, 'yyyy-MM-dd')}"></td>
 
-<!--            <td th:if="${result.BOARD_TITLE} == null">No Title</td>-->
+            <!--            <td th:if="${result.BOARD_TITLE} == null">No Title</td>-->
 
         </tr>
         </tbody>

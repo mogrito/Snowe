@@ -11,5 +11,7 @@ public interface BoardService {
 
     int addBoard(BoardDTO boardDTO);    //게시글 작성
     
-    BoardDTO getBoardView(int bno);       //게시글 상세조회
+    BoardDTO getBoardNo(int bno);       //게시글 상세조회
+    
+    int editBoard(BoardDTO boardDTO);   //게시글 수정
 }

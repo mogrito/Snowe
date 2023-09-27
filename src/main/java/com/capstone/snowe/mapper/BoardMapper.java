@@ -11,5 +11,7 @@ public interface BoardMapper {
 
     int addBoard(BoardDTO boardDTO);    // 게시글 작성
 
-    BoardDTO getBoardView(int bno);       // 게시글 자세히보기
+    BoardDTO getBoardNo(int bno);       // 게시글 자세히보기
+
+    int editBoard(BoardDTO boardDTO);        // 게시글 수정하기
 }

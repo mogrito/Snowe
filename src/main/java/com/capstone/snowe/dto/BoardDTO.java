@@ -22,4 +22,3 @@ public class BoardDTO {
     private Date POST_DATE;     //게시일자
 
 }
-

@@ -2,16 +2,18 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>게시글 상세조회</title>
+    <!-- 버튼 클릭 시 이벤트 함수(2개의 버튼의 이름을 같은 걸로 주고 case문을 사용해 분류) -->
 </head>
 <body><!--action = "/board/editPage/{bno}(bno=${board.BNO})}"-->
-<form id="board" action="/board/editPage" method="get">
+<form id="board" name="board" method="post" action="/board/del">
     <input type = "hidden" id = "BNO" name="BNO" th:value="${board.BNO}" />
     <h1 th:text="${board.BOARD_TITLE}"></h1>
     <p>작성자: <span th:text="${board.USERNAME}"></span></p>
     <p>작성일자: <span th:text="${#dates.format(board.POST_DATE, 'yyyy-MM-dd')}"></span></p>
     <p>내용: <span th:text="${board.CONTENT}"></span></p>
     <!-- 필요한 정보를 th:text와 같은 Thymeleaf 속성을 이용해 출력합니다. -->
-    <button type="submit">수정</button>
+    <input type = "submit" value = "수정하기" >
+
 
 </form>
 </body>

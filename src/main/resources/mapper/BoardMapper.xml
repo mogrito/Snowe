@@ -3,6 +3,19 @@
 
 <mapper namespace="com.capstone.snowe.mapper.BoardMapper">
 
+    <!-- 전체 컬럼 지정 -->
+    <!--<sql id="postColumns">
+        BOARD_ID,
+        TITLE,
+        CONTENT,
+        WRITER_ID,
+        CREATE_DATE,
+        MODIFIED_DATE,
+        VIEW_CNT,
+        DEL_YN,
+        NOTICE_YN
+    </sql>-->
+
     <!-- 게시글목록 조회기능 -->
     <!-- 나중에 뭐.. 추천이나 댓글기능도 당연히 달아야함-->
     <select id = "getBoardList" resultType="com.capstone.snowe.dto.BoardDTO">
@@ -53,6 +66,13 @@
                CONTENT = #{CONTENT}
          WHERE BNO = #{BNO}
     </update>
+
+    <!-- 게시글 삭제 -->
+    <delete id = "delBoard" parameterType="int">
+        DELETE
+        FROM BOARD
+        WHERE BNO = #{BNO}
+    </delete>
 
 
 </mapper>

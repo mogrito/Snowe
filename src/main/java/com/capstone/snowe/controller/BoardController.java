@@ -23,12 +23,11 @@ public class BoardController {
 
     /* 게시글 목록 조회기능 */
     @GetMapping (value = "/board/list")
-    public String home(Model model) {
+    public String list(Model model) {
 
         List<BoardDTO> boardList = boardService.getBoardList();
-        System.out.println("안녕");
+        System.out.println("컨트롤러 : " + boardList);
         model.addAttribute("boardList", boardList);
-        System.out.println(boardList);
         return "board/list";
     }
 
@@ -68,7 +67,7 @@ public class BoardController {
     }
 
     /* 게시글 수정 페이지로 이동 후 페이지 수정 */
-    @GetMapping(value = "/board/editPage")
+    @RequestMapping(value = "/board/editPage")
     public String editPage(@RequestParam(value="BNO", required = false, defaultValue = "0")int bno, Model model) throws Exception {
 
         BoardDTO board = boardService.getBoardNo(bno);      // 수정할 게시글을 특정하기 위해 bno가져오기
@@ -82,6 +81,13 @@ public class BoardController {
 
         boardService.editBoard(boardDTO);
 
+        return "redirect:/board/list";
+    }
+
+    /* 게시글 삭제하기 */
+    @PostMapping(value = "/board/del")
+    public String del(@RequestParam(value="BNO", required = false, defaultValue = "0")int bno) throws Exception {
+        boardService.delBoard(bno);
         return "redirect:/board/list";
     }
 

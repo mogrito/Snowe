@@ -17,6 +17,7 @@ public class BoardServiceImpl implements BoardService {
 
     @Override       //게시글 목록 조회
     public List<BoardDTO> getBoardList() {
+        System.out.println("서비스 : " + boardMapper.getBoardList());
         return this.boardMapper.getBoardList();
     }
 
@@ -33,6 +34,11 @@ public class BoardServiceImpl implements BoardService {
     @Override       //게시글 수정
     public int editBoard(BoardDTO boardDTO) {
         return this.boardMapper.editBoard(boardDTO);
+    }
+
+    @Override       //게시글 삭제
+    public int delBoard(int bno) {
+        return this.boardMapper.delBoard(bno);
     }
 
 

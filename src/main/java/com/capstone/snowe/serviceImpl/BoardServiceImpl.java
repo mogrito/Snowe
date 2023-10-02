@@ -27,8 +27,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override       //게시글 상세조회
-    public BoardDTO getBoardNo(int bno) {
-        return this.boardMapper.getBoardNo(bno);
+    public BoardDTO getBoardId(int BOARD_ID) {
+        return this.boardMapper.getBoardId(BOARD_ID);
     }
 
     @Override       //게시글 수정
@@ -37,8 +37,23 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override       //게시글 삭제
-    public int delBoard(int bno) {
-        return this.boardMapper.delBoard(bno);
+    public int delBoard(int BOARD_ID) {
+        return this.boardMapper.delBoard(BOARD_ID);
+    }
+
+    @Override       // 검색기능
+    public List<BoardDTO> searchBoard(String TITLE) {
+        return this.boardMapper.searchBoard(TITLE);
+    }
+
+    @Override       //게시글 전체 개수(페이징)
+    public int boardCount() {
+        return this.boardMapper.boardCount();
+    }
+
+    @Override
+    public List<BoardDTO> boardPage(int endRow, int startRow) {
+        return this.boardMapper.boardPage(endRow, startRow);
     }
 
 

@@ -6,17 +6,17 @@
 </head>
 <body>
 <form modelAttribute="board" name="editPage" method="post" action = "/board/edit">
-    <input type = "hidden" id = "BNO" name="BNO" th:value="${board?.BNO}" />
+    <input type = "hidden" id = "BNO" name="BNO" th:value="${board?.BOARD_ID}" />
     <table border = "1">
         <tr>
             <th>회원명</th>
-            <td><input name="USERNAME" size="50" th:value="${board?.USERNAME}" /> <span th:class="fieldError">
+            <td><input name="WRITER" size="50" th:value="${board?.WRITER}" /> <span th:class="fieldError">
 			</span></td>
         </tr>
 
         <tr>
             <th>제목</th>
-            <td><input name="BOARD_TITLE" size="50" th:value="${board?.BOARD_TITLE}" /> <span th:class="fieldError">
+            <td><input name="TITLE" size="50" th:value="${board?.TITLE}" /> <span th:class="fieldError">
 			</span></td>
         </tr>
 

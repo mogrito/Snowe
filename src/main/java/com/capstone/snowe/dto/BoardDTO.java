@@ -1,25 +1,33 @@
 package com.capstone.snowe.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//@Entity
 public class BoardDTO {
 
-    private int BNO;    //게시글 id
-    private String USERNAME;          //작성자 id
-    private String BOARD_TITLE; //게시글 제목
-    private String CONTENT;     //게시글 내용
-    private Date POST_DATE;     //게시일자
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "BOARD_ID")
+    private int boardId;    //게시글 id
+
+    @Column(name = "WRITER")
+    private String writer;          //작성자 id
+
+    @Column(name = "TITLE")
+    private String title; //게시글 제목
+
+    @Column(name = "CONTENT")
+    private String content;     //게시글 내용
+
+    @Column(name = "CREATE_DATE")
+    private Date createDate;     //게시일자
+
 
     /*private String BOARD_ID;    //게시글 id
     private String TITLE; //게시글 제목

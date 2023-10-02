@@ -4,75 +4,102 @@
 <mapper namespace="com.capstone.snowe.mapper.BoardMapper">
 
     <!-- 전체 컬럼 지정 -->
-    <!--<sql id="postColumns">
+    <sql id="postColumns">
         BOARD_ID,
         TITLE,
         CONTENT,
-        WRITER_ID,
-        CREATE_DATE,
+        WRITER,
+        CREATE_DATE
+    </sql>
+<!--,
         MODIFIED_DATE,
         VIEW_CNT,
         DEL_YN,
-        NOTICE_YN
-    </sql>-->
+        NOTICE_YN-->
+
 
     <!-- 게시글목록 조회기능 -->
     <!-- 나중에 뭐.. 추천이나 댓글기능도 당연히 달아야함-->
     <select id = "getBoardList" resultType="com.capstone.snowe.dto.BoardDTO">
         SELECT
-                BNO,
-                USERNAME,
-                BOARD_TITLE,
-                CONTENT,
-                POST_DATE
+            <include refid="postColumns" />
         FROM
                 BOARD
-        ORDER BY BNO
+        ORDER BY BOARD_ID
     </select>
 
     <!-- 게시글 저장 -->
     <insert id = "addBoard" parameterType="com.capstone.snowe.dto.BoardDTO">
         INSERT INTO BOARD (
-                           BNO,
-                           BOARD_TITLE,
-                           USERNAME,
-                           CONTENT,
-                           POST_DATE
+                           BOARD_ID,
+                           TITLE,
+                           WRITER,
+                           CONTENT
                             )
                 VALUES (
                         BNO_SEQ.NEXTVAL,
-                        #{BOARD_TITLE},
-                        #{USERNAME},
-                        #{CONTENT},
-                        SYSDATE
+                        #{TITLE},
+                        #{WRITER},
+                        #{CONTENT}
                         )
     </insert>
 
     <!-- 게시글 상세보기, 게시글 번호 가져오기 -->
-    <select id = "getBoardNo" parameterType="int" resultType="com.capstone.snowe.dto.BoardDTO">
-        SELECT BNO,
-               USERNAME,
-               BOARD_TITLE,
-               CONTENT,
-               POST_DATE
+    <select id = "getBoardId" parameterType="int" resultType="com.capstone.snowe.dto.BoardDTO">
+        SELECT
+            <include refid="postColumns" />
         FROM BOARD
-        WHERE BNO = #{BNO}
+        WHERE BOARD_ID = #{BOARD_ID}
     </select>
 
     <!-- 게시글 수정 -->
     <update id = "editBoard" parameterType="com.capstone.snowe.dto.BoardDTO">
         UPDATE BOARD
-           SET BOARD_TITLE = #{BOARD_TITLE},
+           SET TITLE = #{TITLE},
                CONTENT = #{CONTENT}
-         WHERE BNO = #{BNO}
+         WHERE BOARD_ID = #{BOARD_ID}
     </update>
 
     <!-- 게시글 삭제 -->
     <delete id = "delBoard" parameterType="int">
         DELETE
         FROM BOARD
-        WHERE BNO = #{BNO}
+        WHERE BOARD_ID = #{BOARD_ID}
     </delete>
+
+    <!-- 제목으로 게시글 검색 기능 -->
+    <select id = "searchBoard" parameterType="String" resultType="com.capstone.snowe.dto.BoardDTO">
+        SELECT
+            <include refid="postColumns" />
+        FROM BOARD
+        WHERE TITLE LIKE '%' || #{TITLE} || '%'
+        ORDER BY BOARD_ID
+    </select>
+
+    <!--               -->
+    <!--페이징 처리를 위해-->
+    <!-- 게시글 총 개수  -->
+    <select id = "boardCount" resultType="int">
+        SELECT COUNT(BOARD_ID)
+        FROM BOARD
+    </select>
+    <!-- 페이징 기능  -->
+    <select id = "boardPage" parameterType="hashMap" resultType="com.capstone.snowe.dto.BoardDTO">
+        SELECT
+            <include refid="postColumns" />
+        FROM
+            (
+                SELECT
+                    ROWNUM AS RNUM, BOARD.*
+                FROM
+                    BOARD
+                WHERE
+                    ROWNUM <= #{endRow}
+                ORDER BY BOARD.BOARD_ID DESC
+            )
+        WHERE
+        #{startRow} <= RNUM
+    </select>
 
 
 </mapper>

@@ -50,11 +50,11 @@
         </thead>
         <tbody>
         <tr th:each = "result:${boardList}">
-            <td th:text="${result.BNO}"></td>
-            <td><a th:href="@{/board/view/{bno}(bno=${result.BNO})}" th:text="${result.USERNAME}"></a></td>
-            <td th:text="${result.BOARD_TITLE}"></td>
+            <td th:text="${result.BOARD_ID}"></td>
+            <td><a th:href="@{/board/view/{BOARD_ID}(bno=${result.BOARD_ID})}" th:text="${result.WRITER}"></a></td>
+            <td th:text="${result.TITLE}"></td>
             <td th:text="${result.CONTENT}"></td>
-            <td th:text="${#dates.format(result.POST_DATE, 'yyyy-MM-dd')}"></td>
+            <td th:text="${#dates.format(result.CREATE_DATE, 'yyyy-MM-dd')}"></td>
 
             <!--            <td th:if="${result.BOARD_TITLE} == null">No Title</td>-->
 

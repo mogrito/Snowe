@@ -9,7 +9,11 @@
         TITLE,
         CONTENT,
         WRITER,
-        CREATE_DATE
+        CREATE_DATE,
+        RECOMMEND_COUNT,
+        VIEW_COUNT,
+        COMMENT_COUNT,
+        DEL_YN
     </sql>
 <!--,
         MODIFIED_DATE,
@@ -18,17 +22,34 @@
         NOTICE_YN-->
 
 
-    <!-- 게시글목록 조회기능 -->
-    <!-- 나중에 뭐.. 추천이나 댓글기능도 당연히 달아야함-->
+    <!-- ============== -->
+    <!-- 게시글 목록 조회  -->
+    <!-- 게시글 정렬 최신순 -->
+    <!-- ============== -->
     <select id = "getBoardList" resultType="com.capstone.snowe.dto.BoardDTO">
         SELECT
             <include refid="postColumns" />
         FROM
-                BOARD
+            BOARD
+        WHERE
+            DEL_YN = 'N'
+        ORDER BY BOARD_ID DESC
+    </select>
+    <!-- ============== -->
+    <!-- 게시글 오래된 순  -->
+    <!-- ============== -->
+    <select id = "oldGetBoardList" resultType="com.capstone.snowe.dto.BoardDTO">
+        SELECT
+            <include refid="postColumns"/>
+        FROM
+            BOARD
+        WHERE
+            DEL_YN = 'N'
         ORDER BY BOARD_ID
     </select>
 
-    <!-- 게시글 저장 -->
+
+    <!-- 게시글 작성 -->
     <insert id = "addBoard" parameterType="com.capstone.snowe.dto.BoardDTO">
         INSERT INTO BOARD (
                            BOARD_ID,
@@ -48,42 +69,118 @@
     <select id = "getBoardId" parameterType="int" resultType="com.capstone.snowe.dto.BoardDTO">
         SELECT
             <include refid="postColumns" />
-        FROM BOARD
-        WHERE BOARD_ID = #{BOARD_ID}
+        FROM
+            BOARD
+        WHERE
+            BOARD_ID = #{BOARD_ID}
+            AND DEL_YN = 'N'
     </select>
 
     <!-- 게시글 수정 -->
     <update id = "editBoard" parameterType="com.capstone.snowe.dto.BoardDTO">
         UPDATE BOARD
-           SET TITLE = #{TITLE},
-               CONTENT = #{CONTENT}
-         WHERE BOARD_ID = #{BOARD_ID}
+        SET
+            TITLE = #{TITLE},
+            CONTENT = #{CONTENT}
+        WHERE
+            BOARD_ID = #{BOARD_ID}
+    </update>
+
+    <!-- 게시글 삭제(삭제유무) -->
+    <update id = "delBoard" parameterType="int">
+        UPDATE
+            BOARD
+        SET
+            DEL_YN = 'Y'
+        WHERE
+            BOARD_ID = #{BOARD_ID}
+            AND DEL_YN = 'N'
     </update>
 
     <!-- 게시글 삭제 -->
-    <delete id = "delBoard" parameterType="int">
+    <!--<delete id = "delBoard" parameterType="int">
         DELETE
-        FROM BOARD
-        WHERE BOARD_ID = #{BOARD_ID}
-    </delete>
+        FROM
+            BOARD
+        WHERE
+            BOARD_ID = #{BOARD_ID}
+    </delete>-->
 
     <!-- 제목으로 게시글 검색 기능 -->
     <select id = "searchBoard" parameterType="String" resultType="com.capstone.snowe.dto.BoardDTO">
         SELECT
             <include refid="postColumns" />
-        FROM BOARD
-        WHERE TITLE LIKE '%' || #{TITLE} || '%'
-        ORDER BY BOARD_ID
+        FROM
+            BOARD
+        /* 검색 조건이 제목일 경우 */
+        <if test = 'searchType.equals("title")'>
+            WHERE TITLE LIKE '%' || #{keyword} || '%'
+        </if>
+        /* 검색 조건이 내용일 경우*/
+        <if test = 'searchType.equals("content")'>
+            WHERE CONTENT LIKE '%' || #{keyword} || '%'
+        </if>
+        /* 검색 조건이 제목+내용일 경우*/
+        <if test = 'searchType.equals("title_content")'>
+            WHERE TITLE LIKE '%' || #{keyword} || '%'
+                OR CONTENT LIKE '%' || #{keyword} || '%'
+        </if>
+        /* 검색 조건이 작성자일 경우*/
+        <if test = 'searchType.equals("writer")'>
+            WHERE WRITER LIKE '%' || #{keyword} || '%'
+        </if>
+        ORDER BY BOARD_ID DESC
     </select>
+
+    <!-- ============== -->
+    <!-- 게시글 추천수 증가-->
+    <!-- ============== -->
+    <update id = "increaseRecommendCount" parameterType="int">
+        UPDATE
+            BOARD
+        SET
+            RECOMMEND_COUNT = RECOMMEND_COUNT + 1
+        WHERE
+            BOARD_ID = #{BOARD_ID}
+    </update>
+
+    <!-- ============== -->
+    <!-- 게시글 조회수 증가-->
+    <!-- ============== -->
+    <update id = "increaseViewCount" parameterType="int">
+        UPDATE
+            BOARD
+        SET
+            VIEW_COUNT = VIEW_COUNT + 1
+        WHERE
+            BOARD_ID = #{BOARD_ID}
+    </update>
+
+    <!-- ============== -->
+    <!--   댓글 개수 증가 -->
+    <!-- ============== -->
+    <update id = "increaseCommentCount" parameterType="int">
+        UPDATE
+            BOARD B
+        SET COMMENT_COUNT = (SELECT
+                                    COUNT(COMMENT_ID)
+                              FROM
+                                    COMMENTS
+                              WHERE
+                                    BOARD_ID = #{BOARD_ID}
+                                  )
+        WHERE
+            B.BOARD_ID = #{BOARD_ID}
+    </update>
 
     <!--               -->
     <!--페이징 처리를 위해-->
     <!-- 게시글 총 개수  -->
-    <select id = "boardCount" resultType="int">
+    <!--<select id = "boardCount" resultType="int">
         SELECT COUNT(BOARD_ID)
         FROM BOARD
     </select>
-    <!-- 페이징 기능  -->
+    &lt;!&ndash; 페이징 기능  &ndash;&gt;
     <select id = "boardPage" parameterType="hashMap" resultType="com.capstone.snowe.dto.BoardDTO">
         SELECT
             <include refid="postColumns" />
@@ -99,7 +196,7 @@
             )
         WHERE
         #{startRow} <= RNUM
-    </select>
+    </select>-->
 
 
 </mapper>

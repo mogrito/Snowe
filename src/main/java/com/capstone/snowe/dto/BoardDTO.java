@@ -26,7 +26,19 @@ public class BoardDTO {
     private String content;     //게시글 내용
 
     @Column(name = "CREATE_DATE")
-    private Date createDate;     //게시일자
+    private Date createDate;     //작성일자
+
+    @Column(name = "RECOMMEND_COUNT")
+    private int recommendCount;    //추천수
+    
+    @Column(name = "VIEW_COUNT")
+    private int viewCount;          //조회수
+    
+    @Column(name = "DEL_YN")
+    private String delYn;           //삭제유무
+
+    @Column(name = "COMMENT_COUNT")
+    private int commentCount;     //댓글수
 
 
     /*private String BOARD_ID;    //게시글 id

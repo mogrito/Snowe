@@ -18,8 +18,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 /* 리액트, 부트 연동 */
-//@CrossOrigin
-//@RestController
+@CrossOrigin
 @RestController
 public class BoardController {
     @Autowired
@@ -35,12 +34,18 @@ public class BoardController {
     @GetMapping ("/board/list")
     public List<BoardDTO> list(Model model) throws Exception {
 
-        //게시글의 전체개수
-        int boardCount = this.boardService.boardCount();
-
-        //
 
         return boardService.getBoardList();
+    }
+    /*
+     *
+     * 게시판 전체 리스트 조회 (오래된 순)
+     *
+     * */
+    @GetMapping ("/board/oldlist")
+    public List<BoardDTO> oldSortlist(Model model) throws Exception {
+
+        return boardService.oldGetBoardList();
     }
     
 
@@ -54,7 +59,7 @@ public class BoardController {
 
         try {
             this.boardService.addBoard(boardDTO);
-            return ResponseEntity.ok("SUCCESS");
+            return ResponseEntity.ok("작성완료");
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
@@ -65,6 +70,7 @@ public class BoardController {
     /*
     * 
     * 게시글 자세히보기 API
+    * 조회수 증가까지 함께
     * 
     * */
     // @RequestParam int BOARD_ID
@@ -72,7 +78,8 @@ public class BoardController {
     public ResponseEntity<BoardDTO> getBoardView(@PathVariable int BOARD_ID) throws Exception {
         BoardDTO board = boardService.getBoardId(BOARD_ID);
 
-        //model.addAttribute("board", board);
+        //클릭 시 조회수 증가
+        boardService.increaseViewCount(BOARD_ID);
 
         return ResponseEntity.ok(board);
     }
@@ -109,11 +116,12 @@ public class BoardController {
     /*
     *
     * 게시글 삭제 API
+    * 논리적 삭제로 구현
     *
     * */
     // ("/board/del")
     //@RequestParam(value="BNO", required = false, defaultValue = "0")
-    @DeleteMapping("/board/del/{BOARD_ID}")
+    @PutMapping("/board/del/{BOARD_ID}")
     public ResponseEntity<String> del(@PathVariable int BOARD_ID) throws Exception {
         boardService.delBoard(BOARD_ID);
         return ResponseEntity.ok("삭제성공");
@@ -121,20 +129,40 @@ public class BoardController {
 
     /*
     *
-    * 제목으로 게시글 검색하기
+    * 제목, 내용, 작성자 기준으로 게시글 검색하기
     *
     * */
-    @GetMapping("/board/search")                        // 클라이언트에서 searchTitle 요청
-    public ResponseEntity<List<BoardDTO>> searchBoard(@RequestParam("searchTitle") String TITLE) {
-        List<BoardDTO> searchResult = this.boardService.searchBoard(TITLE);
+    @GetMapping("/board/search")                        // 클라이언트에서 검색타입을 맞추고 해당 키워드 요청
+    public ResponseEntity<List<BoardDTO>> searchBoard(@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword) {
+        List<BoardDTO> searchResult = this.boardService.searchBoard(searchType, keyword);
         return ResponseEntity.ok(searchResult);
     }
 
     /*
     *
-    *
+    * 추천수 증가 API
     *
     * */
+    @PostMapping("/board/recommend/{BOARD_ID}")
+    public ResponseEntity<String> recommendBoard(@PathVariable int BOARD_ID) {
+        try {
+            boardService.increaseRecommendCount(BOARD_ID);
+            return ResponseEntity.ok("추천증가");
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
+    @PostMapping("/board/comment/{BOARD_ID}")
+    public ResponseEntity<String> commentCount(@PathVariable int BOARD_ID) {
+        try {
+            boardService.increaseCommentCount(BOARD_ID);
+            return ResponseEntity.ok("댓글개수 수정");
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+    }
 
 }

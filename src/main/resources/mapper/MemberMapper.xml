@@ -6,9 +6,8 @@
     <!-- member 테이블 전체 컬럼 -->
     <sql id="memberColumns">
         login_id
-      , password
+        , password
       , name
-      , gender
       , birthday
       , created_date
       , modified_date
@@ -22,7 +21,6 @@
         #{loginId}
         , #{password}
         , #{name}
-        , #{gender}
         , #{birthday}
         , SYSDATE
         , NULL
@@ -45,7 +43,6 @@
         SET
         modified_date = SYSDATE
         , name = #{name}
-        , gender = #{gender}
         , birthday = TO_DATE(#{birthday},'YYYY-MM-DD')
         <if test="password != null and password != ''">
             , password = #{password}

@@ -18,7 +18,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    // 로그인
+    // 로그인 API
     @PostMapping("/login")
     @ResponseBody
     public MemberResponse login(HttpServletRequest request) {
@@ -47,7 +47,7 @@ public class MemberController {
         return "redirect:/login.do";
     }
 
-    // 회원 정보 저장 (회원가입)
+    // 회원가입 API
     @PostMapping("/members")
     @ResponseBody
     public String saveMember(@RequestBody final MemberRequest params) {

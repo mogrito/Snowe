@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capstone.snowe.mapper.CommentMapper">
+
+    <!-- 전체 컬럼 지정 -->
+    <sql id="postColumns">
+        COMMENT_ID,
+        BOARD_ID,
+        PARENT_COMMENT_ID
+        CONTENT,
+        WRITER,
+        CREATE_DATE,
+        RECOMMEND_COUNT,
+        DEL_YN
+    </sql>
+
+    <!-- =================== -->
+    <!-- 게시판에 해당하는 댓글 목록 -->
+    <!-- =================== -->
+    <select id = "getCommentByBoard" resultType="com.capstone.snowe.dto.CommentDTO">
+        SELECT
+            <include refid="postColumns"/>
+        FROM
+            COMMENTS
+        WHERE
+            BOARD_ID = #{BOARD_ID}
+            AND DEL_YN = 'N'
+        ORDER BY COMMENT_ID DESC
+    </select>
+
+    <!-- =================== -->
+    <!--     댓글 작성(부모)   -->
+    <!-- =================== -->
+    <insert id = "addComment" parameterType="com.capstone.snowe.dto.CommentDTO">
+        INSERT INTO COMMENTS (
+                              COMMENT_ID,
+                              BOARD_ID,
+                              CONTENT,
+                              WRITER
+                            )
+                VALUES (
+                        COMMENT_SEQ.NEXTVAL,
+                        #{BOARD_ID},
+                        #{CONTENT},
+                        #{WRITER}
+                       )
+    </insert>
+
+    <!-- =================== -->
+    <!--     댓글번호 가져오기  -->
+    <!-- =================== -->
+    <select id = "getCommentId" parameterType="int" resultType="com.capstone.snowe.dto.CommentDTO">
+        SELECT
+            <include refid="postColumns" />
+        FROM
+            BOARD
+        WHERE
+            COMMENT_ID = #{COMMENT_ID}
+            AND DEL_YN = 'N'
+    </select>
+
+    <!-- =================== -->
+    <!--     댓글 수정하기     -->
+    <!-- =================== -->
+    <update id = "editCommend" parameterType="com.capstone.snowe.dto.CommentDTO">
+        UPDATE
+            COMMENTS
+        SET
+            CONTENT = #{CONTENT}
+        WHERE
+            COMMENT_ID = #{COMMENT_ID}
+            AND DEL_YN = 'N'
+    </update>
+
+    <!-- =================== -->
+    <!--     댓글 논리적 삭제   -->
+    <!-- =================== -->
+    <update id = "delComment" parameterType="int">
+        UPDATE
+            COMMENTS
+        SET
+            DEL_YN = 'Y'
+        WHERE
+            COMMENT_ID = #{COMMENT_ID}
+            AND DEL_YN = 'N'
+    </update>
+
+
+</mapper>

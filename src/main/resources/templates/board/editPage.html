@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form modelAttribute="board" name="editPage" method="post" action = "/board/edit">
+    <input type = "hidden" id = "BNO" name="BNO" th:value="${board?.BOARD_ID}" />
+    <table border = "1">
+        <tr>
+            <th>회원명</th>
+            <td><input name="WRITER" size="50" th:value="${board?.WRITER}" /> <span th:class="fieldError">
+			</span></td>
+        </tr>
+
+        <tr>
+            <th>제목</th>
+            <td><input name="TITLE" size="50" th:value="${board?.TITLE}" /> <span th:class="fieldError">
+			</span></td>
+        </tr>
+
+        <tr>
+            <th>내용</th>
+            <td><input name="CONTENT" size="50" th:value="${board?.CONTENT}" /> <span th:class="fieldError">
+			</span></td>
+        </tr>
+    </table>
+    <button type="submit">저장을 해보자고</button>
+</form>
+</body>
+</html>

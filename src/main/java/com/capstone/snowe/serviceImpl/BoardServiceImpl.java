@@ -27,8 +27,8 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override       //게시글 작성
-    public int addBoard(BoardDTO boardDTO) {
-        return this.boardMapper.addBoard(boardDTO);
+    public void addBoard(BoardDTO boardDTO) {
+        this.boardMapper.addBoard(boardDTO);
     }
 
     @Override       //게시글 상세조회
@@ -37,13 +37,13 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override       //게시글 수정
-    public void editBoard(BoardDTO boardDTO) {
-        this.boardMapper.editBoard(boardDTO);
+    public int editBoard(BoardDTO boardDTO) {
+        return this.boardMapper.editBoard(boardDTO);
     }
 
     @Override       //게시글 삭제
-    public int delBoard(int BOARD_ID) {
-        return this.boardMapper.delBoard(BOARD_ID);
+    public void delBoard(int BOARD_ID) {
+        this.boardMapper.delBoard(BOARD_ID);
     }
 
     @Override       // 검색기능

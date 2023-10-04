@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface CommentMapper {
 
-    List<CommentDTO> getCommentByBoard();       //해당하는 게시글에 대한 댓글 목록
+    List<CommentDTO> getCommentByBoard(int BOARD_ID);       //해당하는 게시글에 대한 댓글 목록
 
-    int addComment(CommentDTO commentDTO);      // 댓글 추가(부모)
+    void addComment(CommentDTO commentDTO);      // 댓글 추가(부모)
 
     CommentDTO getCommentId(int COMMENT_ID);    // 댓글번호 가져오기
 

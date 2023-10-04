@@ -11,13 +11,13 @@ public interface BoardMapper {
     List<BoardDTO> getBoardList();      // 게시글 목록 가져오기
     List<BoardDTO> oldGetBoardList();      // 게시글 목록 가져오기(오래된 순)
 
-    int addBoard(BoardDTO boardDTO);    // 게시글 작성
+    void addBoard(BoardDTO boardDTO);    // 게시글 작성
 
     BoardDTO getBoardId(int BOARD_ID);       // 게시글 자세히보기
 
-    void editBoard(BoardDTO boardDTO);        // 게시글 수정하기
+    int editBoard(BoardDTO boardDTO);        // 게시글 수정하기
 
-    int delBoard(int BOARD_ID);                  // 게시글 삭제
+    void delBoard(int BOARD_ID);                  // 게시글 삭제
 
     List<BoardDTO> searchBoard(@Param("searchType") String searchType, @Param("keyword") String keyword);         // 검색기능
     

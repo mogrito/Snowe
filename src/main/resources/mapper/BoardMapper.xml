@@ -168,6 +168,7 @@
                                     COMMENTS
                               WHERE
                                     BOARD_ID = #{BOARD_ID}
+                                AND DEL_YN = 'N'
                                   )
         WHERE
             B.BOARD_ID = #{BOARD_ID}

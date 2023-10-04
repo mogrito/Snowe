@@ -10,13 +10,13 @@ public interface BoardService {
     List<BoardDTO> getBoardList();      //게시글 목록 조회
     List<BoardDTO> oldGetBoardList();      //게시글 목록 조회(오래된순)
 
-    int addBoard(BoardDTO boardDTO);    //게시글 작성
+    void addBoard(BoardDTO boardDTO);    //게시글 작성
     
     BoardDTO getBoardId(int BOARD_ID);       //게시글 상세조회
     
-    void editBoard(BoardDTO boardDTO);   //게시글 수정
+    int editBoard(BoardDTO boardDTO);   //게시글 수정
     
-    int delBoard(int BOARD_ID);              //게시글 삭제
+    void delBoard(int BOARD_ID);              //게시글 삭제
 
     List<BoardDTO> searchBoard(String searchType, String keyword);        //검색기능
 

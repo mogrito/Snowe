@@ -54,7 +54,7 @@
         SELECT
             <include refid="postColumns" />
         FROM
-            BOARD
+            COMMENTS
         WHERE
             COMMENT_ID = #{COMMENT_ID}
             AND DEL_YN = 'N'

@@ -11,33 +11,34 @@ import java.util.Date;
 //@Entity
 public class BoardDTO {
 
-    @Id
+/*    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "BOARD_ID")
-    private int boardId;    //게시글 id
+    @Column(name = "BOARD_ID")*/
+    private int BOARD_ID;    //게시글 id
+    // boardId라고 쓰면 edit은 안되는데 list에서 BOARD_ID값이 나옴
 
-    @Column(name = "WRITER")
-    private String writer;          //작성자 id
+//    @Column(name = "WRITER")
+    private String WRITER;          //작성자 id
 
-    @Column(name = "TITLE")
-    private String title; //게시글 제목
+//    @Column(name = "TITLE")
+    private String TITLE; //게시글 제목
 
-    @Column(name = "CONTENT")
-    private String content;     //게시글 내용
+//    @Column(name = "CONTENT")
+    private String CONTENT;     //게시글 내용
 
-    @Column(name = "CREATE_DATE")
+//    @Column(name = "CREATE_DATE")
     private Date createDate;     //작성일자
 
-    @Column(name = "RECOMMEND_COUNT")
+//    @Column(name = "RECOMMEND_COUNT")
     private int recommendCount;    //추천수
     
-    @Column(name = "VIEW_COUNT")
+//    @Column(name = "VIEW_COUNT")
     private int viewCount;          //조회수
     
-    @Column(name = "DEL_YN")
+//    @Column(name = "DEL_YN")
     private String delYn;           //삭제유무
 
-    @Column(name = "COMMENT_COUNT")
+//    @Column(name = "COMMENT_COUNT")
     private int commentCount;     //댓글수
 
 

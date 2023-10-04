@@ -1,5 +1,7 @@
 package com.capstone.snowe.controller;
 
+import com.capstone.snowe.dto.CommentDTO;
+import com.capstone.snowe.service.CommentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.capstone.snowe.dto.BoardDTO;
@@ -23,6 +25,7 @@ import java.util.List;
 public class BoardController {
     @Autowired
     private BoardService boardService;
+    private CommentService commentService;
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 
@@ -76,10 +79,13 @@ public class BoardController {
     // @RequestParam int BOARD_ID
     @GetMapping("/board/view/{BOARD_ID}")
     public ResponseEntity<BoardDTO> getBoardView(@PathVariable int BOARD_ID) throws Exception {
+        //해당 게시글 보기
         BoardDTO board = boardService.getBoardId(BOARD_ID);
 
-        //클릭 시 조회수 증가
+        //클릭 시 조회수 증가, 댓글수 증가
         boardService.increaseViewCount(BOARD_ID);
+        boardService.increaseCommentCount(BOARD_ID);
+
 
         return ResponseEntity.ok(board);
     }
@@ -89,27 +95,35 @@ public class BoardController {
     * 게시글 수정 API
     *
     * */
-    @PutMapping("/board/edit/{BOARD_ID}")
-    public ResponseEntity<String> editPage(@PathVariable int BOARD_ID, @RequestBody BoardDTO requestBoard) throws Exception {
+    @PatchMapping("/board/edit/{BOARD_ID}")
+    public ResponseEntity<String> editPage(@RequestBody BoardDTO boardDTO) throws Exception {
 
-        BoardDTO boardDTO = this.boardService.getBoardId(BOARD_ID);
-        logger.debug("Received update request for BOARD_ID={}", BOARD_ID);
+        try {
+            int boardId = this.boardService.editBoard(boardDTO);
 
-        // 가져온 데이터가 없으면 404 에러 반환
+            return ResponseEntity.ok("수정완료");
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
+
+
+        /*// 가져온 데이터가 없으면 404 에러 반환
         if (boardDTO == null) {
             return ResponseEntity.notFound().build();
         }
 
         // 변경사항 적용
-        boardDTO.setTitle(requestBoard.getTitle());
-        boardDTO.setContent(requestBoard.getContent());
-
+        boardDTO.setTITLE(boardDTO.getTITLE());
+        boardDTO.setCONTENT(boardDTO.getCONTENT());
+        //해당 게시글 보기
+        boardService.getBoardId(BOARD_ID);
         //데이터 저장
         boardService.editBoard(boardDTO);
 
         logger.debug("Employee updated: {}", boardDTO);
 
-        return ResponseEntity.ok("수정완료");
+        return ResponseEntity.ok("수정완료");*/
 
     }
 

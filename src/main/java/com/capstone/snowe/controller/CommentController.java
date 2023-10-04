@@ -7,12 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /* 리액트, 부트 연동 */
 @CrossOrigin
+/*@RestController*/
 @RestController
 public class CommentController {
 
@@ -25,9 +27,9 @@ public class CommentController {
     * 댓글 리스트 불러오기
     * 
     * */
-    @GetMapping("/comment/list")
-    public List<CommentDTO> getCommentByBoard() throws Exception {
-        return this.commentService.getCommentByBoard();
+    @GetMapping("/comment/list/{boardId}")
+    public List<CommentDTO> getCommentByBoard(@PathVariable int boardId) throws Exception {
+        return this.commentService.getCommentByBoard(boardId);
     }
 
     /*
@@ -35,17 +37,25 @@ public class CommentController {
     * 댓글 작성(부모)
     *
     * */
-    /*@PostMapping("/board/view/{BOARD_ID}/comment")
-    public ResponseEntity<String> addComment(@RequestParam int BOARD_ID, @RequestParam String CONTENT) throws Exception {
+    @PostMapping("/board/view/{boardId}/comment")
+    public ResponseEntity<String> addComment(@PathVariable int boardId, @RequestBody CommentDTO commentDTO) throws Exception {
+
         try {
-            CommentDTO commentDTO = new CommentDTO();
-            commentDTO.setContent();
-            CommentDTO
+            commentDTO.setBoardId(boardId);
+            this.commentService.addComment(commentDTO);
+            return ResponseEntity.ok("댓글작성완료");
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-    }*/
+        /*commentDTO.setBOARD_ID(BOARD_ID);
+        this.commentService.addComment(commentDTO);
+        return "redirect:write";*/
+    }
+    @GetMapping("/comment/write")
+    public String add() {
+        return "board/comment_form";
+    }
 
     /*
     *
@@ -63,7 +73,7 @@ public class CommentController {
         }*/
 
         // 변경사항 적용
-        commentDTO.setContent(requsetComment.getContent());
+        commentDTO.setCONTENT(requsetComment.getCONTENT());
 
         //저장
         commentService.editComment(commentDTO);

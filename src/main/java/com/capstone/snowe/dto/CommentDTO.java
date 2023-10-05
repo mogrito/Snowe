@@ -11,16 +11,19 @@ import java.util.Date;
 //@Entity
 public class CommentDTO {
 
-    /*@Id
+/*    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "COMMENT_ID")*/
-    private int commentId;    //댓글id
+    private int COMMENT_ID;    //댓글id
+    //마찬가지로 edit시 commentId로 되어있으면 안됨
 
 //    @Column(name = "BOARD_ID")
-    private int boardId;        //게시글id
+    private int BOARD_ID;        //게시글id
+    //boardId로 하면 add시 안됨
+    //BOARD_ID로 하면 서치 시
 
 //    @Column(name = "PARENT_COMMENT_ID")
-    private int PARENT_COMMENT_ID;    //부모댓글id
+    private int parentCommentId;    //부모댓글id
     
 //    @Column(name = "CONTENT")
     private String CONTENT;     //댓글내용

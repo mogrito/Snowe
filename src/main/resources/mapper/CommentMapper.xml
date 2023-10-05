@@ -36,12 +36,14 @@
         INSERT INTO COMMENTS (
                               COMMENT_ID,
                               BOARD_ID,
+                              PARENT_COMMENT_ID,
                               CONTENT,
                               WRITER
                             )
                 VALUES (
                         COMMENT_SEQ.NEXTVAL,
                         #{BOARD_ID},
+                        #{PARENT_COMMENT_ID},
                         #{CONTENT},
                         #{WRITER}
                        )
@@ -63,7 +65,7 @@
     <!-- =================== -->
     <!--     댓글 수정하기     -->
     <!-- =================== -->
-    <update id = "editCommend" parameterType="com.capstone.snowe.dto.CommentDTO">
+    <update id = "editComment" parameterType="com.capstone.snowe.dto.CommentDTO">
         UPDATE
             COMMENTS
         SET

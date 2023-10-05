@@ -2,7 +2,6 @@ package com.capstone.snowe.dto;
 
 import lombok.*;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -16,9 +15,13 @@ public class BoardDTO {
     @Column(name = "BOARD_ID")*/
     private int BOARD_ID;    //게시글 id
     // boardId라고 쓰면 edit은 안되는데 list에서 BOARD_ID값이 나옴
+    // BOARD_ID라고 쓰면 edit은 되는데 list나 view에서 BOARD_ID값을 가져오지 못 함
 
 //    @Column(name = "WRITER")
     private String WRITER;          //작성자 id
+    // ADD할때 WRITER, TITLE, CONTENT가 소문자로 정의되어 있으면 자꾸 해당 필드의 GETTER값이 없다고 뜸
+    //nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'WRITER' in 'class com.capstone.snowe.dto.BoardDTO'
+    // 그래서 대문자로 바꾸면 된다.. 이상한
 
 //    @Column(name = "TITLE")
     private String TITLE; //게시글 제목

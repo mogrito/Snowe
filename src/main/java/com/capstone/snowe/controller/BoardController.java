@@ -77,14 +77,14 @@ public class BoardController {
     * 
     * */
     // @RequestParam int BOARD_ID
-    @GetMapping("/board/view/{BOARD_ID}")
-    public ResponseEntity<BoardDTO> getBoardView(@PathVariable int BOARD_ID) throws Exception {
+    @GetMapping("/board/view/{boardId}")
+    public ResponseEntity<BoardDTO> getBoardView(@PathVariable int boardId) throws Exception {
         //해당 게시글 보기
-        BoardDTO board = boardService.getBoardId(BOARD_ID);
+        BoardDTO board = boardService.getBoardId(boardId);
 
-        //클릭 시 조회수 증가, 댓글수 증가
-        boardService.increaseViewCount(BOARD_ID);
-        boardService.increaseCommentCount(BOARD_ID);
+        //클릭 시 조회수 증가, 댓글수 수정
+        boardService.increaseViewCount(boardId);
+        boardService.increaseCommentCount(boardId);
 
 
         return ResponseEntity.ok(board);
@@ -95,12 +95,12 @@ public class BoardController {
     * 게시글 수정 API
     *
     * */
-    @PatchMapping("/board/edit/{BOARD_ID}")
-    public ResponseEntity<String> editPage(@RequestBody BoardDTO boardDTO) throws Exception {
+    @PutMapping("/board/edit/{boardId}")
+    public ResponseEntity<String> editPage(@PathVariable int boardId, @RequestBody BoardDTO boardDTO) throws Exception {
 
         try {
-            int boardId = this.boardService.editBoard(boardDTO);
-
+            boardDTO.setBOARD_ID(boardId);
+            this.boardService.editBoard(boardDTO);
             return ResponseEntity.ok("수정완료");
         }
         catch (Exception e) {
@@ -135,9 +135,9 @@ public class BoardController {
     * */
     // ("/board/del")
     //@RequestParam(value="BNO", required = false, defaultValue = "0")
-    @PutMapping("/board/del/{BOARD_ID}")
-    public ResponseEntity<String> del(@PathVariable int BOARD_ID) throws Exception {
-        boardService.delBoard(BOARD_ID);
+    @PutMapping("/board/del/{boardId}")
+    public ResponseEntity<String> del(@PathVariable int boardId) throws Exception {
+        boardService.delBoard(boardId);
         return ResponseEntity.ok("삭제성공");
     }
 
@@ -157,10 +157,10 @@ public class BoardController {
     * 추천수 증가 API
     *
     * */
-    @PostMapping("/board/recommend/{BOARD_ID}")
-    public ResponseEntity<String> recommendBoard(@PathVariable int BOARD_ID) {
+    @PostMapping("/board/recommend/{boardId}")
+    public ResponseEntity<String> recommendBoard(@PathVariable int boardId) {
         try {
-            boardService.increaseRecommendCount(BOARD_ID);
+            boardService.increaseRecommendCount(boardId);
             return ResponseEntity.ok("추천증가");
         }
         catch (Exception e) {
@@ -168,10 +168,10 @@ public class BoardController {
         }
     }
 
-    @PostMapping("/board/comment/{BOARD_ID}")
-    public ResponseEntity<String> commentCount(@PathVariable int BOARD_ID) {
+    @PostMapping("/board/comment/{boardId}")
+    public ResponseEntity<String> commentCount(@PathVariable int boardId) {
         try {
-            boardService.increaseCommentCount(BOARD_ID);
+            boardService.increaseCommentCount(boardId);
             return ResponseEntity.ok("댓글개수 수정");
         }
         catch (Exception e) {

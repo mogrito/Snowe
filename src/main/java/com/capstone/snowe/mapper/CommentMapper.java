@@ -13,7 +13,7 @@ public interface CommentMapper {
 
     CommentDTO getCommentId(int COMMENT_ID);    // 댓글번호 가져오기
 
-    void editComment(CommentDTO commentDTO);        // 댓글 수정하기
+    int editComment(CommentDTO commentDTO);        // 댓글 수정하기
 
     int delComment(int COMMENT_ID);                  // 댓글 삭제
 }

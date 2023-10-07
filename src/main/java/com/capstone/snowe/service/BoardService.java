@@ -3,6 +3,7 @@ package com.capstone.snowe.service;
 import com.capstone.snowe.dto.BoardDTO;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface BoardService {
@@ -25,6 +26,8 @@ public interface BoardService {
     void increaseViewCount(int BOARD_ID);               //조회수 증가
 
     void increaseCommentCount(int BOARD_ID);            //댓글수 증가 수정
+
+    int addBoardFile(Map<String, Object> params);       //게시글 작성 시 파일저장
 
     /*int boardCount();        // 게시글 전체 개수(페이징)
     List<BoardDTO> boardPage(int endRow, int startRow); //페이징기능*/

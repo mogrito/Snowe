@@ -1,8 +1,9 @@
 package com.capstone.snowe.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
 import java.util.Date;
 
 @Data
@@ -29,7 +30,7 @@ public class CommentDTO {
     private String content;     //댓글내용
     
 //    @Column(name = "WRITER")
-    private String writer;      //댓글 작성자
+    private String loginId;      //댓글 작성자
 
 //    @Column(name = "CREATE_DATE")
     private Date createDate;    //댓글 작성일자

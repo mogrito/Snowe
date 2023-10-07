@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BoardServiceImpl implements BoardService {
@@ -65,6 +66,12 @@ public class BoardServiceImpl implements BoardService {
     public void increaseCommentCount(int BOARD_ID) {
         boardMapper.increaseCommentCount(BOARD_ID);
     }
+
+    @Override       //게시글 추가 시 파일저장
+    public int addBoardFile(Map<String, Object> params) {
+        return this.boardMapper.addBoardFile(params);
+    }
+
 
 
     /*@Override       //게시글 전체 개수(페이징)

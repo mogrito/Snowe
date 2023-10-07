@@ -9,7 +9,7 @@
         BOARD_ID,
         PARENT_COMMENT_ID,
         CONTENT,
-        WRITER,
+        LOGIN_ID,
         CREATE_DATE,
         RECOMMEND_COUNT,
         DEL_YN
@@ -38,14 +38,14 @@
                               BOARD_ID,
                               PARENT_COMMENT_ID,
                               CONTENT,
-                              WRITER
+                              LOGIN_ID
                             )
                 VALUES (
                         COMMENT_SEQ.NEXTVAL,
                         #{boardId},
                         #{parentCommentId},
                         #{content},
-                        #{writer}
+                        #{loginId}
                        )
     </insert>
 

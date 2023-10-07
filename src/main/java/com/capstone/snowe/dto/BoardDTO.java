@@ -18,7 +18,7 @@ public class BoardDTO {
     // BOARD_ID라고 쓰면 edit은 되는데 list나 view에서 BOARD_ID값을 가져오지 못 함
 
 //    @Column(name = "WRITER")
-    private String writer;          //작성자 id
+    private String loginId;          //작성자 id
     // ADD할때 WRITER, TITLE, CONTENT가 소문자로 정의되어 있으면 자꾸 해당 필드의 GETTER값이 없다고 뜸
     //nested exception is org.apache.ibatis.reflection.ReflectionException: There is no getter for property named 'WRITER' in 'class com.capstone.snowe.dto.BoardDTO'
     // 그래서 대문자로 바꾸면 된다.. 이상한

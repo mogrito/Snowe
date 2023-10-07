@@ -8,7 +8,7 @@
         BOARD_ID,
         TITLE,
         CONTENT,
-        WRITER,
+        LOGIN_ID,
         CREATE_DATE,
         RECOMMEND_COUNT,
         VIEW_COUNT,
@@ -54,13 +54,13 @@
         INSERT INTO BOARD (
                            BOARD_ID,
                            TITLE,
-                           WRITER,
+                           LOGIN_ID,
                            CONTENT
                             )
                 VALUES (
                         BNO_SEQ.NEXTVAL,
                         #{title},
-                        #{writer},
+                        #{loginId},
                         #{content}
                         )
     </insert>
@@ -127,7 +127,7 @@
         </if>
         /* 검색 조건이 작성자일 경우*/
         <if test = 'searchType.equals("writer")'>
-            WHERE WRITER LIKE '%' || #{keyword} || '%'
+            WHERE LOGIN_ID LIKE '%' || #{keyword} || '%'
         </if>
         ORDER BY BOARD_ID DESC
     </select>
@@ -173,6 +173,25 @@
         WHERE
             B.BOARD_ID = #{boardId}
     </update>
+
+
+    <!-- ============== -->
+    <!-- 게시판 파일 업로드-->
+    <!-- ============== -->
+    <insert id="insertBoardFile">
+        INSERT INTO
+                BOARD_FILE (
+                            BOARD_ID,
+                            FILE_ID
+                            )
+                VALUES (
+                        #{boardId},
+                        B_FILE_SEQ.NEXTVAL
+                       )
+    </insert>
+
+
+
 
     <!--               -->
     <!--페이징 처리를 위해-->

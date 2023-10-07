@@ -4,6 +4,7 @@ import com.capstone.snowe.dto.BoardDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BoardMapper {
 
@@ -26,6 +27,8 @@ public interface BoardMapper {
     void increaseViewCount(int BOARD_ID);           //조회수증가
 
     void increaseCommentCount(int BOARD_ID);		// 게시글 댓글수 수정
+
+    public int addBoardFile(Map<String, Object> params);     //게시글 작성 시 파일 등록
 
     /*int boardCount();       // 게시글 전체 개수(페이징)
     List<BoardDTO> boardPage(int endRow, int startRow);     // 페이징기능*/

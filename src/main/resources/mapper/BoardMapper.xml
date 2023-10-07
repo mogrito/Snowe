@@ -59,9 +59,9 @@
                             )
                 VALUES (
                         BNO_SEQ.NEXTVAL,
-                        #{TITLE},
-                        #{WRITER},
-                        #{CONTENT}
+                        #{title},
+                        #{writer},
+                        #{content}
                         )
     </insert>
 
@@ -72,7 +72,7 @@
         FROM
             BOARD
         WHERE
-            BOARD_ID = #{BOARD_ID}
+            BOARD_ID = #{boardId}
             AND DEL_YN = 'N'
     </select>
 
@@ -80,10 +80,10 @@
     <update id = "editBoard" parameterType="com.capstone.snowe.dto.BoardDTO">
         UPDATE BOARD
         SET
-            TITLE = #{TITLE},
-            CONTENT = #{CONTENT}
+            TITLE = #{title},
+            CONTENT = #{content}
         WHERE
-            BOARD_ID = #{BOARD_ID}
+            BOARD_ID = #{boardId}
     </update>
 
     <!-- 게시글 삭제(삭제유무) -->
@@ -93,7 +93,7 @@
         SET
             DEL_YN = 'Y'
         WHERE
-            BOARD_ID = #{BOARD_ID}
+            BOARD_ID = #{boardId}
             AND DEL_YN = 'N'
     </update>
 
@@ -141,7 +141,7 @@
         SET
             RECOMMEND_COUNT = RECOMMEND_COUNT + 1
         WHERE
-            BOARD_ID = #{BOARD_ID}
+            BOARD_ID = #{boardId}
     </update>
 
     <!-- ============== -->
@@ -153,7 +153,7 @@
         SET
             VIEW_COUNT = VIEW_COUNT + 1
         WHERE
-            BOARD_ID = #{BOARD_ID}
+            BOARD_ID = #{boardId}
     </update>
 
     <!-- ============== -->
@@ -167,11 +167,11 @@
                               FROM
                                     COMMENTS
                               WHERE
-                                    BOARD_ID = #{BOARD_ID}
+                                    BOARD_ID = #{boardId}
                                 AND DEL_YN = 'N'
                                   )
         WHERE
-            B.BOARD_ID = #{BOARD_ID}
+            B.BOARD_ID = #{boardId}
     </update>
 
     <!--               -->

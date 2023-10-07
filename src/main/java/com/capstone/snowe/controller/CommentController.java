@@ -40,7 +40,7 @@ public class CommentController {
     public ResponseEntity<String> addComment(@PathVariable int boardId, @RequestBody CommentDTO commentDTO) throws Exception {
 
         try {
-            commentDTO.setBOARD_ID(boardId);
+            commentDTO.setBoardId(boardId);
             this.commentService.addComment(commentDTO);
             return ResponseEntity.ok("댓글작성완료");
         }
@@ -65,7 +65,7 @@ public class CommentController {
     public ResponseEntity<String> editComment(@PathVariable int commentId, @RequestBody CommentDTO commentDTO) throws  Exception {
 
         try {
-            commentDTO.setCOMMENT_ID(commentId);
+            commentDTO.setCommentId(commentId);
             this.commentService.editComment(commentDTO);
             return ResponseEntity.ok("댓글수정완료");
         }

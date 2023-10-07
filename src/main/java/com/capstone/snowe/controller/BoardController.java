@@ -99,7 +99,7 @@ public class BoardController {
     public ResponseEntity<String> editPage(@PathVariable int boardId, @RequestBody BoardDTO boardDTO) throws Exception {
 
         try {
-            boardDTO.setBOARD_ID(boardId);
+            boardDTO.setBoardId(boardId);
             this.boardService.editBoard(boardDTO);
             return ResponseEntity.ok("수정완료");
         }

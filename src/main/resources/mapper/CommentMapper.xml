@@ -24,7 +24,7 @@
         FROM
             COMMENTS
         WHERE
-            BOARD_ID = #{BOARD_ID}
+            BOARD_ID = #{boardId}
             AND DEL_YN = 'N'
         ORDER BY COMMENT_ID DESC
     </select>
@@ -42,10 +42,10 @@
                             )
                 VALUES (
                         COMMENT_SEQ.NEXTVAL,
-                        #{BOARD_ID},
-                        #{PARENT_COMMENT_ID},
-                        #{CONTENT},
-                        #{WRITER}
+                        #{boardId},
+                        #{parentCommentId},
+                        #{content},
+                        #{writer}
                        )
     </insert>
 
@@ -58,7 +58,7 @@
         FROM
             COMMENTS
         WHERE
-            COMMENT_ID = #{COMMENT_ID}
+            COMMENT_ID = #{commendId}
             AND DEL_YN = 'N'
     </select>
 
@@ -69,9 +69,9 @@
         UPDATE
             COMMENTS
         SET
-            CONTENT = #{CONTENT}
+            CONTENT = #{content}
         WHERE
-            COMMENT_ID = #{COMMENT_ID}
+            COMMENT_ID = #{commentId}
             AND DEL_YN = 'N'
     </update>
 
@@ -84,7 +84,7 @@
         SET
             DEL_YN = 'Y'
         WHERE
-            COMMENT_ID = #{COMMENT_ID}
+            COMMENT_ID = #{commentId}
             AND DEL_YN = 'N'
     </update>
 

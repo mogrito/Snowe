@@ -7,7 +7,7 @@
     <sql id="postColumns">
         COMMENT_ID,
         BOARD_ID,
-        PARENT_COMMENT_ID
+        PARENT_COMMENT_ID,
         CONTENT,
         WRITER,
         CREATE_DATE,
@@ -58,7 +58,7 @@
         FROM
             COMMENTS
         WHERE
-            COMMENT_ID = #{commendId}
+            COMMENT_ID = #{commentId}
             AND DEL_YN = 'N'
     </select>
 

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 /* 리액트, 부트 연동 */
@@ -35,7 +36,12 @@ public class BoardController {
     public List<BoardDTO> list(Model model) throws Exception {
 
 
-        return boardService.getBoardList();
+//        return boardService.getBoardList();
+        List<BoardDTO> dto = new ArrayList<>();
+        BoardDTO dto1 = new BoardDTO();
+        dto1.setBoardId(2222);
+        dto.add(dto1);
+        return dto;
     }
     /*
      *

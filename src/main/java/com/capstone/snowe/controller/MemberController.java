@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
-@CrossOrigin
+@CrossOrigin("*")
 @Controller
 @RequiredArgsConstructor
 public class MemberController {

@@ -175,20 +175,7 @@
     </update>
 
 
-    <!-- ============== -->
-    <!-- 게시판 파일 업로드-->
-    <!-- ============== -->
-    <insert id="insertBoardFile">
-        INSERT INTO
-                BOARD_FILE (
-                            BOARD_ID,
-                            FILE_ID
-                            )
-                VALUES (
-                        #{boardId},
-                        B_FILE_SEQ.NEXTVAL
-                       )
-    </insert>
+
 
 
 

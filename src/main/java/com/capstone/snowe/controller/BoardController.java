@@ -1,22 +1,21 @@
 package com.capstone.snowe.controller;
 
-import com.capstone.snowe.dto.CommentDTO;
+import com.capstone.snowe.dto.BoardDTO;
+import com.capstone.snowe.dto.BoardFileDTO;
+import com.capstone.snowe.service.BoardFileService;
+import com.capstone.snowe.service.BoardService;
 import com.capstone.snowe.service.CommentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.capstone.snowe.dto.BoardDTO;
-import com.capstone.snowe.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
+import java.io.File;
 import java.util.List;
 
 /* 리액트, 부트 연동 */
@@ -26,6 +25,7 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
     private CommentService commentService;
+    private BoardFileService boardFileService;
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 
@@ -55,13 +55,45 @@ public class BoardController {
     /*
     * 
     * 게시글 작성 API
+    * 첨부파일도 같이 INSERT
     * 
     * */
+
+    String uploadPath = "C:\\picture\\";
     @PostMapping("/board/add")
-    public ResponseEntity<String> add(@RequestBody BoardDTO boardDTO) throws Exception {
+    public ResponseEntity<String> add(@RequestBody BoardDTO boardDTO, MultipartHttpServletRequest mrequest) throws Exception {
 
         try {
             this.boardService.addBoard(boardDTO);
+
+            BoardFileDTO file = new BoardFileDTO();
+            List<MultipartFile> fileList = mrequest.getFiles("file");
+
+            for (MultipartFile mf : fileList) {
+                if (!mf.isEmpty()) {
+                    String fileName = mf.getOriginalFilename();
+                    long fileSize = mf.getSize();
+
+                    file.setBoardId(boardDTO.getBoardId());
+                    file.setFileName(fileName);
+                    file.setFileSize(fileSize);
+
+                    boardFileService.insertBoardFile(file);//테이블에 파일저장
+
+                    String saveFile = uploadPath + fileName;    //디스크에 파일저장
+
+                    try {
+                        mf.transferTo(new File(saveFile));
+                    }
+                    catch (IllegalStateException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+
+
+
             return ResponseEntity.ok("작성완료");
 
         } catch (Exception e) {

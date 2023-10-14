@@ -13,10 +13,11 @@ public class BoardFileDTO {
 
     private int fileId;
     private int boardId;
-    private String fileName;
+    private String fileOName;
     private String filePath;
     private Long fileSize;
     private String fileType;
     private Date upload_date;
+    private String fileSName;
 
 }

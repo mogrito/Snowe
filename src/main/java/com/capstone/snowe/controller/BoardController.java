@@ -1,7 +1,6 @@
 package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.BoardDTO;
-import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.service.BoardFileService;
 import com.capstone.snowe.service.BoardService;
 import com.capstone.snowe.service.CommentService;
@@ -12,10 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.File;
 import java.util.List;
 
 /* 리액트, 부트 연동 */
@@ -59,46 +55,14 @@ public class BoardController {
     * 
     * */
 
-    String uploadPath = "C:\\picture\\";
+//    String uploadPath = "C:\\picture\\";
     @PostMapping("/board/add")
-    public ResponseEntity<String> add(@RequestBody BoardDTO boardDTO, MultipartHttpServletRequest mrequest) throws Exception {
+    public ResponseEntity<String> add(@RequestBody BoardDTO boardDTO) throws Exception {
 
-        try {
-            this.boardService.addBoard(boardDTO);
+        this.boardService.addBoard(boardDTO);
 
-            BoardFileDTO file = new BoardFileDTO();
-            List<MultipartFile> fileList = mrequest.getFiles("file");
+        return ResponseEntity.ok("작성완료");
 
-            for (MultipartFile mf : fileList) {
-                if (!mf.isEmpty()) {
-                    String fileName = mf.getOriginalFilename();
-                    long fileSize = mf.getSize();
-
-                    file.setBoardId(boardDTO.getBoardId());
-                    file.setFileName(fileName);
-                    file.setFileSize(fileSize);
-
-                    boardFileService.insertBoardFile(file);//테이블에 파일저장
-
-                    String saveFile = uploadPath + fileName;    //디스크에 파일저장
-
-                    try {
-                        mf.transferTo(new File(saveFile));
-                    }
-                    catch (IllegalStateException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-
-
-
-            return ResponseEntity.ok("작성완료");
-
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
     }
 
 

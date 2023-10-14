@@ -5,7 +5,8 @@
     <sql id="postColumns">
         FILE_ID,
         BOARD_ID,
-        FILE_NAME,
+        FILE_ONAME,
+        FILE_SNAME,
         FILE_PATH,
         FILE_SIZE,
         FILE_TYPE,
@@ -37,13 +38,15 @@
             BOARD_FILE (
                     FILE_ID,
                     BOARD_ID,
-                    FILE_NAME,
+                    FILE_ONAME,
+                    FILE_SNAME,
                     FILE_SIZE
                 )
         VALUES (
                    B_FILE_SEQ.NEXTVAL,
                    #{boardId},
-                   #{fileName},
+                   #{fileOName},
+                   #{fileSName},
                    #{fileSize},
                )
     </insert>

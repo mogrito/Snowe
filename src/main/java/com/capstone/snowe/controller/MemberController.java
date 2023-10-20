@@ -30,12 +30,15 @@ public class MemberController {
         System.out.println(password);
         MemberResponse member = memberService.login(loginId, password);
 
-        // 2. 세션에 회원 정보 저장 & 세션 유지 시간 설정
-        if (member != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("loginMember", member);
-            session.setMaxInactiveInterval(60 * 30);
+
+        if (member == null) {
+            throw new NullPointerException("로그인 실패: 회원 정보를 찾을 수 없습니다.");
         }
+
+        // 2. 세션에 회원 정보 저장 & 세션 유지 시간 설정
+        HttpSession session = request.getSession();
+        session.setAttribute("loginMember", member);
+        session.setMaxInactiveInterval(60 * 30);
 
         return member;
     }
@@ -68,13 +71,31 @@ public class MemberController {
         return memberService.updateMember(params);
     }
 
-
-    // 회원 수 카운팅 (ID 중복 체크)
     @GetMapping("/member-count")
     @ResponseBody
-    public int countMemberByLoginId(@RequestParam final String loginId) {
+    public String countMemberByLoginId(@RequestParam final String loginId) {
         System.out.println(loginId);
-        return memberService.countMemberByLoginId(loginId);
+        int count = memberService.countMemberByLoginId(loginId);
+
+        if (count > 0) {
+            return "duplicate"; // 중복된 아이디일 경우
+        } else {
+            return "not-duplicate"; // 중복되지 않은 아이디일 경우
+        }
+    }
+
+    // 회원 수 카운팅 (ID 중복 체크)
+    @GetMapping("/member-nickname")
+    @ResponseBody
+    public String checkNickname(@RequestParam final String nickname) {
+        System.out.println(nickname);
+        int nickcount = memberService.checkNickname(nickname);
+
+        if (nickcount > 0) {
+            return "duplicate"; // 중복된 아이디일 경우
+        } else {
+            return "not-duplicate"; // 중복되지 않은 아이디일 경우
+        }
     }
 
 }

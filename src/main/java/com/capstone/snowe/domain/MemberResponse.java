@@ -2,7 +2,6 @@ package com.capstone.snowe.domain;
 
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -13,6 +12,7 @@ public class MemberResponse {
     private String name;                   // 이름
     private String gender;                 // 성별
     private String birthday;            // 생년월일
+    private String nickname;
     private LocalDateTime createdDate;     // 생성일시
     private LocalDateTime modifiedDate;    // 최종 수정일시
 

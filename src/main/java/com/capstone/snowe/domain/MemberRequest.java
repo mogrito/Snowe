@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDate;
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberRequest {
@@ -18,6 +16,7 @@ public class MemberRequest {
     private String name;            // 이름
     private String gender;          // 성별
     private String birthday;     // 생년월일
+    private String nickname;
 
     public void encodingPassword(PasswordEncoder passwordEncoder) {
         if (StringUtils.isEmpty(password)) {

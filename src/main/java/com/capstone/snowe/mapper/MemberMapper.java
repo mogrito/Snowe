@@ -3,7 +3,6 @@ package com.capstone.snowe.mapper;
 import com.capstone.snowe.domain.MemberRequest;
 import com.capstone.snowe.domain.MemberResponse;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface MemberMapper {
@@ -35,4 +34,5 @@ public interface MemberMapper {
      */
     int countByLoginId(String loginId);
 
+    int checkNickname(String nickname);
 }

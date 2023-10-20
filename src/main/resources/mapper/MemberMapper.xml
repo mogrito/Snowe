@@ -3,12 +3,16 @@
 
 <mapper namespace="com.capstone.snowe.mapper.MemberMapper">
 
+
     <!-- member 테이블 전체 컬럼 -->
     <sql id="memberColumns">
         login_id
         , password
       , name
       , birthday
+      , gender
+      , nickname
+--       , teacher_info
       , created_date
       , modified_date
     </sql>
@@ -22,6 +26,8 @@
         , #{password}
         , #{name}
         , #{birthday}
+        , #{gender}
+        , #{nickname}
         , SYSDATE
         , NULL
         )
@@ -59,5 +65,14 @@
             member
         WHERE
             login_id = #{value}
+    </select>
+
+    <select id="checkNickname" parameterType="string" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            member
+        WHERE
+            nickname = #{value}
     </select>
 </mapper>

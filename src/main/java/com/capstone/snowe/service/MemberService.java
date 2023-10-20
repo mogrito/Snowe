@@ -4,7 +4,6 @@ import com.capstone.snowe.domain.MemberRequest;
 import com.capstone.snowe.domain.MemberResponse;
 import com.capstone.snowe.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,20 +23,19 @@ public class MemberService {
      * @return 회원 상세정보
      */
     public MemberResponse login(final String loginId, final String password) {
-
-        // 1. 회원 정보 및 비밀번호 조회
+        // 1. 회원 정보 조회
         MemberResponse member = findMemberByLoginId(loginId);
-        String encodedPassword = (member == null) ? "" : member.getPassword();
 
-        // 2. 회원 정보 및 비밀번호 체크
-        if (member == null){
-            return null;
+        // 2. 회원 정보가 없을 경우 또는 비밀번호가 틀릴 경우 처리
+        if (member == null || !passwordEncoder.matches(password, member.getPassword())) {
+            return null; // 로그인 실패
         }
 
         // 3. 회원 응답 객체에서 비밀번호를 제거한 후 회원 정보 리턴
         member.clearPassword();
         return member;
     }
+
 
     /**
      * 회원 정보 저장 (회원가입)
@@ -82,4 +80,6 @@ public class MemberService {
     public int countMemberByLoginId(final String loginId) {
         return memberMapper.countByLoginId(loginId);
     }
+
+    public int checkNickname(final String nickname) { return memberMapper.checkNickname(nickname);}
 }

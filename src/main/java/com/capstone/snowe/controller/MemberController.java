@@ -1,7 +1,6 @@
 package com.capstone.snowe.controller;
 
-import com.capstone.snowe.domain.MemberRequest;
-import com.capstone.snowe.domain.MemberResponse;
+import com.capstone.snowe.dto.LoginResponseDto;
 import com.capstone.snowe.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -21,14 +20,14 @@ public class MemberController {
     // 로그인 API
     @PostMapping("/login")
     @ResponseBody
-    public MemberResponse login(HttpServletRequest request) {
+    public LoginResponseDto login(HttpServletRequest request) {
 
         // 1. 회원 정보 조회
         String loginId = request.getParameter("loginId");
         String password = request.getParameter("password");
         System.out.println(loginId);
         System.out.println(password);
-        MemberResponse member = memberService.login(loginId, password);
+        LoginResponseDto member = memberService.login(loginId, password);
 
         // 2. 세션에 회원 정보 저장 & 세션 유지 시간 설정
         if (member != null) {
@@ -50,31 +49,31 @@ public class MemberController {
     // 회원가입 API
     @PostMapping("/members")
     @ResponseBody
-    public String saveMember(@RequestBody final MemberRequest params) {
+    public String saveMember(@RequestBody final LoginResponseDto params) {
         return memberService.saveMember(params);
     }
 
-    // 회원 상세정보 조회
-    @GetMapping("/members/{loginId}")
-    @ResponseBody
-    public MemberResponse findMemberByLoginId(@PathVariable final String loginId) {
-        return memberService.findMemberByLoginId(loginId);
-    }
-
-    // 회원 정보 수정
-    @PatchMapping("/members/{id}")
-    @ResponseBody
-    public String updateMember(@PathVariable final Long id, @RequestBody final MemberRequest params) {
-        return memberService.updateMember(params);
-    }
-
-
-    // 회원 수 카운팅 (ID 중복 체크)
-    @GetMapping("/member-count")
-    @ResponseBody
-    public int countMemberByLoginId(@RequestParam final String loginId) {
-        System.out.println(loginId);
-        return memberService.countMemberByLoginId(loginId);
-    }
-
+//    // 회원 상세정보 조회
+//    @GetMapping("/members/{loginId}")
+//    @ResponseBody
+//    public MemberResponse findMemberByLoginId(@PathVariable final String loginId) {
+//        return memberService.findMemberByLoginId(loginId);
+//    }
+//
+//    // 회원 정보 수정
+//    @PatchMapping("/members/{id}")
+//    @ResponseBody
+//    public String updateMember(@PathVariable final Long id, @RequestBody final MemberRequest params) {
+//        return memberService.updateMember(params);
+//    }
+//
+//
+//    // 회원 수 카운팅 (ID 중복 체크)
+//    @GetMapping("/member-count")
+//    @ResponseBody
+//    public int countMemberByLoginId(@RequestParam final String loginId) {
+//        System.out.println(loginId);
+//        return memberService.countMemberByLoginId(loginId);
+//    }
+//
 }

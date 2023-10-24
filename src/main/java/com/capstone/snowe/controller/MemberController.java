@@ -1,7 +1,8 @@
 package com.capstone.snowe.controller;
 
-import com.capstone.snowe.domain.MemberRequest;
-import com.capstone.snowe.domain.MemberResponse;
+
+import com.capstone.snowe.dto.LoginResponseDto;
+import com.capstone.snowe.dto.RegisterRequestDto;
 import com.capstone.snowe.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -29,17 +30,17 @@ public class MemberController {
         return memberService.login(loginId, password);
     }
 
-    // 로그아웃
-    @PostMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login.do";
-    }
+//    // 로그아웃
+//    @PostMapping("/logout")
+//    public String logout(HttpSession session) {
+//        session.invalidate();
+//        return "redirect:/login.do";
+//    }
 
     // 회원가입 API
     @PostMapping("/members")
     @ResponseBody
-    public String saveMember(@RequestBody final MemberRequest params) {
+    public String saveMember(@RequestBody final RegisterRequestDto params) {
         return memberService.saveMember(params);
     }
 

@@ -1,11 +1,12 @@
 package com.capstone.snowe.domain;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Data
+@Getter
 @NoArgsConstructor
 public class MemberVo {
     private String loginId;
@@ -19,14 +20,5 @@ public class MemberVo {
     private String perCode;
     private String teacherInfo;
 
-    public MemberVo(String loginId, String password, String name, String birthday, String nickname, String gender, String teacherInfo) {
-        this.loginId = loginId;
-        this.password = password;
-        this.name = name;
-        this.birthday = birthday;
-        this.nickname = nickname;
-        this.gender = gender;
-        this.teacherInfo = teacherInfo;
-    }
 
 }

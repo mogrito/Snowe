@@ -1,25 +1,18 @@
 package com.capstone.snowe.dto;
 
 import lombok.Data;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.util.StringUtils;
 
 @Data
 public class LoginRequestDto {
     private String loginId;
     private String password;
 
-    public String getLoginId() {
-        return loginId;
-    }
-
-    public void setLoginId(String loginId) {
-        this.loginId = loginId;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void encodingPassword(PasswordEncoder passwordEncoder) {
+        if (StringUtils.isEmpty(password)) {
+            return;
+        }
+        password = passwordEncoder.encode(password);
     }
 }

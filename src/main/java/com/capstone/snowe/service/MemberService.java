@@ -1,6 +1,7 @@
 package com.capstone.snowe.service;
 
 import com.capstone.snowe.dto.LoginResponseDto;
+import com.capstone.snowe.dto.RegisterRequestDto;
 import com.capstone.snowe.mapper.MemberMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -8,17 +9,17 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
-@Service
+
 public interface MemberService {
-    MemberResponse login(String loginId, String password);
+    LoginResponseDto login(String loginId, String password);
 
-    String saveMember(MemberRequest params);
+    String saveMember(RegisterRequestDto params);
 
-    MemberResponse findMemberByLoginId(String loginId);
+    LoginResponseDto findMemberByLoginId(String loginId);
 
-    String updateMember(MemberRequest params);
-
-    int countMemberByLoginId(String loginId);
-
-    int checkNickname(String nickname);
+//    String updateMember(MemberRequest params);
+//
+//    int countMemberByLoginId(String loginId);
+//
+//    int checkNickname(String nickname);
 }

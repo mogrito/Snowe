@@ -14,7 +14,7 @@
     </sql>
 
     <!-- 회원 정보 저장 (회원가입) -->
-    <insert id="save" parameterType="com.capstone.snowe.domain.MemberRequest">
+    <insert id="save" parameterType="com.capstone.snowe.domain.RegisterRequestDto">
         INSERT INTO member (
         <include refid="memberColumns" />
         ) VALUES (

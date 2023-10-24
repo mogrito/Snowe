@@ -1,6 +1,7 @@
 package com.capstone.snowe.dto;
 
 import lombok.Data;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Data
 public class RegisterRequestDto {
@@ -11,7 +12,7 @@ public class RegisterRequestDto {
     private String nickname;
     private String gender;
     private String teacherInfo;
-    // 다른 필드들
 
-    // Getter and Setter 메서드
+    public void encodingPassword(PasswordEncoder passwordEncoder) {
+    }
 }

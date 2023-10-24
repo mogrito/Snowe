@@ -22,7 +22,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class BoardController {
-    @Autowired
+
     private BoardService boardService;
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 

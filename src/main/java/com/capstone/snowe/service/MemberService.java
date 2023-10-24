@@ -1,25 +1,20 @@
 package com.capstone.snowe.service;
 
-import com.capstone.snowe.dto.LoginResponseDto;
-import com.capstone.snowe.dto.RegisterRequestDto;
-import com.capstone.snowe.mapper.MemberMapper;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import com.capstone.snowe.dto.MemberRequestDto;
+import com.capstone.snowe.dto.MemberResponseDto;
 
-import javax.transaction.Transactional;
-
-
+// MemberService.java (인터페이스)
 public interface MemberService {
-    LoginResponseDto login(String loginId, String password);
+    MemberResponseDto login(String loginId, String password);
 
-    String saveMember(RegisterRequestDto params);
+    String saveMember(MemberRequestDto params);
 
-    LoginResponseDto findMemberByLoginId(String loginId);
+    MemberResponseDto findMemberByLoginId(String loginId);
 
-//    String updateMember(MemberRequest params);
-//
-//    int countMemberByLoginId(String loginId);
-//
-//    int checkNickname(String nickname);
+    String updateMember(MemberRequestDto params);
+
+    int countMemberByLoginId(String loginId);
+
+    int checkNickname(String nickname);
+
 }

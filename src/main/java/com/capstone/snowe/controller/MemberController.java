@@ -1,6 +1,7 @@
 package com.capstone.snowe.controller;
 
-import com.capstone.snowe.dto.LoginResponseDto;
+import com.capstone.snowe.domain.MemberRequest;
+import com.capstone.snowe.domain.MemberResponse;
 import com.capstone.snowe.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 
-@CrossOrigin("*")
+@CrossOrigin
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
@@ -22,21 +23,10 @@ public class MemberController {
     @ResponseBody
     public LoginResponseDto login(HttpServletRequest request) {
 
-        // 1. 회원 정보 조회
         String loginId = request.getParameter("loginId");
         String password = request.getParameter("password");
-        System.out.println(loginId);
-        System.out.println(password);
-        LoginResponseDto member = memberService.login(loginId, password);
 
-        // 2. 세션에 회원 정보 저장 & 세션 유지 시간 설정
-        if (member != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("loginMember", member);
-            session.setMaxInactiveInterval(60 * 30);
-        }
-
-        return member;
+        return memberService.login(loginId, password);
     }
 
     // 로그아웃
@@ -49,7 +39,7 @@ public class MemberController {
     // 회원가입 API
     @PostMapping("/members")
     @ResponseBody
-    public String saveMember(@RequestBody final LoginResponseDto params) {
+    public String saveMember(@RequestBody final MemberRequest params) {
         return memberService.saveMember(params);
     }
 

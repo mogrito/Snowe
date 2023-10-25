@@ -37,14 +37,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-
+                .csrf().disable()
                 //세션 사용 안함
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
 
                 //URL 관리
                 .authorizeRequests()
-                .antMatchers( "/login","members").permitAll()
+                .antMatchers( "/login","/members","/error").permitAll()
                 .anyRequest().authenticated()
                 .and()
 

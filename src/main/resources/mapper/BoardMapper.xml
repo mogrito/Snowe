@@ -112,22 +112,24 @@
             <include refid="postColumns" />
         FROM
             BOARD
+        WHERE
+            DEL_YN = 'N' AND
         /* 검색 조건이 제목일 경우 */
         <if test = 'searchType.equals("title")'>
-            WHERE TITLE LIKE '%' || #{keyword} || '%'
+            TITLE LIKE '%' || #{keyword} || '%'
         </if>
         /* 검색 조건이 내용일 경우*/
         <if test = 'searchType.equals("content")'>
-            WHERE CONTENT LIKE '%' || #{keyword} || '%'
+            CONTENT LIKE '%' || #{keyword} || '%'
         </if>
         /* 검색 조건이 제목+내용일 경우*/
         <if test = 'searchType.equals("title_content")'>
-            WHERE TITLE LIKE '%' || #{keyword} || '%'
+            TITLE LIKE '%' || #{keyword} || '%'
                 OR CONTENT LIKE '%' || #{keyword} || '%'
         </if>
         /* 검색 조건이 작성자일 경우*/
         <if test = 'searchType.equals("writer")'>
-            WHERE LOGIN_ID LIKE '%' || #{keyword} || '%'
+            LOGIN_ID LIKE '%' || #{keyword} || '%'
         </if>
         ORDER BY BOARD_ID DESC
     </select>

@@ -8,7 +8,6 @@ import javax.security.auth.login.LoginException;
 
 
 public interface MemberService {
-//    MemberDTO login(String loginId, String password);
 
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 

@@ -1,9 +1,7 @@
 package com.capstone.snowe.controller;
 
-import com.capstone.snowe.service.BoardFileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,8 +13,6 @@ import java.io.File;
 @RestController
 public class BoardFileController {
 
-    @Autowired
-    private BoardFileService boardFileService;
     private static final Logger logger = LoggerFactory.getLogger(BoardFileController.class);
 
     /*

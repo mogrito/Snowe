@@ -3,12 +3,11 @@ package com.capstone.snowe.controller;
 import com.capstone.snowe.domain.MemberRequest;
 import com.capstone.snowe.domain.MemberResponse;
 import com.capstone.snowe.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 
 @CrossOrigin
@@ -33,13 +32,7 @@ public class MemberController {
 
         if (member == null) {
             throw new NullPointerException("로그인 실패: 회원 정보를 찾을 수 없습니다.");
-        }
-
-        // 2. 세션에 회원 정보 저장 & 세션 유지 시간 설정
-        HttpSession session = request.getSession();
-        session.setAttribute("loginMember", member);
-        session.setMaxInactiveInterval(60 * 30);
-
+        };
         return member;
     }
 

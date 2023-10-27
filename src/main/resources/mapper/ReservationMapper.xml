@@ -7,7 +7,7 @@
     <!-- 1. 캘린더에서 날짜를 선택 -->
     <!-- 2. 맘에 드는 강사의 강습을 선택 후 예약하기-->
     <!-- ================================= -->
-    <insert id="DateLessonReservation">
+    <insert id="LessonReservationByDay" parameterType="com.capstone.snowe.dto.ReservationDTO">
         INSERT INTO RESERVATION(RESERVE_ID,
                                 TEACHER_ID,
                                 STUDENT_ID,
@@ -16,19 +16,40 @@
         SELECT
             'RSV' || LPAD(RESERVE_SEQ.NEXTVAL, 8, 0) AS RESERVE_ID,
             T.ID AS TEACHER_ID,
-            'jwb1796' AS STUDENT_ID,
+            #{studentId} AS STUDENT_ID,
             L.LESSON_ID AS LESSON_ID,
-            TO_DATE(SYSDATE) AS RESERVE_DATE
-        FROM                                                                        -- #{LOGIN_ID}
-                                                                                    LESSON L
-                                                                                        INNER JOIN TEACHER T
-                                                                                                   ON L.LOGIN_ID = T.ID
+            SYSDATE AS RESERVE_DATE
+        FROM
+            LESSON L
+            INNER JOIN TEACHER T
+                ON L.LOGIN_ID = T.ID
         WHERE
             L.LESSON_DATE >= SYSDATE     -- 강습일자가 현재날짜보다 이후일때
           AND L.LESSON_STAT = 'LS01'  -- 강습 상태가 신청가능일때
-          AND L.LOGIN_ID = #{loginId} -- #{LOGIN_ID} 선택한 강사 아이디 가져와서
-          AND L.LESSON_ID = #{lessonId}   -- #{LESSON_ID} 선택한 강의의 아이디가 일치하는지
+          AND L.LOGIN_ID = #{teacherId} -- 선택한 강사 아이디 가져와서
+          AND L.LESSON_ID = #{lessonId}   -- 선택한 강습의 아이디가 일치하는지
     </insert>
+
+    <!-- =========================================================== -->
+    <!--            ** 예약이 완료되고 실행되어야 하는 쿼리문 **             -->
+    <!--                                                              -->
+    <!-- RESERVATION에서 강습 예약 시 LESSON테이블의 예약 인원 업데이트 하기 -->
+    <!-- 강습인원이 최대인원까지 찼을 경우 LESSON_STAT를 LS02(신청불가)로 변경 -->
+    <!-- =========================================================== -->
+    <update id = "updateReserveCountAndLessonStat" parameterType="com.capstone.snowe.dto.LessonDTO">
+        UPDATE
+            LESSON
+        SET
+            RESERVE_COUNT = (SELECT COUNT(LESSON_ID) AS RESERVE_COUNT
+                             FROM RESERVATION
+                             WHERE LESSON_ID = #{lessonId}
+                               AND CANCLE_STAT = 'N'
+                             GROUP BY LESSON_ID),
+            LESSON_STAT = CASE
+                              WHEN RESERVE_COUNT = MAX_RESERVE_COUNT THEN 'LS02'
+                        END
+        WHERE LESSON_ID = #{lessonId}
+    </update>
 
     <!-- ========================================= -->
     <!-- 개인정보 화면에서 본인이 예약한 예약내역 보여주기 -->
@@ -65,15 +86,36 @@
     <!-- =========== -->
     <!-- 예약 취소하기 -->
     <!-- =========== -->
-    <update id="cancleReservation">
+    <update id="cancleReservation" parameterType="com.capstone.snowe.dto.ReservationDTO">
         UPDATE
             RESERVATION
         SET
             CANCLE_STAT = 'Y',
             CANCLE_DATE = SYSDATE
         WHERE
-            RESERVE_ID = #{reserveId}  -- #{RESERVE_ID}
+            RESERVE_ID = #{reserveId}
+          AND STUDENT_ID = #{studentId}
           AND CANCLE_STAT = 'N'
+    </update>
+    <!-- =========================================================== -->
+    <!--            ** 예약이 취소되고 실행되어야 하는 쿼리문 **             -->
+    <!--                                                              -->
+    <!-- RESERVATION에서 강습 예약 취소시 LESSON테이블의 예약 인원 최신화 하기 -->
+    <!-- 최대인원이 예약인원보다 클경우 LESSON_STAT를 LS01(신청가능)로 변경 -->
+    <!-- =========================================================== -->
+    <update id="deleteReserveCountAndLessonStat" parameterType="com.capstone.snowe.dto.ReservationDTO">
+        UPDATE
+            LESSON
+        SET
+            RESERVE_COUNT = (SELECT COUNT(LESSON_ID) AS RESERVE_COUNT
+                             FROM RESERVATION
+                             WHERE LESSON_ID = #{lessonId}
+                               AND CANCLE_STAT = 'N'
+                             GROUP BY LESSON_ID),
+            LESSON_STAT = CASE
+                              WHEN MAX_RESERVE_COUNT > RESERVE_COUNT THEN 'LS01'
+                END
+        WHERE LESSON_ID = #{lessonId}
     </update>
 
 

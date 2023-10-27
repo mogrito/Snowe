@@ -17,11 +17,15 @@ public class TeacherController {
     /*
     * 강사 추가하기
     * */
-    @PostMapping("/teachers")
-    public ResponseEntity<String> addTeachers(@RequestBody TeacherDTO teacherDTO) throws Exception {
-
-        this.teacherService.addTeacher(teacherDTO);
-        //this.teacherService.perCodeUpdate(memberResponse);
+    @PostMapping("/teachers/{id}")
+    public ResponseEntity<String> addTeachers(@PathVariable String id) throws Exception {
+        // teacher테이블에 추가
+        this.teacherService.addTeacher(id);
+        /*
+        * teacher테이블에 추가 후
+        * member테이블의 per_code(회원구분)을 1(강사)로 변경
+        * */
+        this.teacherService.perCodeUpdate(id);
 
         return ResponseEntity.ok("강사 설정 완료");
     }

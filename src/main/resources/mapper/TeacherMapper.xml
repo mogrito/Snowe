@@ -35,8 +35,7 @@
         UPDATE
             TEACHER
         SET
-            resortId = #{resortId}
-        -- #{RESORT_ID} 콤보박스라던지 VALUE를 RST01~10, 그에 맞게 스키장명을 일치시켜, 화면에서는 스키장명으로 뜨고 실제 VALUE는 RESORT_ID의 값으로 들어오게
+            RESORT_ID = #{resortId} -- 콤보박스라던지 VALUE를 RST01~10, 그에 맞게 스키장명을 일치시켜, 화면에서는 스키장명으로 뜨고 실제 VALUE는 RESORT_ID의 값으로 들어오게
         WHERE
             ID = #{id} -- 현재 세션 ID 가져옴
     </update>

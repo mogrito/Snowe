@@ -31,8 +31,10 @@ public class TeacherController {
     * */
     @PutMapping("/teachers/{id}")
     public ResponseEntity<String> updateTeacherStat(@PathVariable String id, @RequestBody TeacherDTO teacherDTO) throws Exception {
+
         teacherDTO.setId(id);
         this.teacherService.updateTeacherStat(teacherDTO);
+
         return ResponseEntity.ok("정보가 수정되었습니다.");
     }
 }

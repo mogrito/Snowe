@@ -126,8 +126,8 @@
         /* 검색 조건이 제목+내용일 경우*/
         <if test = 'searchType.equals("title_content")'>
             DEL_YN = 'N'
-            AND TITLE LIKE '%' || #{keyword} || '%'
-            OR CONTENT LIKE '%' || #{keyword} || '%'
+            AND (TITLE LIKE '%' || #{keyword} || '%'
+            OR CONTENT LIKE '%' || #{keyword} || '%')
         </if>
         /* 검색 조건이 작성자일 경우*/
         <if test = 'searchType.equals("writer")'>

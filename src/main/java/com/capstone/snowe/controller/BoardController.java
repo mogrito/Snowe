@@ -18,6 +18,7 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class BoardController {
+
     @Autowired
     private BoardService boardService;
     private CommentService commentService;

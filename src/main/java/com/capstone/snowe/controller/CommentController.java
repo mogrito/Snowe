@@ -16,18 +16,18 @@ import java.util.List;
 @RestController
 public class CommentController {
 
-    @Autowired
+
     private CommentService commentService;
-    private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
+    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
     /*
     * 
     * 댓글 리스트 불러오기
     * 
     * */
-    @GetMapping("/comment/list/{boardId}")
-    public List<CommentDTO> getCommentByBoard(@PathVariable int boardId) throws Exception {
-        return this.commentService.getCommentByBoard(boardId);
+    @GetMapping("/comment/list")
+    public List<CommentDTO> getCommentByBoard() throws Exception {
+        return this.commentService.getCommentByBoard();
     }
 
     /*
@@ -35,67 +35,50 @@ public class CommentController {
     * 댓글 작성(부모)
     *
     * */
-    @PostMapping("/board/view/{boardId}/comment")
-    public ResponseEntity<String> addComment(@PathVariable int boardId, @RequestBody CommentDTO commentDTO) throws Exception {
-
+    /*@PostMapping("/board/view/{BOARD_ID}/comment")
+    public ResponseEntity<String> addComment(@RequestParam int BOARD_ID, @RequestParam String CONTENT) throws Exception {
         try {
-            commentDTO.setBoardId(boardId);
-            this.commentService.addComment(commentDTO);
-            return ResponseEntity.ok("댓글작성완료");
+            CommentDTO commentDTO = new CommentDTO();
+            commentDTO.setContent();
+            CommentDTO
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-        /*commentDTO.setBOARD_ID(BOARD_ID);
-        this.commentService.addComment(commentDTO);
-        return "redirect:write";*/
-    }
-    @GetMapping("/comment/write")
-    public String add() {
-        return "board/comment_form";
-    }
+    }*/
 
     /*
     *
     * 댓글 수정
     *
     * */
-    @PutMapping("/comment/edit/{commentId}")
-    public ResponseEntity<String> editComment(@PathVariable int commentId, @RequestBody CommentDTO commentDTO) throws  Exception {
+    @PutMapping("/comment/edit/{COMMENT_ID}")
+    public ResponseEntity<String> editComment(@PathVariable int COMMENT_ID, @RequestBody CommentDTO requsetComment) throws  Exception {
 
-        try {
-            commentDTO.setCommentId(commentId);
-            this.commentService.editComment(commentDTO);
-            return ResponseEntity.ok("댓글수정완료");
-        }
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
-    /*    CommentDTO commentDTO = this.commentService.getCommentId(commentId);
+        CommentDTO commentDTO = this.commentService.getCommentId(COMMENT_ID);
 
         // 데이터x 시 에러
-        *//*if (commentDTO == null) {
+        /*if (commentDTO == null) {
             return ResponseEntity.notFound().build();
-        }*//*
+        }*/
 
         // 변경사항 적용
-        commentDTO.setCONTENT(requestComment.getCONTENT());
+        commentDTO.setContent(requsetComment.getContent());
 
         //저장
         commentService.editComment(commentDTO);
 
         return ResponseEntity.ok("댓글 수정 완료");
-    }*/
+    }
 
     /*
     *
     * 댓글 삭제
     *
     * */
-    @PutMapping("/comment/del/{commentId}")
-    public ResponseEntity<String> delComment(@PathVariable int commentId) throws Exception {
-        commentService.delComment(commentId);
+    @PutMapping("/comment/del/{COMMENT_ID}")
+    public ResponseEntity<String> delComment(@PathVariable int COMMENT_ID) throws Exception {
+        commentService.delComment(COMMENT_ID);
         return ResponseEntity.ok("댓글 삭제 성공");
     }
 

@@ -1,6 +1,6 @@
 package com.capstone.snowe.mapper;
 
-import com.capstone.snowe.domain.MemberResponse;
+import com.capstone.snowe.dto.MemberDTO;
 import com.capstone.snowe.dto.TeacherDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,7 +15,7 @@ public interface TeacherMapper {
     /*
     * 강사가 추가되면 member테이블의 perCode를 수정
     * */
-    void perCodeUpdate(MemberResponse memberResponse);
+    void perCodeUpdate(MemberDTO memberDTO);
 
     /*
     * 강사 정보 수정

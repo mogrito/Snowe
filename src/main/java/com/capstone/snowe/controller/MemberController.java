@@ -5,8 +5,6 @@ import com.capstone.snowe.dto.TokenDTO;
 import com.capstone.snowe.jwt.JwtFilter;
 import com.capstone.snowe.jwt.TokenProvider;
 import com.capstone.snowe.service.MemberService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +14,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 
 @CrossOrigin

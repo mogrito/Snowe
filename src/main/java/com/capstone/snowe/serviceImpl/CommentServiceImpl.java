@@ -16,15 +16,15 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override       //댓글 목록
-    public List<CommentDTO> getCommentByBoard(int BOARD_ID) {
+    public List<CommentDTO> getCommentByBoard() {
 
-        System.out.println("댓글목록 : " + commentMapper.getCommentByBoard(BOARD_ID));
-        return this.commentMapper.getCommentByBoard(BOARD_ID);
+        System.out.println("댓글목록 : " + commentMapper.getCommentByBoard());
+        return this.commentMapper.getCommentByBoard();
     }
 
     @Override       //댓글 추가(부모)
-    public void addComment(CommentDTO commentDTO) {
-        this.commentMapper.addComment(commentDTO);
+    public int addComment(CommentDTO commentDTO) {
+        return this.commentMapper.addComment(commentDTO);
     }
 
     @Override       // 댓글 아이디 가져오기

@@ -7,9 +7,9 @@
     <sql id="postColumns">
         COMMENT_ID,
         BOARD_ID,
-        PARENT_COMMENT_ID,
+        PARENT_COMMENT_ID
         CONTENT,
-        LOGIN_ID,
+        WRITER,
         CREATE_DATE,
         RECOMMEND_COUNT,
         DEL_YN
@@ -24,7 +24,7 @@
         FROM
             COMMENTS
         WHERE
-            BOARD_ID = #{boardId}
+            BOARD_ID = #{BOARD_ID}
             AND DEL_YN = 'N'
         ORDER BY COMMENT_ID DESC
     </select>
@@ -36,16 +36,14 @@
         INSERT INTO COMMENTS (
                               COMMENT_ID,
                               BOARD_ID,
-                              PARENT_COMMENT_ID,
                               CONTENT,
-                              LOGIN_ID
+                              WRITER
                             )
                 VALUES (
                         COMMENT_SEQ.NEXTVAL,
-                        #{boardId},
-                        #{parentCommentId},
-                        #{content},
-                        #{loginId}
+                        #{BOARD_ID},
+                        #{CONTENT},
+                        #{WRITER}
                        )
     </insert>
 
@@ -56,22 +54,22 @@
         SELECT
             <include refid="postColumns" />
         FROM
-            COMMENTS
+            BOARD
         WHERE
-            COMMENT_ID = #{commentId}
+            COMMENT_ID = #{COMMENT_ID}
             AND DEL_YN = 'N'
     </select>
 
     <!-- =================== -->
     <!--     댓글 수정하기     -->
     <!-- =================== -->
-    <update id = "editComment" parameterType="com.capstone.snowe.dto.CommentDTO">
+    <update id = "editCommend" parameterType="com.capstone.snowe.dto.CommentDTO">
         UPDATE
             COMMENTS
         SET
-            CONTENT = #{content}
+            CONTENT = #{CONTENT}
         WHERE
-            COMMENT_ID = #{commentId}
+            COMMENT_ID = #{COMMENT_ID}
             AND DEL_YN = 'N'
     </update>
 
@@ -84,7 +82,7 @@
         SET
             DEL_YN = 'Y'
         WHERE
-            COMMENT_ID = #{commentId}
+            COMMENT_ID = #{COMMENT_ID}
             AND DEL_YN = 'N'
     </update>
 

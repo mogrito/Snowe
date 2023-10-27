@@ -18,7 +18,7 @@
     </sql>
 
     <!-- 회원 정보 저장 (회원가입) -->
-    <insert id="save" parameterType="com.capstone.snowe.domain.MemberRequest">
+    <insert id="save" parameterType="com.capstone.snowe.dto.MemberDTO">
         INSERT INTO member (
         <include refid="memberColumns" />
         ) VALUES (
@@ -34,7 +34,7 @@
     </insert>
 
     <!-- 회원 상세정보 조회 -->
-    <select id="findByLoginId" parameterType="string" resultType="com.capstone.snowe.domain.MemberResponse">
+    <select id="findByLoginId" parameterType="string" resultType="com.capstone.snowe.dto.MemberDTO">
         SELECT
         <include refid="memberColumns" />
         FROM
@@ -43,19 +43,6 @@
         login_id = #{value}
     </select>
 
-    <!-- 회원 정보 수정 -->
-    <update id="update" parameterType="com.capstone.snowe.domain.MemberRequest">
-        UPDATE member
-        SET
-        modified_date = SYSDATE
-        , name = #{name}
-        , birthday = TO_DATE(#{birthday},'YYYY-MM-DD')
-        <if test="password != null and password != ''">
-            , password = #{password}
-        </if>
-        WHERE
-        login_id = #{loginId}
-    </update>
 
     <!-- 회원 수 카운팅 (ID 중복 체크) -->
     <select id="countByLoginId" parameterType="string" resultType="int">

@@ -1,6 +1,6 @@
 package com.capstone.snowe.serviceImpl;
 
-import com.capstone.snowe.domain.MemberResponse;
+import com.capstone.snowe.dto.MemberDTO;
 import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.mapper.TeacherMapper;
 import com.capstone.snowe.service.TeacherService;
@@ -18,12 +18,13 @@ public class TeacherServiceImpl implements TeacherService {
     }
 
     @Override
-    public void perCodeUpdate(MemberResponse memberResponse) {
-        this.teacherMapper.perCodeUpdate(memberResponse);
+    public void perCodeUpdate(MemberDTO memberDTO) {
+        this.teacherMapper.perCodeUpdate(memberDTO);
     }
 
     @Override
     public void updateTeacherStat(TeacherDTO teacherDTO) {
+        System.out.println("수정할 데이터 = " + teacherDTO);
         this.teacherMapper.updateTeacherStat(teacherDTO);
     }
 }

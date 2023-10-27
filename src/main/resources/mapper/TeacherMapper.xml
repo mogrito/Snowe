@@ -18,7 +18,7 @@
     <!-- =============================================== -->
     <!-- 강사 임명 후 MEMBER테이블 회원코드를 강사(1)로 업데이트-->
     <!-- =============================================== -->
-    <update id="perCodeUpdate" parameterType="com.capstone.snowe.domain.MemberResponse">
+    <update id="perCodeUpdate" parameterType="com.capstone.snowe.dto.MemberDTO">
         UPDATE
             MEMBER
         SET

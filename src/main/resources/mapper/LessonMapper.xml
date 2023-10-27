@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capstone.snowe.mapper.LessonMapper">
+
+    <!-- ============= -->
+    <!-- 강사가 강습 등록 -->
+    <!-- ============= -->
+    <insert id = "lessonInsert" parameterType="com.capstone.snowe.dto.LessonDTO">
+        INSERT INTO LESSON(
+                           LOGIN_ID,
+                           LESSON_DATE,
+                           LESSON_ID,
+                           LESSON_DIV,
+                           MAX_RESERVE_COUNT,
+                           TITLE,
+                           LESSON_CLASS,
+                           LESSON_LEVEL)
+        VALUES (
+                #{loginId}, -- 세션이 갖고있는 강사 ID
+                TO_CHAR(#{lessonDate}, 'YYYY-MM-DD'), -- 강습날짜 선택 후
+                'L' || LPAD(LESSON_SEQ.NEXTVAL, 6, 0), --시퀀스 처리
+                #{lessonDiv}, -- 오전, 오후, 야간 중 입력받아서
+                #{maxReserveCount}, -- 최대인원 설정하기
+                #{title}, -- 강습명
+                #{lessonClass}, -- 스키 or 보드
+                #{lessonLevel} -- 난이도
+               )
+    </insert>
+
+    <!-- =================  -->
+    <!-- 강습에 대한 정보 수정 -->
+    <!-- ================== -->
+    <update id = "lessonUpdate" parameterType="com.capstone.snowe.dto.LessonDTO">
+        UPDATE
+            LESSON
+        SET
+            TITLE = #{title},
+            LESSON_CLASS = #{lessonClass},
+            LESSON_LEVEL = #{lessonLevel},
+            LESSON_DATE = TO_CHAR(#{lessonDate}, 'YYYY-MM-DD'),
+            LESSON_DIV = #{lessonDiv},
+            MAX_RESERVE_COUNT = #{maxReserveCount}
+        WHERE
+            LESSON_ID = #{lessonId}
+    </update>
+
+    <!-- ====================-->
+    <!-- 업로드 한 강습 취소하기 -->
+    <!-- ====================-->
+    <update id = "lessonDel" parameterType="String">
+        UPDATE
+            LESSON
+        SET
+            DEL_YN = 'Y',
+            DEL_DATE = SYSDATE
+        WHERE
+            LESSON_ID = #{lessonId}
+          AND DEL_YN = 'N'
+    </update>
+
+    <!-- 확인용, 테스트옹 전체 강습목록 -->
+    <select id="lessonList" resultType="com.capstone.snowe.dto.LessonJoinDTO">
+        SELECT
+            L.LESSON_ID,
+            L.LOGIN_ID,
+            T.NAME,
+            L.TITLE,
+            L.LESSON_CLASS,
+            L.LESSON_LEVEL,
+            L.LESSON_DATE,
+            S.RESORT_NAME,
+            L.RESERVE_COUNT,
+            L.MAX_RESERVE_COUNT,
+            D.DIV,
+            S.STAT
+        FROM
+            LESSON L
+                INNER JOIN TEACHER T
+                           ON L.LOGIN_ID = T.ID
+                INNER JOIN SKI_RESORT S
+                           ON T.RESORT_ID = S.RESORT_ID
+                INNER JOIN (SELECT CODE, CODE_VALUE AS DIV FROM COMMON_CODE WHERE NO = '004') D
+                           ON L.LESSON_DIV = D.CODE
+                INNER JOIN (SELECT CODE, CODE_VALUE AS STAT FROM COMMON_CODE WHERE NO = '003') S
+                           ON L.LESSON_STAT = S.CODE
+        WHERE
+            L.LESSON_STAT = 'LS01'      -- 강습상태가 신청가능이면
+    </select>
+
+    <!-- ================================== -->
+    <!-- 해당 날짜에 존재하는 강사의 강의 보여주기 -->
+    <!-- ================================== -->
+    <select id = "ableLessonListByDay" parameterType="String" resultType="com.capstone.snowe.dto.LessonJoinDTO">
+        -- 강습 불가능할 때 화면에 띄워줄게 아니라면 신청 가능할 때 강습가능이라는 멘트를 빼는게 맞지않나???
+        SELECT
+            L.LESSON_ID,
+            L.LOGIN_ID,
+            T.NAME,
+            L.TITLE,
+            L.LESSON_CLASS,
+            L.LESSON_LEVEL,
+            L.LESSON_DATE,
+            S.RESORT_NAME,
+            L.RESERVE_COUNT,
+            L.MAX_RESERVE_COUNT,
+            D.DIV,
+            S.STAT
+        FROM
+            LESSON L
+                INNER JOIN TEACHER T
+                           ON L.LOGIN_ID = T.ID
+                INNER JOIN SKI_RESORT S
+                           ON T.RESORT_ID = S.RESORT_ID
+                INNER JOIN (SELECT CODE, CODE_VALUE AS DIV FROM COMMON_CODE WHERE NO = '004') D
+                           ON L.LESSON_DIV = D.CODE
+                INNER JOIN (SELECT CODE, CODE_VALUE AS STAT FROM COMMON_CODE WHERE NO = '003') S
+                           ON L.LESSON_STAT = S.CODE
+        WHERE
+            L.LESSON_STAT = 'LS01'      -- 강습상태가 신청가능이면
+          AND TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') = #{lessonDate}
+    </select>
+    <!-- AND TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') = #{lessonDate}      선택한 날짜 정보 가져오기 -->
+<!--     TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD')
+     TO_DATE(#{lessonDate, jdbcType=DATE}, 'YYYY-MM-DD'), -->
+
+    <!-- =========================================================== -->
+    <!-- RESERVATION에서 강습 예약 시 LESSON테이블의 예약 인원 업데이트 하기 -->
+    <!-- =========================================================== -->
+    <update id = "updateReserveCount">
+        UPDATE
+            LESSON
+        SET
+            RESERVE_COUNT = (SELECT COUNT(*) AS RESERVE_COUNT
+                             FROM RESERVATION
+                             WHERE LESSON_ID = #{lessonId}
+                             GROUP BY RESERVE_ID)
+        WHERE LESSON_ID = #{lessonId}
+    </update>
+
+    <!-- ============================================================ -->
+    <!-- 강습인원이 최대인원까지 찼을 경우 LESSON_STAT를 LS02(신청불가)로 변경 -->
+    <!-- ============================================================ -->
+    <update id = "updateLessonStat">
+        UPDATE
+            LESSON
+        SET
+            LESSON_STAT = 'LS02'
+        WHERE
+            RESERVE_COUNT = MAX_RESERVE_COUNT
+          AND LESSON_ID = #{lessonId}
+    </update>
+
+</mapper>

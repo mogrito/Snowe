@@ -10,18 +10,19 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LessonDTO {
-    private String LessonId;
+
     private String loginId;
-    private String title;
-    private String lessonClass;
-    private String lessonLevel;
-    private Date lessonRegDate;
     private Date lessonDate;
     private String lessonStat;
+    private String lessonId;
     private String lessonDiv;
     private int reserveCount;
     private int maxReserveCount;
+    private String title;
+    private String lessonClass;
+    private String lessonLevel;
     private Date delDate;
     private String delYn;
+    private Date lessonRegDate;
 
 }

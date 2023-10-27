@@ -1,8 +1,5 @@
 package com.capstone.snowe.mapper;
 
-import com.capstone.snowe.dto.BoardDTO;
-import com.capstone.snowe.dto.CommentDTO;
-
 import java.util.List;
 
 public interface CommentMapper {

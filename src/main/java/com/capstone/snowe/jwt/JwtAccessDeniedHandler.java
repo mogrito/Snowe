@@ -1,6 +1,5 @@
 package com.capstone.snowe.jwt;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;

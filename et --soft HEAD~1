@@ -1,0 +1,259 @@
+[33mcommit 8010fdf2ad1807d7243ba2bbd9fe914273ff6074[m[33m ([m[1;36mHEAD -> [m[1;32mHong[m[33m)[m
+Author: jwb17 <jwb1796@gmail.com>
+Date:   Wed Oct 25 01:08:34 2023 +0900
+
+    10/24
+
+[33mcommit 9bbc56bc77481bfe0408e278db164520c8f30348[m[33m ([m[1;31morigin/Hong[m[33m)[m
+Author: hong <juseong0625@gmail.com>
+Date:   Fri Oct 20 14:52:21 2023 +0900
+
+    10월 20일 수정
+
+[33mcommit e988164020a4a8e50b06f27c2b58e57e39cd7c0d[m
+Author: hong <juseong0625@gmail.com>
+Date:   Sat Oct 14 20:31:43 2023 +0900
+
+    10월 14일 자잘한 수정
+
+[33mcommit e88add9b39dcb8246e06712e4141c14cfd2f66f0[m
+Author: hong <juseong0625@gmail.com>
+Date:   Wed Oct 11 20:15:53 2023 +0900
+
+    10월 11일
+
+[33mcommit 58c3a87e7d7135e5e0da1a6b70b10b8ff1aacabd[m
+Author: hong <juseong0625@gmail.com>
+Date:   Sat Oct 7 13:55:33 2023 +0900
+
+    10월 7일(loginId수정, 첨부파일 추가예정)
+
+[33mcommit 8526f6163f60e9707b8cc585f06a5f3554a98737[m
+Author: hong <juseong0625@gmail.com>
+Date:   Sat Oct 7 11:09:11 2023 +0900
+
+    10월 7일(DTO문제 해결 완)
+
+[33mcommit d28210038a7cfd3f05630ee4775cb4faff817053[m
+Author: hong <juseong0625@gmail.com>
+Date:   Sat Oct 7 10:47:13 2023 +0900
+
+    10월 7일(DTO문제 해결 완)
+
+[33mcommit 116ac77a1016a724c04004aa8f1d3da527adb12f[m
+Author: hong <juseong0625@gmail.com>
+Date:   Thu Oct 5 17:37:15 2023 +0900
+
+    10월 5일(DTO문제있음)
+
+[33mcommit 066faf16f1b1a7948ec9b6374e2a6bd2160fd81e[m
+Author: hong <juseong0625@gmail.com>
+Date:   Wed Oct 4 21:54:15 2023 +0900
+
+    10월 3일 댓글 일부
+
+[33mcommit ca59ae7b8427ddd663a3895e0026380b14cf9533[m
+Merge: d816568 1a40814
+Author: admin <jwb1796@gmail.com>
+Date:   Wed Oct 4 14:56:55 2023 +0900
+
+    10/04 머지
+
+[33mcommit 1a4081485a9af461da969b57e6b82be24a508794[m
+Author: hong <juseong0625@gmail.com>
+Date:   Tue Oct 3 22:30:22 2023 +0900
+
+    10월 3일 댓글
+
+[33mcommit d81656802d59026f05f2625228304cd39a4a1853[m
+Author: jwb17 <jwb1796@gmail.com>
+Date:   Tue Oct 3 19:49:50 2023 +0900
+
+    10/3
+    회원가입,로그인,세션처리
+
+[33mcommit 320835b373d4787d9b69b4bb1002e40fb1a3d003[m
+Author: jwb17 <jwb1796@gmail.com>
+Date:   Tue Oct 3 19:48:27 2023 +0900
+
+    09/17
+
+[33mcommit d95f460ae85aead090e5e0276fd55d695ed6562d[m
+Author: hong <juseong0625@gmail.com>
+Date:   Mon Oct 2 21:57:35 2023 +0900
+
+    10월 2일 restapi로 변환
+
+[33mcommit 01b40546962b35b21698fef405de1701f64bb3df[m
+Author: hong <juseong0625@gmail.com>
+Date:   Wed Sep 27 20:12:37 2023 +0900
+
+    게시판 수정까지
+
+[33mcommit 4646e7d86b6b8605028067e30d794024a5c5007b[m
+Author: hong <juseong0625@gmail.com>
+Date:   Wed Sep 27 15:37:00 2023 +0900
+
+    게시판 수정까지
+
+[33mcommit 70c8629065272917ce1805c567d9d065d89bf1bd[m
+Merge: 070bb92 bc3afbf
+Author: mogrito <108671696+mogrito@users.noreply.github.com>
+Date:   Tue Sep 26 18:16:31 2023 +0900
+
+    Merge pull request #2 from mogrito/jang
+    
+    delete controller method
+
+[33mcommit bc3afbfe0b5ebd9ec23a59b11d6a10a6916cb521[m
+Author: jwb17 <jwb1796@gmail.com>
+Date:   Tue Sep 26 18:14:56 2023 +0900
+
+    delete controller method
+
+[33mcommit 336d221dd18b3baa0d6810a3a6405b997c40ec00[m
+Author: hong <juseong0625@gmail.com>
+Date:   Mon Sep 25 21:28:44 2023 +0900
+
+    11
+
+[33mcommit e8d28a614587cf8e7ff43bb5246eae419a9616c1[m
+Author: hong <juseong0625@gmail.com>
+Date:   Mon Sep 25 13:00:05 2023 +0900
+
+    11
+
+[33mcommit 070bb921d8d8b013a64205c4afec8302d568a3ef[m
+Author: admin <jwb1796@gmail.com>
+Date:   Fri Sep 22 16:16:58 2023 +0900
+
+    9/20
+
+[33mcommit c2dacdf2085501b3095a29e01d797d7900f5911c[m
+Author: admin <jwb1796@gmail.com>
+Date:   Thu Sep 21 13:15:51 2023 +0900
+
+    9/20
+
+[33mcommit 719832fa216be40c5ba14837b2a0343da3c2de7f[m
+Author: admin <jwb1796@gmail.com>
+Date:   Thu Sep 21 13:15:43 2023 +0900
+
+    9/20
+
+[33mcommit 1e46b03e8c9befec17c08255813592b9d1861096[m
+Author: hong <juseong0625@gmail.com>
+Date:   Thu Sep 21 12:20:33 2023 +0900
+
+    게시판 컨트롤러
+
+[33mcommit e19ce70c3ef73978c38cfbbdfb3509be660c2c15[m
+Author: hong <juseong0625@gmail.com>
+Date:   Wed Sep 20 19:27:55 2023 +0900
+
+    게시판 컨트롤러
+
+[33mcommit 05c42ca081ed7b3da4c2c629f4631e457de4ffef[m
+Merge: b199fea df19aad
+Author: hong <juseong0625@gmail.com>
+Date:   Wed Sep 20 18:00:55 2023 +0900
+
+    Merge branch 'Jang' into Hong
+    
+    # Conflicts:
+    #       build.gradle
+    #       src/main/resources/application.properties
+
+[33mcommit df19aadf2d24eff477ac11a4178d554dc2ebc8f8[m
+Author: admin <jwb1796@gmail.com>
+Date:   Wed Sep 20 17:51:53 2023 +0900
+
+    9/20
+
+[33mcommit 4c0efd6623e609bb0d533d526b9e009cc78f5cf8[m
+Author: admin <jwb1796@gmail.com>
+Date:   Wed Sep 20 17:51:48 2023 +0900
+
+    9/20
+
+[33mcommit b199feafb433ffd27f424b988e0990c4c817fe47[m
+Author: hong <juseong0625@gmail.com>
+Date:   Wed Sep 20 17:04:43 2023 +0900
+
+    게시판 컨트롤러
+
+[33mcommit d1e2909d132803b31e12532c08f0f249cd1489b2[m
+Author: hong <juseong0625@gmail.com>
+Date:   Wed Sep 20 16:57:48 2023 +0900
+
+    게시판 컨트롤러
+
+[33mcommit 4b74117dbbccce1868d0d49d5297974525a44bcb[m
+Merge: 67f1a71 ddc026b
+Author: hong <juseong0625@gmail.com>
+Date:   Wed Sep 20 16:52:59 2023 +0900
+
+    Merge remote-tracking branch 'origin/Hong' into Hong
+
+[33mcommit 67f1a71c70e428d1284a2c117ecb9dc5b3826f3a[m
+Author: hong <juseong0625@gmail.com>
+Date:   Wed Sep 20 16:37:31 2023 +0900
+
+    게시판 컨트롤러
+
+[33mcommit 82c2e75857d2739f55e122f80dc9a5a4ef73c8fc[m
+Author: admin <jwb1796@gmail.com>
+Date:   Wed Sep 20 15:01:59 2023 +0900
+
+    9/20
+
+[33mcommit f874b1d7188babb0bb44e2d6cd3ae9b225f067d7[m
+Author: admin <jwb1796@gmail.com>
+Date:   Wed Sep 20 14:48:06 2023 +0900
+
+    9/20
+
+[33mcommit ddc026b77d402bafb06871b0f233c1e8cb4d0004[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: admin <jwb1796@gmail.com>
+Date:   Wed Sep 20 15:01:59 2023 +0900
+
+    9/20
+
+[33mcommit 62109103529de6d97ff85d3a9c3173360c94c874[m
+Author: admin <jwb1796@gmail.com>
+Date:   Wed Sep 20 14:48:06 2023 +0900
+
+    9/20
+
+[33mcommit 4771154ba0ff84397353c48fec44a6ec653c99b3[m
+Author: juseong <134285301+Vermi-lion@users.noreply.github.com>
+Date:   Mon Sep 18 16:23:53 2023 +0900
+
+    Add files via upload
+
+[33mcommit 4f9bf6f517a772b58ab0a93f545f0f89ae3742b7[m
+Merge: 8d582ad b3bac41
+Author: mogrito <108671696+mogrito@users.noreply.github.com>
+Date:   Sun Sep 17 21:21:01 2023 +0900
+
+    Merge pull request #1 from mogrito/Jang
+    
+    Test
+
+[33mcommit b3bac41eec90da5afba5693fc998cbd925a23c26[m
+Author: jwb17 <jwb1796@gmail.com>
+Date:   Sun Sep 17 21:20:28 2023 +0900
+
+    09/17
+
+[33mcommit 8d582ad4a50cd7858a38a54af21838e342506648[m
+Author: mogrito <108671696+mogrito@users.noreply.github.com>
+Date:   Sun Sep 17 21:17:20 2023 +0900
+
+    Create BackEnd
+
+[33mcommit bab0a066f3d876e0c555fc8d29bc1f5f3c6eb75b[m
+Author: jwb17 <jwb1796@gmail.com>
+Date:   Sun Sep 17 20:49:02 2023 +0900
+
+    09/17

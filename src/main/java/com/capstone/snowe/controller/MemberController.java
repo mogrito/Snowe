@@ -25,8 +25,6 @@ public class MemberController {
         // 1. 회원 정보 조회
         String loginId = request.getParameter("loginId");
         String password = request.getParameter("password");
-        System.out.println(loginId);
-        System.out.println(password);
         MemberResponse member = memberService.login(loginId, password);
 
 

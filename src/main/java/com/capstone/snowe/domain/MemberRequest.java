@@ -20,9 +20,10 @@ public class MemberRequest {
 
     public void encodingPassword(PasswordEncoder passwordEncoder) {
         if (StringUtils.isEmpty(password)) {
+
             return;
         }
-        password = passwordEncoder.encode(password);
+        System.out.println("encode="+password);
     }
 
 }

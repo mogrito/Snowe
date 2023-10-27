@@ -24,6 +24,7 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public void updateTeacherStat(TeacherDTO teacherDTO) {
+        System.out.println("수정할 데이터 = " + teacherDTO);
         this.teacherMapper.updateTeacherStat(teacherDTO);
     }
 }

@@ -1,9 +1,7 @@
 package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.BoardDTO;
-import com.capstone.snowe.service.BoardFileService;
 import com.capstone.snowe.service.BoardService;
-import com.capstone.snowe.service.CommentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +16,9 @@ import java.util.List;
 @CrossOrigin
 @RestController
 public class BoardController {
+
     @Autowired
     private BoardService boardService;
-    private CommentService commentService;
-    private BoardFileService boardFileService;
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 

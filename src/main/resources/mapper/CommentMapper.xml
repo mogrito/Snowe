@@ -9,7 +9,7 @@
         BOARD_ID,
         PARENT_COMMENT_ID
         CONTENT,
-        WRITER,
+        LOGIN_ID,
         CREATE_DATE,
         RECOMMEND_COUNT,
         DEL_YN
@@ -24,7 +24,7 @@
         FROM
             COMMENTS
         WHERE
-            BOARD_ID = #{BOARD_ID}
+            BOARD_ID = #{boardId}
             AND DEL_YN = 'N'
         ORDER BY COMMENT_ID DESC
     </select>
@@ -36,14 +36,16 @@
         INSERT INTO COMMENTS (
                               COMMENT_ID,
                               BOARD_ID,
+                              PARENT_COMMENT_ID,
                               CONTENT,
-                              WRITER
+                              LOGIN_ID
                             )
                 VALUES (
                         COMMENT_SEQ.NEXTVAL,
-                        #{BOARD_ID},
-                        #{CONTENT},
-                        #{WRITER}
+                        #{boardId},
+                        #{parentCommentId},
+                        #{content},
+                        #{loginId}
                        )
     </insert>
 
@@ -54,22 +56,22 @@
         SELECT
             <include refid="postColumns" />
         FROM
-            BOARD
+            COMMENTS
         WHERE
-            COMMENT_ID = #{COMMENT_ID}
+            COMMENT_ID = #{commentId}
             AND DEL_YN = 'N'
     </select>
 
     <!-- =================== -->
     <!--     댓글 수정하기     -->
     <!-- =================== -->
-    <update id = "editCommend" parameterType="com.capstone.snowe.dto.CommentDTO">
+    <update id = "editComment" parameterType="com.capstone.snowe.dto.CommentDTO">
         UPDATE
             COMMENTS
         SET
-            CONTENT = #{CONTENT}
+            CONTENT = #{content}
         WHERE
-            COMMENT_ID = #{COMMENT_ID}
+            COMMENT_ID = #{commentId}
             AND DEL_YN = 'N'
     </update>
 
@@ -82,7 +84,7 @@
         SET
             DEL_YN = 'Y'
         WHERE
-            COMMENT_ID = #{COMMENT_ID}
+            COMMENT_ID = #{commentId}
             AND DEL_YN = 'N'
     </update>
 

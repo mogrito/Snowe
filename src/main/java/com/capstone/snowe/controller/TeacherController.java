@@ -20,7 +20,7 @@ public class TeacherController {
     @PostMapping("/teachers")
     public ResponseEntity<String> addTeachers(@RequestBody TeacherDTO teacherDTO) throws Exception {
 
-        this.teacherService.addTeacher(teacherDTO);
+        this.teacherService.addTeacher(teacherDTO.getId());
         //this.teacherService.perCodeUpdate(memberResponse);
 
         return ResponseEntity.ok("강사 설정 완료");

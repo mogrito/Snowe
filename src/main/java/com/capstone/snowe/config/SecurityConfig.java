@@ -5,7 +5,6 @@ import com.capstone.snowe.jwt.JwtAuthenticationEntryPoint;
 import com.capstone.snowe.jwt.JwtSecurityConfig;
 import com.capstone.snowe.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -33,7 +32,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                // token을 사용하는 방식이기 때문에 csrf를 disable합니다.
+                // srf를 disable
                 .csrf().disable()
 
                 .exceptionHandling()
@@ -48,7 +47,7 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/api/member/**").permitAll()
+                        .requestMatchers("/member/**").permitAll()
                         .anyRequest().authenticated()
                 )// 그 외 인증 없이 접근X
 

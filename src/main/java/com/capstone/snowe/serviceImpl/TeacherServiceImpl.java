@@ -1,6 +1,5 @@
 package com.capstone.snowe.serviceImpl;
 
-import com.capstone.snowe.dto.MemberDTO;
 import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.mapper.TeacherMapper;
 import com.capstone.snowe.service.TeacherService;
@@ -13,13 +12,13 @@ public class TeacherServiceImpl implements TeacherService {
     private TeacherMapper teacherMapper;
 
     @Override
-    public void addTeacher(TeacherDTO teacherDTO) {
-        this.teacherMapper.addTeacher(teacherDTO);
+    public void addTeacher(String id) {
+        this.teacherMapper.addTeacher(id);
     }
 
     @Override
-    public void perCodeUpdate(MemberDTO memberDTO) {
-        this.teacherMapper.perCodeUpdate(memberDTO);
+    public void perCodeUpdate(String id) {
+        this.teacherMapper.perCodeUpdate(id);
     }
 
     @Override

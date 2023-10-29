@@ -27,22 +27,7 @@ public class MemberController {
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    // 로그인 API
-//    @PostMapping("/login")
-//    @ResponseBody
-//    public MemberDTO login(HttpServletRequest request) {
-//
-//        // 1. 회원 정보 조회
-//        String loginId = request.getParameter("loginId");
-//        String password = request.getParameter("password");
-//        MemberDTO member = memberService.login(loginId, password);
-//
-//
-//        if (member == null) {
-//            throw new NullPointerException("로그인 실패: 회원 정보를 찾을 수 없습니다.");
-//        };
-//        return member;
-//    }
+
     @RequestMapping("/test")
     public String test(){
         System.out.println("test");

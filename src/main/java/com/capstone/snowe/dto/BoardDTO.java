@@ -1,7 +1,10 @@
 package com.capstone.snowe.dto;
 
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -12,7 +15,7 @@ public class BoardDTO {
 
     private int boardId;    //게시글 id
 
-    private String writer;          //작성자 id
+    private String loginId;          //작성자 id
 
 
     private String title; //게시글 제목
@@ -25,14 +28,15 @@ public class BoardDTO {
 
 
     private int recommendCount;    //추천수
-    
+
 
     private int viewCount;          //조회수
-    
 
     private String delYn;           //삭제유무
 
     private int commentCount;     //댓글수
+    
+    private List<BoardFileDTO> boardFile;   // DB에 전달하기 위해 생성
 
 
 }

@@ -21,7 +21,7 @@ public interface ReservationMapper {
     void updateReserveCountAndLessonStat(String lessonId);
 
     /*
-    *
+    * 예약 취소
     * */
 
 }

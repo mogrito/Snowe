@@ -1,9 +1,7 @@
 package com.capstone.snowe.controller;
 
-import com.capstone.snowe.dto.BoardDTO;
 import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.service.BoardFileService;
-import jakarta.validation.Valid;
 import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,14 +10,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -156,15 +151,19 @@ public class BoardFileController {
             logger.info("파일이름 : " + multipartFile.getOriginalFilename());
             logger.info("파일타입 : " + multipartFile.getContentType());
             logger.info("파일크기 : " + multipartFile.getSize());
-            logger.info("============================================");
+            logger.info("====================저장될 값======================");
+            //logger.info("파일에 해당하는 게시글 번호 : " + boardDTO.getBoardId());
+            logger.info("저장될 SName이름 : " + boardFileDTO.getFileSName());
+            logger.info("저장될 OName이름 : " + boardFileDTO.getFileOName());
+            logger.info("uuid : " + boardFileDTO.getUuid());
+            logger.info("저장될 경로 : " + boardFileDTO.getFilePath());
+            logger.info("파일 사이즈 : " + boardFileDTO.getFileSize());
+            logger.info("파일 타입 : " + boardFileDTO.getFileType());
         }
 
         ResponseEntity<List<BoardFileDTO>> result = new ResponseEntity<List<BoardFileDTO>>(list, HttpStatus.OK);
         return result;
     }
-
-
-
 }
 /* 썸네일 생성 (ImageIO) : 다른방법 1 */
                 /*File thumnailFile = new File(filePath, "s_" + fileOName);

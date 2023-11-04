@@ -1,7 +1,6 @@
 package com.capstone.snowe.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,7 +15,7 @@ public class BoardFileDTO {
     private int boardId;
     private String fileOName;
     private String filePath;
-    private Long fileSize;
+    private long fileSize;
     private String fileType;
     private Date uploadDate;
     private String fileSName;

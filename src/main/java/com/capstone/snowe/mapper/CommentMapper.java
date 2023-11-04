@@ -1,6 +1,5 @@
 package com.capstone.snowe.mapper;
 
-import com.capstone.snowe.dto.BoardDTO;
 import com.capstone.snowe.dto.CommentDTO;
 
 import java.util.List;
@@ -16,4 +15,6 @@ public interface CommentMapper {
     int editComment(CommentDTO commentDTO);        // 댓글 수정하기
 
     int delComment(int COMMENT_ID);                  // 댓글 삭제
+    
+    void getCommentCountByBoardId(int BOARD_ID);        //보드아이디로 댓글개수 가져오기
 }

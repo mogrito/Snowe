@@ -34,7 +34,7 @@
     <!-- 게시판 파일 업로드-->
     <!-- insert시 추가   -->
     <!-- ============== -->
-    <insert id="insertBoardFile">
+    <insert id="insertBoardFile" parameterType="com.capstone.snowe.dto.BoardFileDTO">
         INSERT INTO
             BOARD_FILE (
                 <include refid="fileColumns" />
@@ -46,7 +46,7 @@
                     #{fileOName},
                     #{filePath},
                     #{fileSize},
-                    #{fileType}
+                    #{fileType},
                     sysdate,
                     #{fileSName},
                     #{uuid}

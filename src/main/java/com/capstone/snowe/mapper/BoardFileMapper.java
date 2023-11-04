@@ -1,10 +1,7 @@
 package com.capstone.snowe.mapper;
 
-import com.capstone.snowe.dto.BoardDTO;
 import com.capstone.snowe.dto.BoardFileDTO;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 @Mapper
 public interface BoardFileMapper {

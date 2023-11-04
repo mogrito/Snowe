@@ -15,4 +15,6 @@ public interface CommentService {
     void editComment(CommentDTO commentDTO);        // 댓글 수정하기
 
     int delComment(int COMMENT_ID);                  // 댓글 삭제
+
+    void getCommentCountByBoardId(int BOARD_ID);    //보드아이디로 댓글개수 가져오기
 }

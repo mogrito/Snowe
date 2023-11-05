@@ -20,8 +20,5 @@ public interface ReservationMapper {
      * */
     void updateReserveCountAndLessonStat(String lessonId);
 
-    /*
-    *
-    * */
 
 }

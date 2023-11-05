@@ -88,5 +88,17 @@
             AND DEL_YN = 'N'
     </update>
 
+    <!-- ================= -->
+    <!-- 해당하는 댓글의 개수 -->
+    <!-- ================= -->
+    <select id = "getCommentCountByBoardId">
+        SELECT
+            COUNT(boardId)
+        FROM
+            COMMENTS
+        WHERE
+            BOARD_ID = #{boardId}
+    </select>
+
 
 </mapper>

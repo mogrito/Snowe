@@ -1,15 +1,7 @@
 package com.capstone.snowe.config;
 
-import com.capstone.snowe.jwt.JwtAccessDeniedHandler;
-import com.capstone.snowe.jwt.JwtAuthenticationEntryPoint;
-import com.capstone.snowe.jwt.JwtSecurityConfig;
-import com.capstone.snowe.jwt.TokenProvider;
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -18,8 +10,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
-@EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final TokenProvider tokenProvider;
@@ -62,6 +52,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/member/**").permitAll()
                         .requestMatchers("/board/**").permitAll()
+                        .requestMatchers("/comment/**").permitAll()
                         .anyRequest().authenticated()
                 )// 그 외 인증 없이 접근X
 

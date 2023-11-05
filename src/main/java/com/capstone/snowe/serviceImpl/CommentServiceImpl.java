@@ -41,4 +41,11 @@ public class CommentServiceImpl implements CommentService {
     public int delComment(int COMMENT_ID) {
         return this.commentMapper.delComment(COMMENT_ID);
     }
+
+    @Override       //보드아이디로 댓글개수 가져오기
+    public void getCommentCountByBoardId(int BOARD_ID) {
+        this.commentMapper.getCommentCountByBoardId(BOARD_ID);
+    }
+
+
 }

@@ -1,19 +1,22 @@
 package com.capstone.snowe.serviceImpl;
 
 import com.capstone.snowe.dto.BoardDTO;
+import com.capstone.snowe.dto.BoardFileDTO;
+import com.capstone.snowe.mapper.BoardFileMapper;
 import com.capstone.snowe.mapper.BoardMapper;
 import com.capstone.snowe.service.BoardService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
-    @Autowired
-    private BoardMapper boardMapper;
+    private final BoardMapper boardMapper;
+    private final BoardFileMapper boardFileMapper;
 
 
     @Override       //게시글 목록 조회
@@ -27,9 +30,18 @@ public class BoardServiceImpl implements BoardService {
         return this.boardMapper.oldGetBoardList();
     }
 
-    @Override       //게시글 작성
-    public void addBoard(BoardDTO boardDTO) {
+    @Override       //게시글 작성                /* 첨부파일 기능 추가 */
+    public int addBoard(BoardDTO boardDTO) {
         this.boardMapper.addBoard(boardDTO);
+
+        System.out.println("BoardServiceImpl의 addBoard입니다 : " + boardDTO);
+
+        return boardDTO.getBoardId();
+    }
+    @Override
+    public void insertBoardFile(BoardFileDTO boardFileDTO) {
+        this.boardFileMapper.insertBoardFile(boardFileDTO);
+        System.out.println("BoardServiceImpl의 insertBoardFile입니다 : " + boardFileDTO);
     }
 
     @Override       //게시글 상세조회
@@ -74,6 +86,10 @@ public class BoardServiceImpl implements BoardService {
 
 
 
+
+
+
+
     /*@Override       //게시글 전체 개수(페이징)
     public int boardCount() {
         return this.boardMapper.boardCount();
@@ -82,6 +98,8 @@ public class BoardServiceImpl implements BoardService {
     @Override
     public List<BoardDTO> boardPage(int endRow, int startRow) {
         return this.boardMapper.boardPage(endRow, startRow);}*/
+
+
 
 
 

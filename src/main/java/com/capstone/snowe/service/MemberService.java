@@ -4,14 +4,14 @@ import com.capstone.snowe.dto.MemberDTO;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import javax.security.auth.login.LoginException;
+
 
 public interface MemberService {
 
     UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
 
-//    MemberDTO checkLogin(String username,String password) throws LoginException;
-
-    UserDetails me(UserDetails userDetails);
+    MemberDTO checkLogin(String username,String password) throws LoginException;
 
     String saveMember(MemberDTO params);
 

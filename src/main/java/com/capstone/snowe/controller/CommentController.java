@@ -1,6 +1,7 @@
 package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.CommentDTO;
+import com.capstone.snowe.service.BoardService;
 import com.capstone.snowe.service.CommentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +15,13 @@ import java.util.List;
 /* 리액트, 부트 연동 */
 @CrossOrigin
 @RestController
+//@RequestMapping("/comment")
 public class CommentController {
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private BoardService boardService;
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
     /*
@@ -41,6 +45,7 @@ public class CommentController {
         try {
             commentDTO.setBoardId(boardId);
             this.commentService.addComment(commentDTO);
+            this.boardService.increaseCommentCount(boardId);
             return ResponseEntity.ok("댓글작성완료");
         }
         catch (Exception e) {
@@ -49,10 +54,6 @@ public class CommentController {
         /*commentDTO.setBOARD_ID(BOARD_ID);
         this.commentService.addComment(commentDTO);
         return "redirect:write";*/
-    }
-    @GetMapping("/comment/write")
-    public String add() {
-        return "board/comment_form";
     }
 
     /*
@@ -93,10 +94,20 @@ public class CommentController {
     * 댓글 삭제
     *
     * */
-    @PutMapping("/comment/del/{commentId}")
-    public ResponseEntity<String> delComment(@PathVariable int commentId) throws Exception {
+    @PutMapping("/comment/del/{commentId}/{boardId}")
+    public ResponseEntity<String> delComment(@PathVariable int commentId, @PathVariable int boardId) throws Exception {
         commentService.delComment(commentId);
+        boardService.increaseCommentCount(boardId);
         return ResponseEntity.ok("댓글 삭제 성공");
+    }
+
+    /*
+    * 보드아이디로 댓글개수 가져오기
+    * */
+    @GetMapping("/comment/boardId/{boardId}")
+    public ResponseEntity<String> getCommentCountByBoardId(@PathVariable int boardId) throws Exception{
+        commentService.getCommentCountByBoardId(boardId);
+        return ResponseEntity.ok("안녕");
     }
 
 

@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -54,6 +56,12 @@ public class MemberController {
         // tokenDto를 이용해 response body에도 넣어서 리턴
         return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
     }
+
+    @GetMapping("/me")
+    public UserDetails me(@AuthenticationPrincipal UserDetails userDetails) {
+        return memberService.me(userDetails);
+    }
+
 
     // 로그아웃
     @PostMapping("/logout")

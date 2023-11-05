@@ -15,6 +15,8 @@ public interface BoardService {
     List<BoardDTO> oldGetBoardList();      //게시글 목록 조회(오래된순)
 
     int addBoard(BoardDTO boardDTO,@AuthenticationPrincipal UserDetails user);    //게시글 작성
+
+    void insertBoardFile(BoardFileDTO boardFileDTO);        //파일 첨부
     
     BoardDTO getBoardId(int BOARD_ID);       //게시글 상세조회
     
@@ -35,5 +37,5 @@ public interface BoardService {
     /*int boardCount();        // 게시글 전체 개수(페이징)
     List<BoardDTO> boardPage(int endRow, int startRow); //페이징기능*/
 
-    void insertBoardFile(BoardFileDTO boardFileDTO);
+
 }

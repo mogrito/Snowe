@@ -33,5 +33,4 @@ public interface BoardMapper {
     /*int boardCount();       // 게시글 전체 개수(페이징)
     List<BoardDTO> boardPage(int endRow, int startRow);     // 페이징기능*/
 
-    //void insertBoardFile(List<BoardFileDTO> list);      // 게시글 저장
 }

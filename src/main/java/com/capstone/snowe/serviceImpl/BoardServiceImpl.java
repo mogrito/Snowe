@@ -44,6 +44,7 @@ public class BoardServiceImpl implements BoardService {
         System.out.println("BoardServiceImpl의 addBoard입니다 : " + boardDTO);
         return boardDTO.getBoardId();
     }
+    // 게시글과 함께 파일 첨부
     @Override
     public void insertBoardFile(BoardFileDTO boardFileDTO) {
         this.boardFileMapper.insertBoardFile(boardFileDTO);

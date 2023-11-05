@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 public interface MemberService {
 
-    UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+    UserDetails loadUserByUsername(String loginId) throws UsernameNotFoundException;
 
 //    MemberDTO checkLogin(String username,String password) throws LoginException;
 

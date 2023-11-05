@@ -24,6 +24,8 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String loginId){
+        System.out.println(loginId);
+        System.out.println(memberMapper.findByLoginId(loginId));
         MemberDTO user = memberMapper.findByLoginId(loginId);
 
         if (user == null) {
@@ -33,7 +35,7 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
         System.out.println(user.getLoginId());
         System.out.println(user.getAuthorities());
         // 유저의 권한을 설정하는 부분
-        return new org.springframework.security.core.userdetails.User(user.getLoginId(), user.getPassword(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(user.getLoginId(), user.getPassword(), user.getAuthorities());
 
     }
     public UserDetails me(@AuthenticationPrincipal UserDetails user){

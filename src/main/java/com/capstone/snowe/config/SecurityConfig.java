@@ -53,7 +53,6 @@ public class SecurityConfig {
         httpSecurity
                 // srf를 disable
                 .csrf().disable()
-
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
@@ -70,10 +69,6 @@ public class SecurityConfig {
                         .requestMatchers("/member/**").permitAll()
                         .requestMatchers("/board/**").permitAll()
                         .requestMatchers("/comment/**").permitAll()
-                        .requestMatchers("/guest/**").permitAll()
-                        .requestMatchers("/user/**").hasAuthority("ROLE_USER")
-                        .requestMatchers("/teacher/**").hasAuthority("ROLE_TEACHER")
-                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated()
                 )// 그 외 인증 없이 접근X
 

@@ -31,9 +31,9 @@ public class MemberController {
 
 
     @RequestMapping("/test")
-    public String test(){
-        System.out.println("test");
-        return "test";
+    public String test(@RequestBody String loginId){
+        memberService.findMemberByLoginId(loginId);
+        return null;
     }
 
     @PostMapping("/login")

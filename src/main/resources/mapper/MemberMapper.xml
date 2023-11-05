@@ -29,6 +29,7 @@
         , #{birthday}
         , #{gender}
         , #{nickname}
+        , #{email}
         , 'USER'
         , SYSDATE
         , NULL

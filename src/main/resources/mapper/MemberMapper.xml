@@ -7,12 +7,13 @@
     <!-- member 테이블 전체 컬럼 -->
     <sql id="memberColumns">
         login_id
-        , password
+      , password
+      , email
       , name
       , birthday
       , gender
       , nickname
---       , teacher_info
+      , role
       , created_date
       , modified_date
     </sql>

@@ -34,10 +34,10 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
             // user가 null인 경우 예외 발생
             throw new UsernameNotFoundException("유저를 찾을 수 없습니다.");
         }
-        System.out.println(user.getLoginId());
-        System.out.println(user.getAuthorities());
-        // 유저정보 설정
-        return new org.springframework.security.core.userdetails.User(user.getLoginId(), user.getPassword(), user.getAuthorities());
+        System.out.println(user);
+        // 유저의 권한을 설정하는 부분
+        return new org.springframework.security.core.userdetails.User(user.getLoginId(), user.getPassword(), new ArrayList<>());
+
     }
     public UserDetails me(@AuthenticationPrincipal UserDetails user){
         MemberDTO member = memberMapper.findByLoginId(user.getUsername());

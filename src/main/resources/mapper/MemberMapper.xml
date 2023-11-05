@@ -7,18 +7,18 @@
     <!-- member 테이블 전체 컬럼 -->
     <sql id="memberColumns">
         login_id
-        , password
+      , password
       , name
       , birthday
       , gender
       , nickname
---       , teacher_info
+      , role
       , created_date
       , modified_date
     </sql>
 
     <!-- 회원 정보 저장 (회원가입) -->
-    <insert id="save" parameterType="com.capstone.snowe.dto.MemberDTO">
+    <insert id="signup" parameterType="com.capstone.snowe.dto.MemberDTO">
         INSERT INTO member (
         <include refid="memberColumns" />
         ) VALUES (
@@ -28,6 +28,7 @@
         , #{birthday}
         , #{gender}
         , #{nickname}
+        , 'USER'
         , SYSDATE
         , NULL
         )

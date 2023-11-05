@@ -21,6 +21,11 @@ public class BoardController {
     private BoardService boardService;
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
+    @GetMapping("/test")
+    public String test(){
+        System.out.println("test");
+        return "test";
+    }
 
     /*
     * 

@@ -1,6 +1,7 @@
 package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.MemberDTO;
+import com.capstone.snowe.dto.ResponseDTO;
 import com.capstone.snowe.dto.TokenDTO;
 import com.capstone.snowe.jwt.JwtFilter;
 import com.capstone.snowe.jwt.TokenProvider;
@@ -13,8 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
+
 
 
 @CrossOrigin
@@ -29,9 +33,8 @@ public class MemberController {
 
 
     @RequestMapping("/test")
-    public String test(){
-        System.out.println("test");
-        return "test";
+    public String test(@AuthenticationPrincipal User user){
+        return user.getUsername();
     }
 
     @PostMapping("/login")
@@ -50,9 +53,11 @@ public class MemberController {
         HttpHeaders httpHeaders = new HttpHeaders();
         // response header에 jwt token에 넣어줌
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
+        httpHeaders.add("loginId", memberDTO.getLoginId());
 
-        // tokenDto를 이용해 response body에도 넣어서 리턴
-        return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
+
+        //body 에 토큰 리턴
+         return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
     }
 
     // 로그아웃
@@ -63,11 +68,12 @@ public class MemberController {
     }
 
     // 회원가입 API
-    @PostMapping("/members")
+    @PostMapping("/signup")
     @ResponseBody
-    public String saveMember(@RequestBody final MemberDTO params) {
-        return memberService.saveMember(params);
+    public MemberDTO signup(@RequestBody final MemberDTO params) {
+        return memberService.signup(params);
     }
+
 
     // 회원 상세정보 조회
     @GetMapping("/members/{loginId}")

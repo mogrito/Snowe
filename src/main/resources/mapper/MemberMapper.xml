@@ -25,10 +25,12 @@
         ) VALUES (
         #{loginId}
         , #{password}
+        , #{email}
         , #{name}
         , #{birthday}
         , #{gender}
         , #{nickname}
+        , 'USER'
         , SYSDATE
         , NULL
         )

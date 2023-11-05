@@ -50,7 +50,7 @@
 
 
     <!-- 게시글 작성 -->
-    <insert id = "addBoard" parameterType="com.capstone.snowe.dto.BoardDTO">
+    <insert id = "addBoard" parameterType="com.capstone.snowe.dto.BoardDTO" useGeneratedKeys="true" keyProperty="boardId">
         INSERT INTO BOARD (
                            BOARD_ID,
                            TITLE,
@@ -63,6 +63,9 @@
                         #{loginId},
                         #{content}
                         )
+        <selectKey keyProperty="boardId" resultType="Integer" order="AFTER">
+            SELECT BNO_SEQ.CURRVAL FROM dual
+        </selectKey>
     </insert>
 
     <!-- 게시글 상세보기, 게시글 번호 가져오기 -->

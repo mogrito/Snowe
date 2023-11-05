@@ -3,10 +3,10 @@ package com.capstone.snowe.controller;
 import com.capstone.snowe.dto.BoardDTO;
 import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.service.BoardService;
+import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,15 +18,18 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 /* 리액트, 부트 연동 */
 @CrossOrigin
 @RestController
+@RequiredArgsConstructor
 public class BoardController {
 
-    @Autowired
-    private BoardService boardService;
+    private final BoardService boardService;
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
 
@@ -65,8 +68,8 @@ public class BoardController {
     @PostMapping("/board/add")
     public ResponseEntity<List<BoardFileDTO>> add(@RequestPart("board") BoardDTO boardDTO, @RequestPart("files")MultipartFile[] files) throws Exception {
     /* public ResponseEntity<List<BoardFileDTO>> add(@RequestPart("board") BoardDTO boardDTO, @RequestPart("files")MultipartFile[] files) throws Exception { */
-        boardService.addBoard(boardDTO);
-        int boardId = 487;
+        int boardId = boardService.addBoard(boardDTO);
+//        int boardId = 487;
         /* 이미지 파일 체크 */
         for (MultipartFile multipartFile : files) {
             File checkFile = new File(multipartFile.getOriginalFilename());

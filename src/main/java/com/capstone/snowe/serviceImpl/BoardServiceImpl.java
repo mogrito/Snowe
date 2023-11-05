@@ -5,19 +5,18 @@ import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.mapper.BoardFileMapper;
 import com.capstone.snowe.mapper.BoardMapper;
 import com.capstone.snowe.service.BoardService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class BoardServiceImpl implements BoardService {
 
-    @Autowired
-    private BoardMapper boardMapper;
-    @Autowired
-    private BoardFileMapper boardFileMapper;
+    private final BoardMapper boardMapper;
+    private final BoardFileMapper boardFileMapper;
 
 
     @Override       //게시글 목록 조회

@@ -21,10 +21,6 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
     private final MemberMapper memberMapper;
     private final PasswordEncoder passwordEncoder;
 
-//    @Override
-//    public MemberDTO login(String loginId, String password) {
-//        return null;
-//    }
 
     @Override
     public UserDetails loadUserByUsername(String loginId){
@@ -34,7 +30,8 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
             // user가 null인 경우 예외 발생
             throw new UsernameNotFoundException("유저를 찾을 수 없습니다.");
         }
-        System.out.println(user);
+        System.out.println(user.getLoginId());
+        System.out.println(user.getAuthorities());
         // 유저의 권한을 설정하는 부분
         return new org.springframework.security.core.userdetails.User(user.getLoginId(), user.getPassword(), new ArrayList<>());
 

@@ -13,7 +13,8 @@
         RECOMMEND_COUNT,
         VIEW_COUNT,
         COMMENT_COUNT,
-        DEL_YN
+        DEL_YN,
+        category
     </sql>
 <!--,
         MODIFIED_DATE,
@@ -50,18 +51,20 @@
 
 
     <!-- 게시글 작성 -->
-    <insert id = "addBoard" parameterType="com.capstone.snowe.dto.BoardDTO" useGeneratedKeys="true" keyProperty="boardId">
+    <insert id = "addBoard" parameterType="com.capstone.snowe.dto.BoardDTO">
         INSERT INTO BOARD (
                            BOARD_ID,
                            TITLE,
                            LOGIN_ID,
-                           CONTENT
+                           CONTENT,
+                           CATEGORY
                             )
                 VALUES (
                         BNO_SEQ.NEXTVAL,
                         #{title},
                         #{loginId},
-                        #{content}
+                        #{content},
+                        #{category}
                         )
         <selectKey keyProperty="boardId" resultType="Integer" order="AFTER">
             SELECT BNO_SEQ.CURRVAL FROM dual

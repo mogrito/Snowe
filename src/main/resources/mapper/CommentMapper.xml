@@ -7,7 +7,7 @@
     <sql id="postColumns">
         COMMENT_ID,
         BOARD_ID,
-        PARENT_COMMENT_ID
+        PARENT_COMMENT_ID,
         CONTENT,
         LOGIN_ID,
         CREATE_DATE,

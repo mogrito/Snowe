@@ -1,18 +1,23 @@
 package com.capstone.snowe.serviceImpl;
 
 import com.capstone.snowe.dto.CommentDTO;
+import com.capstone.snowe.dto.MemberDTO;
 import com.capstone.snowe.mapper.CommentMapper;
+import com.capstone.snowe.mapper.MemberMapper;
 import com.capstone.snowe.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
-    @Autowired
-    private CommentMapper commentMapper;
+    private final CommentMapper commentMapper;
+    private final MemberMapper memberMapper;
 
 
     @Override       //댓글 목록
@@ -23,7 +28,10 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override       //댓글 추가(부모)
-    public void addComment(CommentDTO commentDTO) {
+    public void addComment(CommentDTO commentDTO, @AuthenticationPrincipal UserDetails user) {
+        MemberDTO member = memberMapper.findByLoginId(user.getUsername());
+        commentDTO.setLoginId(member.getNickname());
+
         this.commentMapper.addComment(commentDTO);
     }
 

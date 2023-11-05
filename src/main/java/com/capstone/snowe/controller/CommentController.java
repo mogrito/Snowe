@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -40,11 +42,15 @@ public class CommentController {
     *
     * */
     @PostMapping("/board/view/{boardId}/comment")
-    public ResponseEntity<String> addComment(@PathVariable int boardId, @RequestBody CommentDTO commentDTO) throws Exception {
+    public ResponseEntity<String> addComment(@PathVariable int boardId, @RequestBody CommentDTO commentDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
 
         try {
+            //boardId set해주기
             commentDTO.setBoardId(boardId);
-            this.commentService.addComment(commentDTO);
+
+            this.commentService.addComment(commentDTO, user);
+
+            // 댓글 작성 시 Board테이블에 댓글개수 수정
             this.boardService.increaseCommentCount(boardId);
             return ResponseEntity.ok("댓글작성완료");
         }

@@ -60,6 +60,7 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/board/add").hasAuthority("USER")
                         .requestMatchers("/member/**").permitAll()
                         .requestMatchers("/board/**").permitAll()
                         .requestMatchers("/comment/**").permitAll()

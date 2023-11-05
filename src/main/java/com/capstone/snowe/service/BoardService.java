@@ -1,6 +1,9 @@
 package com.capstone.snowe.service;
 
 import com.capstone.snowe.dto.BoardDTO;
+import com.capstone.snowe.dto.BoardFileDTO;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +14,7 @@ public interface BoardService {
     List<BoardDTO> getBoardList();      //게시글 목록 조회
     List<BoardDTO> oldGetBoardList();      //게시글 목록 조회(오래된순)
 
-    void addBoard(BoardDTO boardDTO);    //게시글 작성
+    int addBoard(BoardDTO boardDTO,@AuthenticationPrincipal UserDetails user);    //게시글 작성
     
     BoardDTO getBoardId(int BOARD_ID);       //게시글 상세조회
     
@@ -31,4 +34,6 @@ public interface BoardService {
 
     /*int boardCount();        // 게시글 전체 개수(페이징)
     List<BoardDTO> boardPage(int endRow, int startRow); //페이징기능*/
+
+    void insertBoardFile(BoardFileDTO boardFileDTO);
 }

@@ -2,15 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.capstone.snowe.mapper.BoardFileMapper">
-    <sql id="postColumns">
+    <sql id="fileColumns">
         FILE_ID,
         BOARD_ID,
         FILE_ONAME,
-        FILE_SNAME,
         FILE_PATH,
         FILE_SIZE,
         FILE_TYPE,
-        UPLOAD_DATE
+        UPLOAD_DATE,
+        FILE_SNAME,
+        UUID
     </sql>
 
 
@@ -36,19 +37,21 @@
     <insert id="insertBoardFile" parameterType="com.capstone.snowe.dto.BoardFileDTO">
         INSERT INTO
             BOARD_FILE (
-                    FILE_ID,
-                    BOARD_ID,
-                    FILE_ONAME,
-                    FILE_SNAME,
-                    FILE_SIZE
+                <include refid="fileColumns" />
                 )
         VALUES (
-                   B_FILE_SEQ.NEXTVAL,
-                   #{boardId},
-                   #{fileOName},
-                   #{fileSName},
-                   #{fileSize},
+
+                    B_FILE_SEQ.NEXTVAL,
+                    #{boardId},
+                    #{fileOName},
+                    #{filePath},
+                    #{fileSize},
+                    #{fileType},
+                    sysdate,
+                    #{fileSName},
+                    #{uuid}
                )
+
     </insert>
 
 </mapper>

@@ -8,6 +8,7 @@
     <sql id="memberColumns">
         login_id
       , password
+      , email
       , name
       , birthday
       , gender

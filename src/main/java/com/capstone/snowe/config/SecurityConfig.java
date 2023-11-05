@@ -16,6 +16,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
@@ -50,7 +53,7 @@ public class SecurityConfig {
         httpSecurity
                 // srf를 disable
                 .csrf().disable()
-                .cors().and()
+
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .accessDeniedHandler(jwtAccessDeniedHandler)
@@ -63,7 +66,10 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests((authz) -> authz
+                        .requestMatchers("/board/add").hasAuthority("USER")
                         .requestMatchers("/member/**").permitAll()
+                        .requestMatchers("/board/**").permitAll()
+                        .requestMatchers("/comment/**").permitAll()
                         .requestMatchers("/guest/**").permitAll()
                         .requestMatchers("/user/**").hasAuthority("ROLE_USER")
                         .requestMatchers("/teacher/**").hasAuthority("ROLE_TEACHER")

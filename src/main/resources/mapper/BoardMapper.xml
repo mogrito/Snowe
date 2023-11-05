@@ -13,7 +13,8 @@
         RECOMMEND_COUNT,
         VIEW_COUNT,
         COMMENT_COUNT,
-        DEL_YN
+        DEL_YN,
+        category
     </sql>
 <!--,
         MODIFIED_DATE,
@@ -55,14 +56,19 @@
                            BOARD_ID,
                            TITLE,
                            LOGIN_ID,
-                           CONTENT
+                           CONTENT,
+                           CATEGORY
                             )
                 VALUES (
                         BNO_SEQ.NEXTVAL,
                         #{title},
                         #{loginId},
-                        #{content}
+                        #{content},
+                        #{category}
                         )
+        <selectKey keyProperty="boardId" resultType="Integer" order="AFTER">
+            SELECT BNO_SEQ.CURRVAL FROM dual
+        </selectKey>
     </insert>
 
     <!-- 게시글 상세보기, 게시글 번호 가져오기 -->

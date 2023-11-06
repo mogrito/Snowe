@@ -85,6 +85,11 @@ public class BoardController {
             try {
                 type = Files.probeContentType(checkFile.toPath());
                 logger.info("MIME TYPE : " + type);
+                if (!type.startsWith("files")) {
+                    List<BoardFileDTO> list = null;
+                    return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

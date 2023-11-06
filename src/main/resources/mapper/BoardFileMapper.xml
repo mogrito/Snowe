@@ -19,20 +19,19 @@
     <!-- ============== -->
     <!-- 게시판 파일 리스트-->
     <!-- ============== -->
-    <!--<select id="getFileByBoard" parameterType="int" resultType="com.capstone.snowe.dto.BoardFileDTO">
+    <select id="getFileByBoard" resultType="com.capstone.snowe.dto.BoardFileDTO">
         SELECT
-            <include refid="postColumns"/>
+            <include refid="fileColumns"/>
         FROM
             BOARD_FILE
         WHERE
             BOARD_ID = #{boardId}
-
-    </select>-->
+    </select>
 
 
     <!-- ============== -->
     <!-- 게시판 파일 업로드-->
-    <!-- insert시 추가   -->
+    <!-- BOARD insert시 추가   -->
     <!-- ============== -->
     <insert id="insertBoardFile" parameterType="com.capstone.snowe.dto.BoardFileDTO">
         INSERT INTO

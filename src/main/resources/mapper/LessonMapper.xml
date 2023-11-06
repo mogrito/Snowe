@@ -17,7 +17,7 @@
                            LESSON_CLASS,
                            LESSON_LEVEL)
         VALUES (
-                #{loginId}, -- 세션이 갖고있는 강사 ID
+                #{loginId}, -- 토큰이 갖고있는 회원 ID
                 TO_CHAR(#{lessonDate}, 'YYYY-MM-DD'), -- 강습날짜 선택 후
                 'L' || LPAD(LESSON_SEQ.NEXTVAL, 6, 0), --시퀀스 처리
                 #{lessonDiv}, -- 오전, 오후, 야간 중 입력받아서

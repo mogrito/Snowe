@@ -5,6 +5,8 @@ import com.capstone.snowe.dto.LessonJoinDTO;
 import com.capstone.snowe.mapper.LessonMapper;
 import com.capstone.snowe.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,9 +22,6 @@ public class LessonServiceImpl implements LessonService {
     * */
     @Override
     public void lessonInsert(LessonDTO lessonDTO) {
-
-        System.out.println("lessonDTO는 = " + lessonDTO);
-
         this.lessonMapper.lessonInsert(lessonDTO);
     }
 

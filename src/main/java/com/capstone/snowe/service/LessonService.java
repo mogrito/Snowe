@@ -2,6 +2,8 @@ package com.capstone.snowe.service;
 
 import com.capstone.snowe.dto.LessonDTO;
 import com.capstone.snowe.dto.LessonJoinDTO;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 

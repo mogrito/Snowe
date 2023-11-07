@@ -37,9 +37,7 @@ public class BoardController {
 
 
     /*
-     *
      * 게시판 전체 리스트 조회
-     *
      * */
     @GetMapping ("/board/list")
     public List<BoardDTO> list() throws Exception {
@@ -85,7 +83,7 @@ public class BoardController {
             try {
                 type = Files.probeContentType(checkFile.toPath());
                 logger.info("MIME TYPE : " + type);
-                if (!type.startsWith("files")) {
+                if (!type.startsWith("image")) {
                     List<BoardFileDTO> list = null;
                     return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
                 }
@@ -94,10 +92,10 @@ public class BoardController {
                 e.printStackTrace();
             }
 
-            if (!type.startsWith("image")) {
+            /*if (!type.startsWith("image")) {
                 List<BoardFileDTO> list = null;
                 return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
-            }
+            }*/
         }
 
         //파일 저장 경로 선언

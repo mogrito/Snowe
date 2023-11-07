@@ -25,5 +25,4 @@ public class LessonDTO {
     private Date delDate;
     private String delYn;
     private Date lessonRegDate;
-
 }

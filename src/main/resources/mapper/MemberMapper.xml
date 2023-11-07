@@ -25,14 +25,27 @@
         ) VALUES (
         #{loginId}
         , #{password}
+        , #{email}
         , #{name}
         , #{birthday}
         , #{gender}
         , #{nickname}
-        , #{email}
         , 'USER'
         , SYSDATE
         , NULL
+        )
+    </insert>
+
+    <!-- 강사 자격 신청 -->
+    <insert id="apply" parameterType="com.capstone.snowe.dto.MemberDTO">
+        INSERT INTO APPLY_TEACHER (
+            login_id,
+            name,
+            APPLY_DATE
+        ) VALUES (
+            #{loginId}
+            , #{name}
+            , SYSDATE
         )
     </insert>
 
@@ -46,8 +59,7 @@
         login_id = #{value}
     </select>
 
-
-    <!-- 회원 수 카운팅 (ID 중복 체크) -->
+    <!-- ID 중복 체크  -->
     <select id="countByLoginId" parameterType="string" resultType="int">
         SELECT
             COUNT(*)
@@ -57,6 +69,7 @@
             login_id = #{value}
     </select>
 
+    <!-- 닉네임 중복 체크  -->
     <select id="checkNickname" parameterType="string" resultType="int">
         SELECT
             COUNT(*)
@@ -65,4 +78,31 @@
         WHERE
             nickname = #{value}
     </select>
+
+    <!-- 강사 전체 조회 쿼리  -->
+    <select id="getAllTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
+        SELECT
+            *
+        FROM
+            teacher
+    </select>
+
+    <select id="getBoardTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
+        SELECT
+            *
+        FROM
+            teacher
+        WHERE
+            classification = 'board'
+    </select>
+
+    <select id="getSkiTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
+        SELECT
+            *
+        FROM
+            teacher
+        WHERE
+            classification = 'ski'
+    </select>
+
 </mapper>

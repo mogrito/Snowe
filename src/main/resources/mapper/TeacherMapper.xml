@@ -3,32 +3,10 @@
 
 <mapper namespace="com.capstone.snowe.mapper.TeacherMapper">
 
-    <!-- =========== -->
-    <!-- 강사 임명하기 -->
-    <!-- =========== -->
-    <insert id="addTeacher" parameterType="com.capstone.snowe.dto.TeacherDTO">
-        INSERT INTO TEACHER(ID, NAME)
-        SELECT LOGIN_ID,
-               NAME
-        FROM MEMBER
-        WHERE LOGIN_ID = #{id}
-        -- 페이지에서 사람을 클릭해서 강사로 변경....하기?
-    </insert>
 
-    <!-- =============================================== -->
-    <!-- 강사 임명 후 MEMBER테이블 회원코드를 강사(1)로 업데이트-->
-    <!-- =============================================== -->
-    <update id="perCodeUpdate" parameterType="com.capstone.snowe.dto.MemberDTO">
-        UPDATE
-            MEMBER
-        SET
-            PER_CODE = 1
-        WHERE
-            LOGIN_ID = #{id}
-    </update>
 
     <!-- ======================================= -->
-    <!-- 강사 설정 (본인 나와바리 스키장이 어딘지 설정) -->
+    <!-- 강사 설정 (본인의 활동 스키장이 어딘지 설정) -->
     <!-- 강사 설명이 될 수도 있고 다른 정보들이 추가될 수도 있음 -->
     <!-- ======================================= -->
     <update id="updateTeacherStat" parameterType="com.capstone.snowe.dto.TeacherDTO">

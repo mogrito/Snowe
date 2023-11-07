@@ -23,7 +23,19 @@ public class LessonController {
     * */
     @PostMapping("/lesson/add")
     public ResponseEntity<String> lessonInsert(@RequestBody LessonDTO lessonDTO, @AuthenticationPrincipal UserDetails user) throws Exception{
-        lessonDTO.setLoginId(user.getUsername());  //강사 아이디 받아
+        lessonDTO.setLoginId(user.getUsername());
+        String div = lessonDTO.getLessonDiv();
+
+        switch (div){
+                case "오전":
+                    lessonDTO.setLessonDiv("LD01");
+                case "오후":
+                    lessonDTO.setLessonDiv("LD02");
+                case "야간":
+                    lessonDTO.setLessonDiv("LD03");
+                default:
+                    break;
+        }
         this.lessonService.lessonInsert(lessonDTO);
         return ResponseEntity.ok("강습등록이 완료되었습니다.");
     }

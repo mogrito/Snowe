@@ -1,6 +1,7 @@
 package com.capstone.snowe.serviceImpl;
 
 import com.capstone.snowe.dto.MemberDTO;
+import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.mapper.MemberMapper;
 import com.capstone.snowe.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.security.auth.login.LoginException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -51,8 +53,12 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
         return memberInfo;
     }
 
+    @Override
+    public void apply(MemberDTO memberDTO,@AuthenticationPrincipal UserDetails user) {
+        MemberDTO member = memberMapper.findByLoginId(user.getUsername());
 
-
+        memberMapper.apply(member);
+    }
 
     @Override
     @Transactional
@@ -70,6 +76,7 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
 
         return params;
     }
+
     @Override
     public MemberDTO findMemberByLoginId(String loginId) {
         return memberMapper.findByLoginId(loginId);
@@ -83,6 +90,21 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
     @Override
     public int checkNickname(String nickname) {
         return memberMapper.checkNickname(nickname);
+    }
+
+    @Override
+    public List<TeacherDTO> getAllTeacher(String ridingClass) {
+        return memberMapper.getAllTeacher(ridingClass);
+    }
+
+    @Override
+    public List<TeacherDTO> getBoardTeacher(String ridingClass) {
+        return memberMapper.getBoardTeacher(ridingClass);
+    }
+
+    @Override
+    public List<TeacherDTO> getSkiTeacher(String ridingClass) {
+        return memberMapper.getSkiTeacher(ridingClass);
     }
 
     private void encodePassword(MemberDTO params) {

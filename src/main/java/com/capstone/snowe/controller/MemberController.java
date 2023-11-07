@@ -1,6 +1,7 @@
 package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.MemberDTO;
+import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.dto.TokenDTO;
 import com.capstone.snowe.jwt.JwtFilter;
 import com.capstone.snowe.jwt.TokenProvider;
@@ -17,6 +18,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Collections;
+import java.util.List;
 
 
 @CrossOrigin
@@ -36,6 +40,7 @@ public class MemberController {
         return null;
     }
 
+    // 토큰 로그인
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody MemberDTO memberDTO){
 
@@ -57,20 +62,22 @@ public class MemberController {
         return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
     }
 
+    // 강사 신청
+    @PostMapping("/apply")
+    public MemberDTO applyTeacher(MemberDTO memberDTO,@AuthenticationPrincipal UserDetails user){
+        memberService.apply(memberDTO,user);
+        return null;
+    }
+
+
+    // ME API
     @GetMapping("/me")
     public UserDetails me(@AuthenticationPrincipal UserDetails userDetails) {
         return memberService.me(userDetails);
     }
 
 
-    // 로그아웃
-    @PostMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login.do";
-    }
-
-    // 회원가입 API
+    // 회원가입
     @PostMapping("/signup")
     @ResponseBody
     public MemberDTO signup(@RequestBody final MemberDTO params) {
@@ -84,8 +91,7 @@ public class MemberController {
         return memberService.findMemberByLoginId(loginId);
     }
 
-
-
+    // ID 중복체크
     @GetMapping("/member-count")
     @ResponseBody
     public String countMemberByLoginId(@RequestParam final String loginId) {
@@ -99,7 +105,7 @@ public class MemberController {
         }
     }
 
-    // 회원 수 카운팅 (ID 중복 체크)
+    // 닉네임 중복체크
     @GetMapping("/member-nickname")
     @ResponseBody
     public String checkNickname(@RequestParam final String nickname) {
@@ -113,4 +119,27 @@ public class MemberController {
         }
     }
 
+    // 종목별 강사리스트 불러오기
+    @GetMapping("/getTeacherList")
+    public List<TeacherDTO> getTeacherList(@RequestParam String ridingClass) {
+        if (ridingClass != null) {
+            switch (ridingClass) {
+                case "Board":
+                    System.out.println(ridingClass);
+                    System.out.println(memberService.getBoardTeacher(ridingClass));
+                    return memberService.getBoardTeacher(ridingClass);
+                case "Ski":
+                    return memberService.getSkiTeacher(ridingClass);
+                case "All":
+                    System.out.println(memberService.getAllTeacher(ridingClass));
+                    return memberService.getAllTeacher(ridingClass);
+                default:
+                    break;
+
+            }
+        } else {
+            throw new IllegalArgumentException("ridingClass is null");
+        }
+        return Collections.emptyList();
+    }
 }

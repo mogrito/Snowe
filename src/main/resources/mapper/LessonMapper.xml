@@ -12,7 +12,8 @@
                            LESSON_DATE,
                            LESSON_ID,
                            LESSON_DIV,
-                           MAX_RESERVE_COUNT,
+                           MAX_RESERVE_COUNT,g
+
                            TITLE,
                            LESSON_CLASS,
                            LESSON_LEVEL)

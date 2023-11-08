@@ -10,8 +10,8 @@ public interface BoardFileMapper {
     /* 파일 저장 */
     void insertBoardFile(BoardFileDTO boardFileDTO);
 
-    BoardFileDTO getFileByBoard(int boardId);
-    //List<BoardFileDTO> getFileByBoard(int boardId);
+    //BoardFileDTO getFileByBoard(int boardId);
+    List<BoardFileDTO> getFileByBoard(int boardId);
 
 
 }

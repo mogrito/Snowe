@@ -2,6 +2,7 @@ package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.BoardDTO;
 import com.capstone.snowe.dto.BoardFileDTO;
+import com.capstone.snowe.dto.RecommendDTO;
 import com.capstone.snowe.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
@@ -67,10 +68,11 @@ public class BoardController {
 
     //    String uploadPath = "C:\\picture\\";
     @PostMapping("/board/add")
-    public ResponseEntity<List<BoardFileDTO>> add(@RequestPart("board") BoardDTO boardDTO, @RequestPart(value="files", required=false)MultipartFile[] files, @AuthenticationPrincipal UserDetails user) throws Exception {
+    public ResponseEntity<List<BoardFileDTO>> add(@RequestPart("board") BoardDTO boardDTO, @RequestPart(value="image", required=false)MultipartFile[] files, @AuthenticationPrincipal UserDetails user) throws Exception {
         /* public ResponseEntity<List<BoardFileDTO>> add(@RequestPart("board") BoardDTO boardDTO, @RequestPart("files")MultipartFile[] files) throws Exception { */
         int boardId = boardService.addBoard(boardDTO, user);
 
+        // 이미지 파일이 없을 시,
         if (files == null || files.length == 0) {
             return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
         }
@@ -196,9 +198,8 @@ public class BoardController {
     // @RequestParam int BOARD_ID
     @GetMapping("/board/view/{boardId}")
     public ResponseEntity<BoardDTO> getBoardView(@PathVariable int boardId) throws Exception {
-        //클릭 시 조회수 증가, 댓글수 수정
+        //클릭 시 조회수 증가
         boardService.increaseViewCount(boardId);
-        //boardService.increaseCommentCount(boardId);
 
         //해당 게시글 보기
         BoardDTO board = boardService.getBoardId(boardId);
@@ -272,30 +273,27 @@ public class BoardController {
     }
 
     /*
-     *
-     * 추천수 증가 API
-     *
-     * */
-    @PostMapping("/board/recommend/{boardId}")
-    public ResponseEntity<String> recommendBoard(@PathVariable int boardId) {
-        try {
-            boardService.increaseRecommendCount(boardId);
-            return ResponseEntity.ok("추천증가");
+    * 게시글 추천
+    * <트리거로 board테이블의 recommend_count도 update되도록 설정>
+    * */
+    @PostMapping("/board/recommend")
+    public ResponseEntity<String> recommendByBoard(@RequestParam int boardId, RecommendDTO recommendDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
+        // 가져온 boardId값 할당
+        recommendDTO.setBoardId(boardId);
+
+        // 추천 중복검사
+        int recommendCount = boardService.checkRecommendByLoginId(recommendDTO, user);
+
+        // 추천을 이미 했으면,
+        if (recommendCount == 1) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("추천은 한 번만!");
         }
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
+
+        // 동일한 loginId로 추천을 하지 않았다면, 추천테이블에 insert
+        this.boardService.recommendByBoard(recommendDTO, user);
+
+        return ResponseEntity.ok("해당 아이디로 " + boardId + "게시글에 추천을 완료했습니다.");
     }
 
-    @PostMapping("/board/comment/{boardId}")
-    public ResponseEntity<String> commentCount(@PathVariable int boardId) {
-        try {
-            boardService.increaseCommentCount(boardId);
-            return ResponseEntity.ok("댓글개수 수정");
-        }
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-        }
-    }
 
 }

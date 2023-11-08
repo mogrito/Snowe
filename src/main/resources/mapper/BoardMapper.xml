@@ -48,6 +48,27 @@
             DEL_YN = 'N'
         ORDER BY BOARD_ID
     </select>
+    <!-- ======================================= -->
+    <!-- 현재 게시글에서는 실질적인 member의 loginId를 가져오는게 아닌 nickname을 가져오므로 기본키인 loginId가 없음-->
+    <!-- 따라서 구분을 위한 loginId를 볼 수 있는 쿼리문 -->
+    <!-- 혹시 몰라서 메모해놓음
+    select
+    b.BOARD_ID,
+        b.TITLE,
+        b.CONTENT,
+        b.LOGIN_ID,
+        m.login_id,
+        b.CREATE_DATE,
+        b.RECOMMEND_COUNT,
+        b.VIEW_COUNT,
+        b.COMMENT_COUNT,
+        b.DEL_YN,
+        b.category
+    from
+        board b
+        inner join member m on b.login_id = m.nickname;
+        -->
+    <!-- ======================================= -->
 
 
     <!-- 게시글 작성 -->
@@ -143,17 +164,29 @@
         ORDER BY BOARD_ID DESC
     </select>
 
-    <!-- ============== -->
-    <!-- 게시글 추천수 증가-->
-    <!-- ============== -->
-    <update id = "increaseRecommendCount" parameterType="int">
-        UPDATE
-            BOARD
-        SET
-            RECOMMEND_COUNT = RECOMMEND_COUNT + 1
+    <!-- 게시글 추천 기능 -->
+    <insert id = "recommendByBoard">
+        INSERT INTO RECOMMEND (
+                               BOARD_ID
+                               , LOGIN_ID
+                                )
+                    VALUES (
+                            #{boardId}
+                            , #{loginId}
+                           )
+    </insert>
+
+    <!-- 게시글 추천 중복검사 -->
+    <select id = "checkRecommendByLoginId" resultType="int">
+        SELECT
+            COUNT(*)
+        FROM
+            RECOMMEND
         WHERE
             BOARD_ID = #{boardId}
-    </update>
+            AND LOGIN_ID = #{loginId}
+    </select>
+
 
     <!-- ============== -->
     <!-- 게시글 조회수 증가-->

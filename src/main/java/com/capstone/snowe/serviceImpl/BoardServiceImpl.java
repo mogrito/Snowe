@@ -3,11 +3,13 @@ package com.capstone.snowe.serviceImpl;
 import com.capstone.snowe.dto.BoardDTO;
 import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.dto.MemberDTO;
+import com.capstone.snowe.dto.RecommendDTO;
 import com.capstone.snowe.mapper.BoardFileMapper;
 import com.capstone.snowe.mapper.BoardMapper;
 import com.capstone.snowe.mapper.MemberMapper;
 import com.capstone.snowe.service.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.UserDatabase;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -70,11 +72,29 @@ public class BoardServiceImpl implements BoardService {
     public List<BoardDTO> searchBoard(String searchType, String keyword) {
         return this.boardMapper.searchBoard(searchType, keyword);
     }
+    
+    @Override       // 게시글 추천
+    public void recommendByBoard(RecommendDTO recommendDTO, @AuthenticationPrincipal UserDetails user) {
+        MemberDTO memberDTO = memberMapper.findByLoginId(user.getUsername());
+        // recommend테이블의 login_id에 토큰 login_id 지정
+        recommendDTO.setLoginId(memberDTO.getLoginId());
 
-    @Override       // 추천수증가
-    public void increaseRecommendCount(int BOARD_ID) {
-        boardMapper.increaseRecommendCount(BOARD_ID);
+        System.out.println("저장될 recommendDTO : " + recommendDTO);
+
+        this.boardMapper.recommendByBoard(recommendDTO);
     }
+    @Override       // 추천 중복검사
+    public int checkRecommendByLoginId(RecommendDTO recommendDTO, @AuthenticationPrincipal UserDetails user) {
+        MemberDTO memberDTO = memberMapper.findByLoginId(user.getUsername());
+        // recommend테이블의 login_id에 토큰 login_id 지정
+        recommendDTO.setLoginId(memberDTO.getLoginId());
+
+        System.out.println("추천 중복검사 : " + recommendDTO);
+
+        return boardMapper.checkRecommendByLoginId(recommendDTO);
+    }
+
+
 
     @Override       //조회수증가
     public void increaseViewCount(int BOARD_ID) {

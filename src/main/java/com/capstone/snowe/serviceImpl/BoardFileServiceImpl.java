@@ -20,19 +20,19 @@ public class BoardFileServiceImpl implements BoardFileService {
     private static final Logger logger = LoggerFactory.getLogger(BoardFileServiceImpl.class);
 
 
-    @Override
+    /*@Override
     public BoardFileDTO getFileByBoard(int boardId) {
 
         logger.info("이미지 불러오기~~" + boardId);
 
         return this.boardFileMapper.getFileByBoard(boardId);
-    }
+    }*/
 
-    /*@Override
+    @Override
     public List<BoardFileDTO> getFileByBoard(int boardId) {
 
         logger.info("이미지 불러오기~~" + boardId);
 
         return this.boardFileMapper.getFileByBoard(boardId);
-    }*/
+    }
 }

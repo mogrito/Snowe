@@ -1,6 +1,7 @@
 package com.capstone.snowe.mapper;
 
 import com.capstone.snowe.dto.BoardDTO;
+import com.capstone.snowe.dto.RecommendDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,6 +24,10 @@ public interface BoardMapper {
     List<BoardDTO> searchBoard(@Param("searchType") String searchType, @Param("keyword") String keyword);         // 검색기능
     
     void increaseRecommendCount(int BOARD_ID);      //추천수증가
+
+    void recommendByBoard(RecommendDTO recommendDTO); // 추천 증가 (recommend insert)
+
+    int checkRecommendByLoginId(RecommendDTO recommendDTO);        // 추천 중복검사
     
     void increaseViewCount(int BOARD_ID);           //조회수증가
 

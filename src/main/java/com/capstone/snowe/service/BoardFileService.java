@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface BoardFileService {
 
-    BoardFileDTO getFileByBoard(int boardId);
-    //List<BoardFileDTO> getFileByBoard(int boardId);
+    //BoardFileDTO getFileByBoard(int boardId);
+    List<BoardFileDTO> getFileByBoard(int boardId);
 
 }

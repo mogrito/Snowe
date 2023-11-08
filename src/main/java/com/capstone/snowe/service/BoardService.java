@@ -2,6 +2,7 @@ package com.capstone.snowe.service;
 
 import com.capstone.snowe.dto.BoardDTO;
 import com.capstone.snowe.dto.BoardFileDTO;
+import com.capstone.snowe.dto.RecommendDTO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,8 +27,10 @@ public interface BoardService {
 
     List<BoardDTO> searchBoard(String searchType, String keyword);        //검색기능
 
-    void increaseRecommendCount(int BOARD_ID);          //추천수 증가
-    
+    void recommendByBoard(RecommendDTO recommendDTO, @AuthenticationPrincipal UserDetails user);     // 게시글 추천
+
+    int checkRecommendByLoginId(RecommendDTO recommendDTO, @AuthenticationPrincipal UserDetails user);        // 추천 중복검사
+
     void increaseViewCount(int BOARD_ID);               //조회수 증가
 
     void increaseCommentCount(int BOARD_ID);            //댓글수 증가 수정

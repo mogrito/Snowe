@@ -82,27 +82,62 @@
     <!-- 강사 전체 조회 쿼리  -->
     <select id="getAllTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
         SELECT
-            *
+            a.login_Id,
+            a.name,
+            c.resort_name,
+            d.classification,
+            a.introduce,
+            a.class_level
         FROM
-            teacher
+            teacher a
+                INNER JOIN (select code_value as resort_name,code
+                            from common_code
+                            where no ='005') c
+                           on a.resort_id = c.code
+                INNER JOIN (select code_value as classification,code
+                            from common_code
+                            where no ='006') d
+                           on a.classification = d.code
     </select>
 
     <select id="getBoardTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
         SELECT
-            *
+            a.login_Id,
+            a.name,
+            c.resort_name,
+            c.classification,
+            a.introduce,
+            a.class_level
         FROM
-            teacher
-        WHERE
-            classification = 'board'
+            teacher a
+                INNER JOIN (select code_value as resort_name,code
+                            from common_code
+                            where no ='005') c
+                           on a.resort_id = c.code
+                INNER JOIN (select code_value as classification,code
+                            from common_code
+                            where no ='006' and code = 'CL02' ) c
+                           on a.classification = c.code
     </select>
 
     <select id="getSkiTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
         SELECT
-            *
+            a.login_Id,
+            a.name,
+            c.resort_name,
+            c.classification,
+            a.introduce,
+            a.class_level
         FROM
-            teacher
-        WHERE
-            classification = 'ski'
+            teacher a
+                INNER JOIN (select code_value as resort_name,code
+                            from common_code
+                            where no ='005') c
+                           on a.resort_id = c.code
+                INNER JOIN (select code_value as classification,code
+                            from common_code
+                            where no ='006' and code = 'CL01' ) c
+                           on a.classification = c.code
     </select>
 
 </mapper>

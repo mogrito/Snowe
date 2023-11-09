@@ -276,8 +276,8 @@ public class BoardController {
     * 게시글 추천
     * <트리거로 board테이블의 recommend_count도 update되도록 설정>
     * */
-    @PostMapping("/board/recommend")
-    public ResponseEntity<String> recommendByBoard(@RequestParam int boardId, RecommendDTO recommendDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
+    @PostMapping("/board/recommend/{boardId}")
+    public ResponseEntity<String> recommendByBoard(@PathVariable int boardId, RecommendDTO recommendDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
         // 가져온 boardId값 할당
         recommendDTO.setBoardId(boardId);
 

@@ -37,6 +37,15 @@ public class BoardServiceImpl implements BoardService {
         return this.boardMapper.oldGetBoardList();
     }
 
+    @Override
+    public void testInsertToBoard(BoardDTO boardDTO) {
+        /*System.out.println(boardDTO.getContent());
+        System.out.println(boardDTO.getTitle());
+        System.out.println(boardDTO.getLoginId());*/
+
+        boardMapper.testInsertToBoard(boardDTO);
+    }
+
     @Override       //게시글 작성                /* 첨부파일 기능 추가 */
     public int addBoard(BoardDTO boardDTO, @AuthenticationPrincipal UserDetails user) {
         MemberDTO member = memberMapper.findByLoginId(user.getUsername());
@@ -76,6 +85,8 @@ public class BoardServiceImpl implements BoardService {
     @Override       // 게시글 추천
     public void recommendByBoard(RecommendDTO recommendDTO, @AuthenticationPrincipal UserDetails user) {
         MemberDTO memberDTO = memberMapper.findByLoginId(user.getUsername());
+
+        System.out.println("유저" + user.getUsername());
         // recommend테이블의 login_id에 토큰 login_id 지정
         recommendDTO.setLoginId(memberDTO.getLoginId());
 

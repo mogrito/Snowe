@@ -17,6 +17,8 @@ public interface BoardService {
 
     int addBoard(BoardDTO boardDTO,@AuthenticationPrincipal UserDetails user);    //게시글 작성
 
+    void testInsertToBoard(BoardDTO boardDTO);
+
     void insertBoardFile(BoardFileDTO boardFileDTO);        //파일 첨부
     
     BoardDTO getBoardId(int BOARD_ID);       //게시글 상세조회

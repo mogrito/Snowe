@@ -218,7 +218,20 @@
             B.BOARD_ID = #{boardId}
     </update>
 
-
+    <insert id="testInsertToBoard" parameterType="com.capstone.snowe.dto.BoardDTO">
+        INSERT INTO BOARD (
+        BOARD_ID,
+        TITLE,
+        LOGIN_ID,
+        CONTENT
+        )
+        VALUES (
+        BNO_SEQ.NEXTVAL,
+        #{title},
+        #{loginId},
+        #{content}
+        )
+    </insert>
 
 
 

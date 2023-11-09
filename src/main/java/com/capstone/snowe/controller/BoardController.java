@@ -65,6 +65,12 @@ public class BoardController {
      * 첨부파일도 같이 INSERT
      *
      * */
+    @PostMapping("/board/test/add")
+    public ResponseEntity<String> testAdd(@RequestPart("board") BoardDTO boardDTO) {
+        boardService.testInsertToBoard(boardDTO);
+
+        return ResponseEntity.ok("입력완료");
+    }
 
     //    String uploadPath = "C:\\picture\\";
     @PostMapping("/board/add")

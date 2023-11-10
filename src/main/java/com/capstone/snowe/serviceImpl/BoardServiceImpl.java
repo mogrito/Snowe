@@ -51,6 +51,8 @@ public class BoardServiceImpl implements BoardService {
         MemberDTO member = memberMapper.findByLoginId(user.getUsername());
         boardDTO.setLoginId(member.getNickname());
 
+        System.out.println("Received JSON: " + boardDTO);
+
         this.boardMapper.addBoard(boardDTO);
         System.out.println("BoardServiceImpl의 addBoard입니다 : " + boardDTO);
         return boardDTO.getBoardId();

@@ -4,6 +4,7 @@ import com.capstone.snowe.dto.BoardDTO;
 import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.dto.RecommendDTO;
 import com.capstone.snowe.service.BoardService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
@@ -74,8 +75,9 @@ public class BoardController {
 
     //    String uploadPath = "C:\\picture\\";
     @PostMapping("/board/add")
-    public ResponseEntity<List<BoardFileDTO>> add(@RequestPart("board") BoardDTO boardDTO, @RequestPart(value="image", required=false)MultipartFile[] files, @AuthenticationPrincipal UserDetails user) throws Exception {
-        /* public ResponseEntity<List<BoardFileDTO>> add(@RequestPart("board") BoardDTO boardDTO, @RequestPart("files")MultipartFile[] files) throws Exception { */
+    public ResponseEntity<List<?>> add(@RequestPart(value = "board") @Valid BoardDTO boardDTO, @RequestPart(value="image", required=false)MultipartFile[] files, @AuthenticationPrincipal UserDetails user) throws Exception {
+        logger.info(String.valueOf(boardDTO));
+
         int boardId = boardService.addBoard(boardDTO, user);
 
         // 이미지 파일이 없을 시,

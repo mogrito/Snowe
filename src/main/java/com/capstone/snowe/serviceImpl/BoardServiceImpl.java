@@ -9,7 +9,6 @@ import com.capstone.snowe.mapper.BoardMapper;
 import com.capstone.snowe.mapper.MemberMapper;
 import com.capstone.snowe.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.UserDatabase;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -37,14 +36,6 @@ public class BoardServiceImpl implements BoardService {
         return this.boardMapper.oldGetBoardList();
     }
 
-    @Override
-    public void testInsertToBoard(BoardDTO boardDTO) {
-        /*System.out.println(boardDTO.getContent());
-        System.out.println(boardDTO.getTitle());
-        System.out.println(boardDTO.getLoginId());*/
-
-        boardMapper.testInsertToBoard(boardDTO);
-    }
 
     @Override       //게시글 작성                /* 첨부파일 기능 추가 */
     public int addBoard(BoardDTO boardDTO, @AuthenticationPrincipal UserDetails user) {

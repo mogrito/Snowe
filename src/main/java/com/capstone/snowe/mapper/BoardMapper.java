@@ -15,8 +15,6 @@ public interface BoardMapper {
 
     void addBoard(BoardDTO boardDTO);    // 게시글 작성
 
-    void testInsertToBoard(BoardDTO boardDTO);
-
     BoardDTO getBoardId(int BOARD_ID);       // 게시글 자세히보기
 
     int editBoard(BoardDTO boardDTO);        // 게시글 수정하기

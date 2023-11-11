@@ -4,7 +4,6 @@ import com.capstone.snowe.dto.BoardDTO;
 import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.dto.RecommendDTO;
 import com.capstone.snowe.service.BoardService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
 import org.slf4j.Logger;
@@ -15,6 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -22,16 +22,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Date;
-import java.util.UUID;
+import java.util.*;
 
 /* 리액트, 부트 연동 */
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
+@EnableWebMvc
 public class BoardController {
 
     private final BoardService boardService;
@@ -66,24 +63,22 @@ public class BoardController {
      * 첨부파일도 같이 INSERT
      *
      * */
-    @PostMapping("/board/test/add")
-    public ResponseEntity<String> testAdd(@RequestPart("board") BoardDTO boardDTO) {
-        boardService.testInsertToBoard(boardDTO);
-
-        return ResponseEntity.ok("입력완료");
-    }
 
     //    String uploadPath = "C:\\picture\\";
-    @PostMapping("/board/add")
-    public ResponseEntity<List<?>> add(@RequestPart(value = "board") @Valid BoardDTO boardDTO, @RequestPart(value="image", required=false)MultipartFile[] files, @AuthenticationPrincipal UserDetails user) throws Exception {
+
+    @PostMapping(value = "/board/add", consumes = {"multipart/form-data"})
+    public ResponseEntity<List<?>> add(@RequestPart(value = "board") BoardDTO boardDTO, @RequestPart(value="image")MultipartFile[] files, @AuthenticationPrincipal UserDetails user) throws Exception {
         logger.info(String.valueOf(boardDTO));
 
         int boardId = boardService.addBoard(boardDTO, user);
 
         // 이미지 파일이 없을 시,
         if (files == null || files.length == 0) {
+            logger.info("파일이 없어요 ");
             return new ResponseEntity<>(Collections.emptyList(), HttpStatus.OK);
         }
+
+        logger.info("파일이 있어요 " + files);
 
         //이미지 파일 체크
         for (MultipartFile multipartFile : files) {

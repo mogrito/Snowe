@@ -1,5 +1,7 @@
 package com.capstone.snowe.service;
 
+import com.capstone.snowe.dto.ReservationDTO;
+
 public interface ReservationService {
 
     /*
@@ -16,4 +18,6 @@ public interface ReservationService {
      * lessonStat를 변경
      * */
     void updateReserveCountAndLessonStat(String lessonId);
+
+    ReservationDTO getReservationListOnDate(ReservationDTO reservationDTO);
 }

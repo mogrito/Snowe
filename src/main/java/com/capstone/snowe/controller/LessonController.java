@@ -13,14 +13,17 @@ import java.util.List;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/lesson")
 public class LessonController {
     @Autowired
     private LessonService lessonService;
 
+
+
     /*
     * 강사가 강습 등록하기
     * */
-    @PostMapping("/lesson/add")
+    @PostMapping("//add")
     public ResponseEntity<String> lessonInsert(@RequestBody LessonDTO lessonDTO, @AuthenticationPrincipal UserDetails user) throws Exception{
         lessonDTO.setLoginId(user.getUsername());
         String div = lessonDTO.getLessonDiv();
@@ -42,7 +45,7 @@ public class LessonController {
     /*
     * 강습정보 수정하기
     * */
-    @PutMapping("/lesson/edit{lessonId}")
+    @PutMapping("/edit{lessonId}")
     public ResponseEntity<String> lessonUpdate(@PathVariable String lessonId,@RequestBody LessonDTO lessonDTO ,@AuthenticationPrincipal UserDetails user) throws Exception {
         lessonDTO.setLessonId(lessonId);
         if(lessonDTO.getLoginId().equals(user.getUsername())) {
@@ -57,7 +60,7 @@ public class LessonController {
     /*
     * 강습 삭제하기
     * */
-    @PutMapping("/lesson/del/{lessonId}")
+    @PutMapping("/del/{lessonId}")
     public ResponseEntity<String> lessonDel(@PathVariable String lessonId, @RequestBody LessonDTO lessonDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
         lessonDTO.setLoginId(lessonId);
         if(lessonDTO.getLoginId().equals(user.getUsername())) {
@@ -72,17 +75,9 @@ public class LessonController {
     /*
      * 해당하는 날짜에 존재하는 강습 정보 리스트 가져오기
      * */
-    @GetMapping("/lesson")
+    @GetMapping("/list")
     public ResponseEntity<List<LessonJoinDTO>> ableLesson(@RequestParam("lessonDate") String lessonDate) throws Exception {
         List<LessonJoinDTO> lessonListByDay = lessonService.ableLessonListByDay(lessonDate);
         return ResponseEntity.ok(lessonListByDay);
-    }
-
-    /*
-    * 테스트용 강습 리스트
-    * */
-    @GetMapping("/lesson/list")
-    public List<LessonJoinDTO> lessonList() {
-        return lessonService.lessonList();
     }
 }

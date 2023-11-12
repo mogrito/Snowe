@@ -1,5 +1,6 @@
 package com.capstone.snowe.mapper;
 
+import com.capstone.snowe.dto.ReservationDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -19,6 +20,8 @@ public interface ReservationMapper {
      * lessonStat를 변경
      * */
     void updateReserveCountAndLessonStat(String lessonId);
+
+    ReservationDTO reservationListOnDate(ReservationDTO reservationDTO);
 
 
 }

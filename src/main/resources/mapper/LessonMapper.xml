@@ -41,14 +41,11 @@
         UPDATE
             LESSON
         SET
-            TITLE = #{title},
-            LESSON_CLASS = #{lessonClass},
-            LESSON_LEVEL = #{lessonLevel},
-            LESSON_DATE = TO_CHAR(#{lessonDate}, 'YYYY-MM-DD'),
-            LESSON_DIV = #{lessonDiv},
+            LESSON_TITLE = #{lessonTitle},
             MAX_RESERVE_COUNT = #{maxReserveCount}
         WHERE
             LESSON_ID = #{lessonId}
+            AND LOGIN_ID = #{loginId}
     </update>
 
     <!-- ====================-->
@@ -62,6 +59,7 @@
             DEL_DATE = SYSDATE
         WHERE
             LESSON_ID = #{lessonId}
+          AND LOGIN_ID = #{loginId}
           AND DEL_YN = 'N'
     </update>
 
@@ -128,6 +126,17 @@
         WHERE
             L.LESSON_STAT = 'LS01'    -- 강습상태가 신청가능이면
           AND TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') = #{lessonDate}
+    </select>
+
+    <!-- 강의를 올린 강사만 수정하거나 취소할 수 있게 아이디 가져옴 -->
+    <select id="selectLoginIdByLessonId" resultType="int">
+        SELECT
+            COUNT(LOGIN_ID)
+        FROM
+            LESSON
+        WHERE
+            LESSON_ID = #{lessonId}
+            AND LOGIN_ID = #{loginId}
     </select>
 
 </mapper>

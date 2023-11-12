@@ -233,34 +233,30 @@
         )
     </insert>
 
-
-
-
-
-    <!--               -->
-    <!--페이징 처리를 위해-->
-    <!-- 게시글 총 개수  -->
-    <!--<select id = "boardCount" resultType="int">
-        SELECT COUNT(BOARD_ID)
-        FROM BOARD
-    </select>
-    &lt;!&ndash; 페이징 기능  &ndash;&gt;
-    <select id = "boardPage" parameterType="hashMap" resultType="com.capstone.snowe.dto.BoardDTO">
+    <!-- hot게시판 리스트 -->
+    <select id="hotBoardByRecommend" resultType="com.capstone.snowe.dto.BoardDTO">
         SELECT
-            <include refid="postColumns" />
-        FROM
-            (
-                SELECT
-                    ROWNUM AS RNUM, BOARD.*
-                FROM
-                    BOARD
-                WHERE
-                    ROWNUM <= #{endRow}
-                ORDER BY BOARD.BOARD_ID DESC
+            BOARD_ID,
+            TITLE,
+            CONTENT,
+            LOGIN_ID,
+            CREATE_DATE,
+            RECOMMEND_COUNT,
+            VIEW_COUNT,
+            COMMENT_COUNT,
+            DEL_YN,
+            category
+        FROM (
+            SELECT
+                ROW_NUMBER() OVER (ORDER BY CREATE_DATE DESC) AS rnum,
+                <include refid="postColumns"/>
+            FROM
+                BOARD
+            WHERE
+                RECOMMEND_COUNT >= 10
+                AND DEL_YN = 'N'
             )
         WHERE
-        #{startRow} <= RNUM
-    </select>-->
-
-
+            3 >= rnum
+    </select>
 </mapper>

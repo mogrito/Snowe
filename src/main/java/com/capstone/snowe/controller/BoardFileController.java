@@ -2,15 +2,11 @@ package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.service.BoardFileService;
-import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.http.parser.HttpParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin
@@ -54,7 +48,7 @@ public class BoardFileController {
     }
 
     // 2. 게시글의 사진 가져옴. but, 여러 개의 사진은 못 가져옴
-    /*@GetMapping("/file")
+    @GetMapping("/file")
     public ResponseEntity<byte[]> getImage2(@RequestParam int boardId) {
         List<BoardFileDTO> boardFiles = boardFileService.getFileByBoard(boardId);
 
@@ -72,7 +66,7 @@ public class BoardFileController {
 
         String path = boardFile.getFilePath();
         String fileName = boardFile.getFileSName();
-        File file = new File(path + "\\s_" + fileName);
+        File file = new File(path + "\\" + fileName);
 
         logger.info("파일의 경로 : " + path);
         logger.info("파일의 이름 : " + fileName);
@@ -92,10 +86,10 @@ public class BoardFileController {
 
 
         return result;
-    }*/
+    }
 
     // 3. 게시글에 해당하는 여러 개의 파일 불러오기
-    @GetMapping("/file")
+    /*@GetMapping("/file")
     public List<ResponseEntity<byte[]>> getImage2(@RequestParam int boardId) {
 
         List<BoardFileDTO> boardFiles = boardFileService.getFileByBoard(boardId);
@@ -138,7 +132,7 @@ public class BoardFileController {
         }// for문
 
         return results;
-    }
+    }*/
 
     // 리스트로 안 받아옴
     /*@GetMapping("/file")

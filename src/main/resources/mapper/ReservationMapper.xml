@@ -101,4 +101,22 @@
     </update>
 
 
+    <select id="reservationListOnDate" parameterType="String" resultType="com.capstone.snowe.dto.ReservationDTO">
+        select
+            a.reserve_id,
+            a.teacher_id,
+            a.student_id,
+            a.lesson_code,
+            a.reserve_date,
+            a.cancel_date,
+            a.lesson_id,
+            a.cancel_stat,
+            b.lesson_date
+        from reservation a
+                 INNER JOIN  lesson b
+                             ON a.LESSON_ID = b.LESSON_ID
+        where student_id = #{studentId}
+          and cancel_stat = 'N'
+          and b.LESSON_DATE = #{lessonDate}
+    </select>
 </mapper>

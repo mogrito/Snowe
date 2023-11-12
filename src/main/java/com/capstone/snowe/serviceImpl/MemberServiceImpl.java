@@ -13,8 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.security.auth.login.LoginException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,11 +42,14 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
         MemberDTO member = memberMapper.findByLoginId(user.getUsername());
         // 아래 정보를 제외한 정보는 null 처리
         MemberDTO memberInfo = new MemberDTO();
+        // 이름
         memberInfo.setName(member.getName());
+        // 닉네임
         memberInfo.setNickname(member.getNickname());
         memberInfo.setBirthday(member.getBirthday());
         memberInfo.setEmail(member.getEmail());
         memberInfo.setGender(member.getGender());
+        memberInfo.setRole(member.getRole());
 
         return memberInfo;
     }

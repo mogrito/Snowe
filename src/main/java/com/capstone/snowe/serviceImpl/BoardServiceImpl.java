@@ -36,12 +36,19 @@ public class BoardServiceImpl implements BoardService {
         return this.boardMapper.oldGetBoardList();
     }
 
+    @Override       // 핫 게시물
+    public List<BoardDTO> hotBoardByRecommend() {
+        return this.boardMapper.hotBoardByRecommend();
+    }
+
 
     @Override       //게시글 작성                /* 첨부파일 기능 추가 */
     public int addBoard(BoardDTO boardDTO, @AuthenticationPrincipal UserDetails user) {
         MemberDTO member = memberMapper.findByLoginId(user.getUsername());
         boardDTO.setLoginId(member.getNickname());
 
+        System.out.println("유저의 로그인 아이디 => " + member.getLoginId());
+        System.out.println("유저의 이름과 닉네임 => " + member.getUsername());
         System.out.println("Received JSON: " + boardDTO);
 
         this.boardMapper.addBoard(boardDTO);
@@ -56,18 +63,47 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override       //게시글 상세조회
-    public BoardDTO getBoardId(int BOARD_ID) {
-        return this.boardMapper.getBoardId(BOARD_ID);
+    public BoardDTO getBoardId(int boardId) {
+//        MemberDTO memberDTO = memberMapper.findByLoginId(user.getUsername());
+//
+//        //boardDTO에 토큰에서 가져온 loginId set
+//        boardDTO.setLoginId(memberDTO.getLoginId());
+//
+//        System.out.println("저장될 recommendDTO : " + boardDTO);
+
+        return this.boardMapper.getBoardId(boardId);
+    }
+
+    @Override       // 본인 게시글인지 확인하기 위한 토큰값 검출
+    public UserDetails tokenCheckByBoard(@AuthenticationPrincipal UserDetails user) {
+        MemberDTO member = memberMapper.findByLoginId(user.getUsername());
+        // 아래 정보를 제외한 정보는 null 처리
+
+        MemberDTO memberInfo = new MemberDTO();
+        memberInfo.setNickname(member.getNickname());
+
+        return memberInfo;
     }
 
     @Override       //게시글 수정
-    public int editBoard(BoardDTO boardDTO) {
-        return this.boardMapper.editBoard(boardDTO);
+    public void editBoard(BoardDTO boardDTO, @AuthenticationPrincipal UserDetails user) {
+        MemberDTO memberDTO = memberMapper.findByLoginId(user.getUsername());
+
+        //boardDTO에 토큰에서 가져온 loginId set
+        boardDTO.setLoginId(memberDTO.getLoginId());
+
+        System.out.println("수정할 boardDTO => " + boardDTO);
+        this.boardMapper.editBoard(boardDTO);
     }
 
     @Override       //게시글 삭제
-    public void delBoard(int BOARD_ID) {
-        this.boardMapper.delBoard(BOARD_ID);
+    public void delBoard(BoardDTO boardDTO, @AuthenticationPrincipal UserDetails user) {
+        MemberDTO memberDTO = memberMapper.findByLoginId(user.getUsername());
+
+        //boardDTO에 토큰에서 가져온 loginId set
+        boardDTO.setLoginId(memberDTO.getLoginId());
+
+        this.boardMapper.delBoard(boardDTO);
     }
 
     @Override       // 검색기능

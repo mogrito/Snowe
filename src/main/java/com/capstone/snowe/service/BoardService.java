@@ -14,16 +14,20 @@ public interface BoardService {
 
     List<BoardDTO> getBoardList();      //게시글 목록 조회
     List<BoardDTO> oldGetBoardList();      //게시글 목록 조회(오래된순)
+    
+    List<BoardDTO> hotBoardByRecommend();       // 핫 게시물
 
     int addBoard(BoardDTO boardDTO,@AuthenticationPrincipal UserDetails user);    //게시글 작성
 
     void insertBoardFile(BoardFileDTO boardFileDTO);        //파일 첨부
     
-    BoardDTO getBoardId(int BOARD_ID);       //게시글 상세조회
+    BoardDTO getBoardId(int boardId);       //게시글 상세조회
+
+    UserDetails tokenCheckByBoard(@AuthenticationPrincipal UserDetails user); // 본인 게시글인지 확인하기 위한 토큰값 검출
+
+    void editBoard(BoardDTO boardDTO, @AuthenticationPrincipal UserDetails user);   //게시글 수정
     
-    int editBoard(BoardDTO boardDTO);   //게시글 수정
-    
-    void delBoard(int BOARD_ID);              //게시글 삭제
+    void delBoard(BoardDTO boardDTO, @AuthenticationPrincipal UserDetails user);              //게시글 삭제
 
     List<BoardDTO> searchBoard(String searchType, String keyword);        //검색기능
 

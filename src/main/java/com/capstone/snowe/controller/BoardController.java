@@ -14,13 +14,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -28,22 +25,16 @@ import java.util.*;
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
-@EnableWebMvc
+@RequestMapping("/board")
 public class BoardController {
 
     private final BoardService boardService;
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-    @GetMapping("/test")
-    public String test(){
-        System.out.println("test");
-        return "test";
-    }
-
     /*
      * 게시판 전체 리스트 조회
      * */
-    @GetMapping ("/board/list")
+    @GetMapping ("/list")
     public List<BoardDTO> list() throws Exception {
 
 
@@ -55,10 +46,18 @@ public class BoardController {
      * 게시판 전체 리스트 조회 (오래된 순)
      *
      * */
-    @GetMapping ("/board/oldlist")
+    @GetMapping ("/oldlist")
     public List<BoardDTO> oldSortlist() throws Exception {
 
         return boardService.oldGetBoardList();
+    }
+
+    /*
+    * 핫게시물
+    * */
+    @GetMapping("/hot-List")
+    public List<BoardDTO> hotBoardList() throws Exception{
+        return boardService.hotBoardByRecommend();
     }
 
 
@@ -71,8 +70,8 @@ public class BoardController {
 
     //    String uploadPath = "C:\\picture\\";
 
-    @PostMapping(value = "/board/add", consumes = {"multipart/form-data"})
-    public ResponseEntity<List<?>> add(@RequestPart(value = "board") BoardDTO boardDTO, @RequestPart(value="image")MultipartFile[] files, @AuthenticationPrincipal UserDetails user) throws Exception {
+    @PostMapping(value = "/add", consumes = {"multipart/form-data"})
+    public ResponseEntity<List<?>> add(@RequestPart(value = "board") BoardDTO boardDTO, @RequestPart(value="image", required = false)MultipartFile[] files, @AuthenticationPrincipal UserDetails user) throws Exception {
         logger.info(String.valueOf(boardDTO));
 
         int boardId = boardService.addBoard(boardDTO, user);
@@ -85,28 +84,29 @@ public class BoardController {
 
         logger.info("파일이 있어요 " + files);
 
+
         //이미지 파일 체크
-        for (MultipartFile multipartFile : files) {
-            File checkFile = new File(multipartFile.getOriginalFilename());
-            String type = null;
-
-            try {
-                type = Files.probeContentType(checkFile.toPath());
-                logger.info("MIME TYPE : " + type);
-                if (!type.startsWith("image")) {
-                    List<BoardFileDTO> list = null;
-                    return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            /*if (!type.startsWith("image")) {
-                List<BoardFileDTO> list = null;
-                return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
-            }*/
-        }
+//        for (MultipartFile multipartFile : files) {
+//            File checkFile = new File(multipartFile.getOriginalFilename());
+//            //String type = null;
+//
+//            try {
+//                type = Files.probeContentType(checkFile.toPath());
+//                logger.info("MIME TYPE : " + type);
+//                if (!type.startsWith("image")) {
+//                    List<BoardFileDTO> list = null;
+//                    return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
+//                }
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//
+//            /*if (!type.startsWith("image")) {
+//                List<BoardFileDTO> list = null;
+//                return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
+//            }*/
+//        }
 
         //파일 저장 경로 선언
         String uploadFolder = "C:\\upload";
@@ -143,6 +143,8 @@ public class BoardController {
             boardFileDTO.setFilePath(String.valueOf(filePath));
             boardFileDTO.setFileSize(multipartFile.getSize());
             boardFileDTO.setFileType(multipartFile.getContentType());
+
+            logger.info("타입 => " + multipartFile.getContentType());
 
 
             //파일 이름에 UUID적용
@@ -204,18 +206,27 @@ public class BoardController {
      *
      * */
     // @RequestParam int BOARD_ID
-    @GetMapping("/board/view/{boardId}")
+    @GetMapping("/view/{boardId}")
     public ResponseEntity<BoardDTO> getBoardView(@PathVariable int boardId) throws Exception {
         //클릭 시 조회수 증가
         boardService.increaseViewCount(boardId);
 
+        // boardDTO에 boardId set
+//        boardDTO.setBoardId(boardId);
+
         //해당 게시글 보기
         BoardDTO board = boardService.getBoardId(boardId);
 
-
-
-
         return ResponseEntity.ok(board);
+    }
+
+    /*
+    * 본인 게시글인지 확인하기 위한 토큰값 검출
+    * 게시글 수정, 삭제 검사
+    * */
+    @GetMapping("/view/token-check")
+    public UserDetails tokenCheckByBoard(@AuthenticationPrincipal UserDetails userDetails) throws Exception {
+        return boardService.tokenCheckByBoard(userDetails);
     }
 
     /*
@@ -223,35 +234,19 @@ public class BoardController {
      * 게시글 수정 API
      *
      * */
-    @PutMapping("/board/edit/{boardId}")
-    public ResponseEntity<String> editPage(@PathVariable int boardId, @RequestBody BoardDTO boardDTO) throws Exception {
+    @PutMapping("/edit/{boardId}")
+    public ResponseEntity<String> editPage(@PathVariable int boardId, @RequestBody BoardDTO boardDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
 
         try {
+            // boardDTO에 boardId set
             boardDTO.setBoardId(boardId);
-            this.boardService.editBoard(boardDTO);
-            return ResponseEntity.ok("수정완료");
+
+            this.boardService.editBoard(boardDTO, user);
+            return ResponseEntity.ok("게시글 수정완료");
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-
-
-        /*// 가져온 데이터가 없으면 404 에러 반환
-        if (boardDTO == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        // 변경사항 적용
-        boardDTO.setTITLE(boardDTO.getTITLE());
-        boardDTO.setCONTENT(boardDTO.getCONTENT());
-        //해당 게시글 보기
-        boardService.getBoardId(BOARD_ID);
-        //데이터 저장
-        boardService.editBoard(boardDTO);
-
-        logger.debug("Employee updated: {}", boardDTO);
-
-        return ResponseEntity.ok("수정완료");*/
 
     }
 
@@ -263,10 +258,17 @@ public class BoardController {
      * */
     // ("/board/del")
     //@RequestParam(value="BNO", required = false, defaultValue = "0")
-    @PutMapping("/board/del/{boardId}")
-    public ResponseEntity<String> del(@PathVariable int boardId) throws Exception {
-        boardService.delBoard(boardId);
-        return ResponseEntity.ok("삭제성공");
+    @PutMapping("/del/{boardId}")
+    public ResponseEntity<String> del(@PathVariable int boardId,BoardDTO boardDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
+        try {
+            // boardDTO에 set
+            boardDTO.setBoardId(boardId);
+
+            this.boardService.delBoard(boardDTO, user);
+            return ResponseEntity.ok("삭제성공");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+        }
     }
 
     /*
@@ -274,7 +276,7 @@ public class BoardController {
      * 제목, 내용, 작성자 기준으로 게시글 검색하기
      *
      * */
-    @GetMapping("/board/search")                        // 클라이언트에서 검색타입을 맞추고 해당 키워드 요청
+    @GetMapping("/search")                        // 클라이언트에서 검색타입을 맞추고 해당 키워드 요청
     public ResponseEntity<List<BoardDTO>> searchBoard(@RequestParam("searchType") String searchType, @RequestParam("keyword") String keyword) {
         List<BoardDTO> searchResult = this.boardService.searchBoard(searchType, keyword);
         return ResponseEntity.ok(searchResult);
@@ -284,11 +286,11 @@ public class BoardController {
     * 게시글 추천
     * <트리거로 board테이블의 recommend_count도 update되도록 설정>
     * */
-    @PostMapping("/board/recommend/{boardId}")
+    @PostMapping("/recommend/{boardId}")
     public ResponseEntity<String> recommendByBoard(@PathVariable int boardId, RecommendDTO recommendDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
         // 가져온 boardId값 할당
         recommendDTO.setBoardId(boardId);
-
+        logger.info("이게뭔데" + recommendDTO);
         // 추천 중복검사
         int recommendCount = boardService.checkRecommendByLoginId(recommendDTO, user);
 

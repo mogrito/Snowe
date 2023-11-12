@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -13,16 +13,19 @@ public class LessonDTO {
 
 
     private String loginId;
-    private Date lessonDate;
+    private String lessonDate;
+    private String lessonDateEnd;
     private String lessonStat;
     private String lessonId;
     private String lessonDiv;
     private int reserveCount;
     private int maxReserveCount;
-    private String title;
+    private String lessonTitle;
     private String lessonClass;
     private String lessonLevel;
-    private Date delDate;
+    private String lessonStart;
+    private String lessonEnd;
+    private LocalDate delDate;
     private String delYn;
-    private Date lessonRegDate;
+    private LocalDate lessonRegDate;
 }

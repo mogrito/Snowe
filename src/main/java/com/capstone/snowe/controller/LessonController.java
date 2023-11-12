@@ -6,7 +6,6 @@ import com.capstone.snowe.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +24,7 @@ public class LessonController {
     public ResponseEntity<String> lessonInsert(@RequestBody LessonDTO lessonDTO, @AuthenticationPrincipal UserDetails user) throws Exception{
         lessonDTO.setLoginId(user.getUsername());
         String div = lessonDTO.getLessonDiv();
-
+        System.out.println(lessonDTO);
         switch (div){
                 case "오전":
                     lessonDTO.setLessonDiv("LD01");

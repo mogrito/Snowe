@@ -4,22 +4,28 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class LessonJoinDTO {
 
-    private String lessonId;
     private String loginId;
     private String name;
-    private String title;
-    private String lessonClass;
-    private String lessonLevel;
-    private Date lessonDate;
+    private String lessonDate;
+    private String lessonDateEnd;
+    private String lessonStat;
+    private String lessonId;
+    private String Div;
     private int reserveCount;
     private int maxReserveCount;
-    private String div;
-    private String stat;
+    private String lessonTitle;
+    private String lessonClass;
+    private String lessonLevel;
+    private String lessonStart;
+    private String lessonEnd;
+    private LocalDate delDate;
+    private String delYn;
+    private LocalDate lessonRegDate;
 }

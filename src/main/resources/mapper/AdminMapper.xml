@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capstone.snowe.mapper.AdminMapper">
+
+
+    <!-- =========== -->
+    <!-- 강사 임명하기 -->
+    <!-- =========== -->
+    <insert id="addTeacher" parameterType="com.capstone.snowe.dto.TeacherDTO">
+        INSERT INTO TEACHER(LOGIN_ID, NAME)
+        SELECT LOGIN_ID,
+               NAME
+        FROM APPLY_TEACHER
+        WHERE LOGIN_ID = #{LOGIN_ID}
+        -- 페이지에서 사람을 클릭해서 강사로 변경....하기?
+    </insert>
+
+</mapper>

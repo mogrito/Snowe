@@ -19,7 +19,7 @@
     </sql>
 
     <!-- 회원 정보 저장 (회원가입) -->
-    <insert id="save" parameterType="com.capstone.snowe.dto.MemberDTO">
+    <insert id="signup" parameterType="com.capstone.snowe.dto.MemberDTO">
         INSERT INTO member (
         <include refid="memberColumns" />
         ) VALUES (
@@ -36,6 +36,19 @@
         )
     </insert>
 
+    <!-- 강사 자격 신청 -->
+    <insert id="apply" parameterType="com.capstone.snowe.dto.MemberDTO">
+        INSERT INTO APPLY_TEACHER (
+            login_id,
+            name,
+            APPLY_DATE
+        ) VALUES (
+            #{loginId}
+            , #{name}
+            , SYSDATE
+        )
+    </insert>
+
     <!-- 회원 상세정보 조회 -->
     <select id="findByLoginId" parameterType="string" resultType="com.capstone.snowe.dto.MemberDTO">
         SELECT
@@ -46,8 +59,7 @@
         login_id = #{value}
     </select>
 
-
-    <!-- 회원 수 카운팅 (ID 중복 체크) -->
+    <!-- ID 중복 체크  -->
     <select id="countByLoginId" parameterType="string" resultType="int">
         SELECT
             COUNT(*)
@@ -57,6 +69,7 @@
             login_id = #{value}
     </select>
 
+    <!-- 닉네임 중복 체크  -->
     <select id="checkNickname" parameterType="string" resultType="int">
         SELECT
             COUNT(*)
@@ -65,4 +78,66 @@
         WHERE
             nickname = #{value}
     </select>
+
+    <!-- 강사 전체 조회 쿼리  -->
+    <select id="getAllTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
+        SELECT
+            a.login_Id,
+            a.name,
+            c.resort_name,
+            d.classification,
+            a.introduce,
+            a.class_level
+        FROM
+            teacher a
+                INNER JOIN (select code_value as resort_name,code
+                            from common_code
+                            where no ='005') c
+                           on a.resort_id = c.code
+                INNER JOIN (select code_value as classification,code
+                            from common_code
+                            where no ='006') d
+                           on a.classification = d.code
+    </select>
+
+    <select id="getBoardTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
+        SELECT
+            a.login_Id,
+            a.name,
+            c.resort_name,
+            c.classification,
+            a.introduce,
+            a.class_level
+        FROM
+            teacher a
+                INNER JOIN (select code_value as resort_name,code
+                            from common_code
+                            where no ='005') c
+                           on a.resort_id = c.code
+                INNER JOIN (select code_value as classification,code
+                            from common_code
+                            where no ='006' and code = 'CL02' ) c
+                           on a.classification = c.code
+    </select>
+
+    <select id="getSkiTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
+        SELECT
+            a.login_Id,
+            a.name,
+            c.resort_name,
+            c.classification,
+            a.introduce,
+            a.class_level
+        FROM
+            teacher a
+                INNER JOIN (select code_value as resort_name,code
+                            from common_code
+                            where no ='005') c
+                           on a.resort_id = c.code
+                INNER JOIN (select code_value as classification,code
+                            from common_code
+                            where no ='006' and code = 'CL01' ) c
+                           on a.classification = c.code
+    </select>
+
 </mapper>

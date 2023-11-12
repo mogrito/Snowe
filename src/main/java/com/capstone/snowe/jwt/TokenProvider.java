@@ -29,11 +29,12 @@ public class TokenProvider implements InitializingBean {
     private final long tokenValidityInMilliseconds;
     private Key key;
 
+    // application.properties 에서 설장한 값들 가져오기
     public TokenProvider(
             @Value("${jwt.secret}") String secret,
             @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
         this.secret = secret;
-        this.tokenValidityInMilliseconds = tokenValidityInSeconds * 1000;
+        this.tokenValidityInMilliseconds = tokenValidityInSeconds*10;
     }
 
     // 빈이 생성되고 주입을 받은 후에 secret값을 Base64 Decode해서 key 변수에 할당하기 위해
@@ -56,7 +57,7 @@ public class TokenProvider implements InitializingBean {
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities) // 정보 저장
                 .signWith(key, SignatureAlgorithm.HS512) // 사용할 암호화 알고리즘과 , signature 에 들어갈 secret값 세팅
-                .setExpiration(validity) // set Expire Time 해당 옵션 안넣으면 expire안함
+//                .setExpiration(validity) // set Expire Time 해당 옵션 안넣으면 expire안함
                 .compact();
     }
 
@@ -83,12 +84,12 @@ public class TokenProvider implements InitializingBean {
     public boolean validateToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            logger.info("올바른 JWT");
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-
+            logger.info(token);
             logger.info("잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
-
             logger.info("만료된 JWT 토큰입니다.");
         } catch (UnsupportedJwtException e) {
 

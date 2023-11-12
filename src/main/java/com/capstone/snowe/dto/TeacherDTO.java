@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TeacherDTO {
-    private String id;
+    private String loginId;
     private String name;
-    private String resortId;
+    private String resortName;
+    private String classification;
+    private String introduce;
+    private String classLevel;
 }

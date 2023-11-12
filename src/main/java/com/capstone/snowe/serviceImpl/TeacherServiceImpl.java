@@ -11,15 +11,6 @@ public class TeacherServiceImpl implements TeacherService {
     @Autowired
     private TeacherMapper teacherMapper;
 
-    @Override
-    public void addTeacher(String id) {
-        this.teacherMapper.addTeacher(id);
-    }
-
-    @Override
-    public void perCodeUpdate(String id) {
-        this.teacherMapper.perCodeUpdate(id);
-    }
 
     @Override
     public void updateTeacherStat(TeacherDTO teacherDTO) {

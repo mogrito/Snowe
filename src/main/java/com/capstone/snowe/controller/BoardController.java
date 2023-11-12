@@ -34,6 +34,11 @@ public class BoardController {
     private final BoardService boardService;
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
+    @GetMapping("/test")
+    public String test(){
+        System.out.println("test");
+        return "test";
+    }
 
     /*
      * 게시판 전체 리스트 조회

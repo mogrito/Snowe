@@ -11,6 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class LessonDTO {
 
+
     private String loginId;
     private Date lessonDate;
     private String lessonStat;
@@ -24,5 +25,4 @@ public class LessonDTO {
     private Date delDate;
     private String delYn;
     private Date lessonRegDate;
-
 }

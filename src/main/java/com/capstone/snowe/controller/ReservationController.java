@@ -31,20 +31,13 @@ public class ReservationController {
     }
 
     @GetMapping("/listOnDate")
-    public ResponseEntity<ReservationDTO> getReservationListOnDate(@RequestParam String lessonDate, @AuthenticationPrincipal UserDetails user){
+    @ResponseBody
+    public ReservationDTO getReservationListOnDate(@RequestParam String lessonDate, @AuthenticationPrincipal UserDetails user){
         ReservationDTO reservationDTO = new ReservationDTO();
         reservationDTO.setStudentId(user.getUsername());
         reservationDTO.setLessonDate(lessonDate);
 
-        ReservationDTO result = this.reservationService.getReservationListOnDate(reservationDTO);
-
-        if (result != null && result.getReservations() != null && !result.getReservations().isEmpty()) {
-            // 예약 목록이 비어있지 않으면 200 OK와 함께 데이터를 반환
-            return ResponseEntity.ok(result);
-        } else {
-            // 예약 목록이 비어있거나 오류가 발생한 경우 204 No Content 반환
-            return ResponseEntity.noContent().build();
-        }
+        return this.reservationService.getReservationListOnDate(reservationDTO);
     }
 
 }

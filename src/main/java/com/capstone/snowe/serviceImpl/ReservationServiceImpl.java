@@ -35,7 +35,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public ReservationDTO getReservationListOnDate(ReservationDTO reservationDTO) {
-        this.reservationMapper.reservationListOnDate(reservationDTO);
-        return reservationDTO;
+        return this.reservationMapper.reservationListOnDate(reservationDTO);
     }
 }

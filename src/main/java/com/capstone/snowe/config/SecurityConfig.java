@@ -70,6 +70,7 @@ public class SecurityConfig {
                         .requestMatchers("/member/**").permitAll()
                         .requestMatchers("/board/**").permitAll()
                         .requestMatchers("/comment/**").permitAll()
+                        .requestMatchers("/reservation").hasAuthority("USER")
                         .anyRequest().authenticated()
                 )// 그 외 인증 없이 접근X
 

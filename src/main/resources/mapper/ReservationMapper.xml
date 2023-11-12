@@ -85,15 +85,20 @@
             a.reserve_id,
             a.teacher_id,
             a.student_id,
+            c.name,
             a.lesson_code,
             a.reserve_date,
             a.cancel_date,
             a.lesson_id,
             a.cancel_stat,
-            b.lesson_date
+            b.lesson_date,
+            b.lesson_title
+
         from reservation a
                  INNER JOIN  lesson b
                              ON a.LESSON_ID = b.LESSON_ID
+                 INNER JOIN  member c
+                             ON a.teacher_id = c.login_id
         where student_id = #{studentId}
           and cancel_stat = 'N'
           and b.LESSON_DATE = #{lessonDate}

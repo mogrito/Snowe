@@ -16,4 +16,6 @@ public class ReservationDTO {
     private LocalDate cancelDate;
     private String cancelStat;
     private String lessonDate;
+    private String name;
+    private String lessonTitle;
 }

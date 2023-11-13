@@ -28,4 +28,6 @@ public class LessonDTO {
     private LocalDate delDate;
     private String delYn;
     private LocalDate lessonRegDate;
+    private String lessonAge;
+    private String lessonIntroduce;
 }

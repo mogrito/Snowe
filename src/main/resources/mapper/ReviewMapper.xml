@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capstone.snowe.mapper.ReviewMapper">
+
+
+
+    <!-- ======================================= -->
+    <!-- 강사 설정 (본인의 활동 스키장이 어딘지 설정) -->
+    <!-- 강사 설명이 될 수도 있고 다른 정보들이 추가될 수도 있음 -->
+    <!-- ======================================= -->
+    <insert id="review">
+        INSERT INTO REVIEW(REVIEW_ID, LOGIN_ID, TEACHER_ID, LESSON_ID, RATING, REVIEW_COMMENT, REG_DATE)
+        SELECT
+            REVIEW_SEQ.NEXTVAL,
+            #{loginId},
+            #{teacher},
+            #{rating},
+            #{reviewComment},
+            sysdate
+        FROM
+            LESSON L
+            INNER INTO TEACHER T ON L.LOGIN_ID = T.LOGIN_ID
+        WHERE
+            L.LESSON_ID = #{lessonId}
+          AND T.LOGIN_ID = #{teacherId}
+    </insert>
+
+
+
+</mapper>

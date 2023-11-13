@@ -146,4 +146,14 @@ public class BoardFileController {
         Resource imageResource = new ClassPathResource(path + "/s_" + fileName);
     }*/
 
+    /*@GetMapping("/image")
+    public ResponseEntity<?> returnImage(@RequestParam String fileName) {
+        List<BoardFileDTO> boardFiles = boardFileService.getFileByBoard(boardId);
+
+
+        String path = "C:\\upload\\respository\\image\\"; //이미지가 저장된 위치
+        Resource resource = new FileSystemResource(path + fileName);
+        return new ResponseEntity<>(resource, HttpStatus.OK);
+    }*/
+
 }

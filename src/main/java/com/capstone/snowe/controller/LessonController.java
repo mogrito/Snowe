@@ -3,7 +3,7 @@ package com.capstone.snowe.controller;
 import com.capstone.snowe.dto.LessonDTO;
 import com.capstone.snowe.mapper.MemberMapper;
 import com.capstone.snowe.service.LessonService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/lesson")
 public class LessonController {
-    @Autowired
-    private LessonService lessonService;
-    @Autowired
-    private MemberMapper memberMapper;
+
+    private final LessonService lessonService;
+    private final MemberMapper memberMapper;
 
 
 
@@ -29,18 +29,12 @@ public class LessonController {
         lessonDTO.setLoginId(user.getUsername());
         String div = lessonDTO.getLessonDiv();
         System.out.println(lessonDTO);
-        switch (div){
-                case "오전":
-                    lessonDTO.setLessonDiv("LD01");
-                    break;
-                case "오후":
-                    lessonDTO.setLessonDiv("LD02");
-                    break;
-                case "야간":
-                    lessonDTO.setLessonDiv("LD03");
-                    break;
-                default:
-                    break;
+        switch (div) {
+            case "오전" -> lessonDTO.setLessonDiv("LD01");
+            case "오후" -> lessonDTO.setLessonDiv("LD02");
+            case "야간" -> lessonDTO.setLessonDiv("LD03");
+            default -> {
+            }
         }
         this.lessonService.lessonInsert(lessonDTO);
         return ResponseEntity.ok("강습등록이 완료되었습니다.");

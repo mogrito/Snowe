@@ -81,6 +81,7 @@ public class BoardServiceImpl implements BoardService {
 
         MemberDTO memberInfo = new MemberDTO();
         memberInfo.setNickname(member.getNickname());
+        memberInfo.setRole(member.getRole());
 
         return memberInfo;
     }

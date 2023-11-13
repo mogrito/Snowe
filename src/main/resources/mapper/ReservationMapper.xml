@@ -16,7 +16,7 @@
         SELECT
             'R' || LPAD(RESERVE_SEQ.NEXTVAL, 8, 0) AS RESERVE_ID,
             T.LOGIN_ID AS TEACHER_ID,
-            #{student_id} AS STUDENT_ID,
+            #{studentId} AS STUDENT_ID,
             L.LESSON_ID AS LESSON_ID,
             SYSDATE AS RESERVE_DATE
         FROM

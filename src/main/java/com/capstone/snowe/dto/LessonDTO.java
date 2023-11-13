@@ -14,7 +14,7 @@ public class LessonDTO {
 
     private String loginId;
     private String lessonDate;
-    private String lessonDateEnd;
+    private LocalDate lessonDateEnd;
     private String lessonStat;
     private String lessonId;
     private String lessonDiv;

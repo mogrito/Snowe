@@ -3,13 +3,14 @@ package com.capstone.snowe.serviceImpl;
 import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.mapper.TeacherMapper;
 import com.capstone.snowe.service.TeacherService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class TeacherServiceImpl implements TeacherService {
-    @Autowired
-    private TeacherMapper teacherMapper;
+
+    private final TeacherMapper teacherMapper;
 
 
     @Override

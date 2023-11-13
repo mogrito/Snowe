@@ -28,6 +28,15 @@
             BOARD_ID = #{boardId}
     </select>
 
+    <select id="getFileByBoardTest" resultType="com.capstone.snowe.dto.BoardFileDTO">
+        SELECT
+        <include refid="fileColumns"/>
+        FROM
+        BOARD_FILE
+        WHERE
+
+    </select>
+
 
     <!-- ============== -->
     <!-- 게시판 파일 업로드-->

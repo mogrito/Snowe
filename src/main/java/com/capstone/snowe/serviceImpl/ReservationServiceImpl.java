@@ -3,14 +3,14 @@ package com.capstone.snowe.serviceImpl;
 import com.capstone.snowe.dto.ReservationDTO;
 import com.capstone.snowe.mapper.ReservationMapper;
 import com.capstone.snowe.service.ReservationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
 
-    @Autowired
-    private ReservationMapper reservationMapper;
+    private final ReservationMapper reservationMapper;
 
     /*
      * 1. 캘린더에서 날짜를 선택

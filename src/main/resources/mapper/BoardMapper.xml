@@ -257,6 +257,6 @@
                 AND DEL_YN = 'N'
             )
         WHERE
-            3 >= rnum
+            4 >= rnum
     </select>
 </mapper>

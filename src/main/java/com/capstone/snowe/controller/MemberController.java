@@ -6,7 +6,6 @@ import com.capstone.snowe.dto.TokenDTO;
 import com.capstone.snowe.jwt.JwtFilter;
 import com.capstone.snowe.jwt.TokenProvider;
 import com.capstone.snowe.service.MemberService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,11 +33,6 @@ public class MemberController {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 
-    @RequestMapping("/test")
-    public String test(@RequestBody String loginId){
-        memberService.findMemberByLoginId(loginId);
-        return null;
-    }
 
     // 토큰 로그인
     @PostMapping("/login")

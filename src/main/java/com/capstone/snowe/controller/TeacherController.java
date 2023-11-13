@@ -1,8 +1,10 @@
 package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.TeacherDTO;
+import com.capstone.snowe.service.MemberService;
 import com.capstone.snowe.service.TeacherService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

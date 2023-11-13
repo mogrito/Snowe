@@ -1,8 +1,10 @@
 package com.capstone.snowe.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -14,13 +16,13 @@ public class BoardDTO {
 
     private int boardId;    //게시글 id
 
-    private String loginId;          //작성자 id
+    private String loginId;  //작성자 id
 
     private String title; //게시글 제목
 
     private String content;     //게시글 내용
 
-    private Date createDate;     //작성일자
+    private LocalDate createDate;     //작성일자
 
     private int recommendCount;    //추천수
 

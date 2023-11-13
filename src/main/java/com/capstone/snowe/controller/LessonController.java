@@ -2,8 +2,10 @@ package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.LessonDTO;
 import com.capstone.snowe.dto.LessonJoinDTO;
+import com.capstone.snowe.mapper.MemberMapper;
 import com.capstone.snowe.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,13 +19,15 @@ import java.util.List;
 public class LessonController {
     @Autowired
     private LessonService lessonService;
+    @Autowired
+    private MemberMapper memberMapper;
 
 
 
     /*
     * 강사가 강습 등록하기
     * */
-    @PostMapping("//add")
+    @PostMapping("/add")
     public ResponseEntity<String> lessonInsert(@RequestBody LessonDTO lessonDTO, @AuthenticationPrincipal UserDetails user) throws Exception{
         lessonDTO.setLoginId(user.getUsername());
         String div = lessonDTO.getLessonDiv();
@@ -45,16 +49,27 @@ public class LessonController {
     /*
     * 강습정보 수정하기
     * */
-    @PutMapping("/edit{lessonId}")
-    public ResponseEntity<String> lessonUpdate(@PathVariable String lessonId,@RequestBody LessonDTO lessonDTO ,@AuthenticationPrincipal UserDetails user) throws Exception {
-        lessonDTO.setLessonId(lessonId);
-        if(lessonDTO.getLoginId().equals(user.getUsername())) {
-            this.lessonService.lessonUpdate(lessonDTO);
+    @PutMapping("/edit/{lessonId}")
+    public ResponseEntity<?> lessonUpdate(@PathVariable String lessonId,@RequestBody LessonDTO lessonDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
+
+        LessonDTO checkDTO = new LessonDTO();
+        //레슨id값 할당
+        checkDTO.setLessonId(lessonId);
+
+        int checkIdCount = this.lessonService.selectLoginIdByLessonId(checkDTO, user);
+        System.out.println(checkIdCount);
+
+        if (checkIdCount == 1 ) {
+
+            lessonDTO.setLessonId(lessonId);
+
+            System.out.println("lessonDTO는?? ==> "+lessonDTO);
+
+            this.lessonService.lessonUpdate(lessonDTO, user);
+
+            return ResponseEntity.ok("강습 수정 완료");
         }
-        else{
-            ResponseEntity.status(401);
-        }
-        return ResponseEntity.ok("강습 수정 완료!");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("강습 수정 실패");
     }
 
     /*
@@ -62,9 +77,22 @@ public class LessonController {
     * */
     @PutMapping("/del/{lessonId}")
     public ResponseEntity<String> lessonDel(@PathVariable String lessonId, @RequestBody LessonDTO lessonDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
-        lessonDTO.setLoginId(lessonId);
-        if(lessonDTO.getLoginId().equals(user.getUsername())) {
-            this.lessonService.lessonUpdate(lessonDTO);
+        LessonDTO checkDTO = new LessonDTO();
+        //레슨id값 할당
+        checkDTO.setLessonId(lessonId);
+
+        int checkIdCount = this.lessonService.selectLoginIdByLessonId(checkDTO, user);
+        System.out.println(checkIdCount);
+
+        if (checkIdCount == 1 ) {
+
+            lessonDTO.setLessonId(lessonId);
+
+            System.out.println("lessonDTO는?? ==> "+lessonDTO);
+
+            this.lessonService.lessonDel(lessonDTO, user);
+
+            return ResponseEntity.ok("강습 삭제 완료");
         }
         else{
             ResponseEntity.status(401);
@@ -80,4 +108,6 @@ public class LessonController {
         List<LessonJoinDTO> lessonListByDay = lessonService.ableLessonListByDay(lessonDate);
         return ResponseEntity.ok(lessonListByDay);
     }
+
+
 }

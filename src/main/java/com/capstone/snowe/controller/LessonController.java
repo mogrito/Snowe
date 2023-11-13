@@ -1,7 +1,6 @@
 package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.LessonDTO;
-import com.capstone.snowe.dto.LessonJoinDTO;
 import com.capstone.snowe.mapper.MemberMapper;
 import com.capstone.snowe.service.LessonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -35,10 +32,13 @@ public class LessonController {
         switch (div){
                 case "오전":
                     lessonDTO.setLessonDiv("LD01");
+                    break;
                 case "오후":
                     lessonDTO.setLessonDiv("LD02");
+                    break;
                 case "야간":
                     lessonDTO.setLessonDiv("LD03");
+                    break;
                 default:
                     break;
         }
@@ -100,14 +100,6 @@ public class LessonController {
         return ResponseEntity.ok("등록된 강습 삭제 완료");
     }
 
-    /*
-     * 해당하는 날짜에 존재하는 강습 정보 리스트 가져오기
-     * */
-    @GetMapping("/list")
-    public ResponseEntity<List<LessonJoinDTO>> ableLesson(@RequestParam("lessonDate") String lessonDate) throws Exception {
-        List<LessonJoinDTO> lessonListByDay = lessonService.ableLessonListByDay(lessonDate);
-        return ResponseEntity.ok(lessonListByDay);
-    }
 
 
 }

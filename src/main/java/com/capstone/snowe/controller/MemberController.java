@@ -1,10 +1,12 @@
 package com.capstone.snowe.controller;
 
+import com.capstone.snowe.dto.LessonJoinDTO;
 import com.capstone.snowe.dto.MemberDTO;
 import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.dto.TokenDTO;
 import com.capstone.snowe.jwt.JwtFilter;
 import com.capstone.snowe.jwt.TokenProvider;
+import com.capstone.snowe.service.LessonService;
 import com.capstone.snowe.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -27,7 +29,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/member")
 public class MemberController {
-
+    private final LessonService lessonService;
     private final MemberService memberService;
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -135,5 +137,14 @@ public class MemberController {
             throw new IllegalArgumentException("ridingClass is null");
         }
         return Collections.emptyList();
+    }
+
+    /*
+     * 해당하는 날짜에 존재하는 강습 정보 리스트 가져오기
+     * */
+    @GetMapping("/list")
+    public ResponseEntity<List<LessonJoinDTO>> ableLesson(@RequestParam("lessonDate") String lessonDate) throws Exception {
+        List<LessonJoinDTO> lessonListByDay = lessonService.ableLessonListByDay(lessonDate);
+        return ResponseEntity.ok(lessonListByDay);
     }
 }

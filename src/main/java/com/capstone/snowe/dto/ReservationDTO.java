@@ -7,8 +7,6 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ReservationDTO {
 
     private String reserveId;
@@ -20,4 +18,6 @@ public class ReservationDTO {
     private LocalDate cancelDate;
     private String cancelStat;
     private String lessonDate;
+    private String name;
+    private String lessonTitle;
 }

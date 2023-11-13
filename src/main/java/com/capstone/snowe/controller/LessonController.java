@@ -22,6 +22,8 @@ public class LessonController {
     @Autowired
     private MemberMapper memberMapper;
 
+
+
     /*
     * 강사가 강습 등록하기
     * */
@@ -49,7 +51,7 @@ public class LessonController {
     * */
     @PutMapping("/edit/{lessonId}")
     public ResponseEntity<?> lessonUpdate(@PathVariable String lessonId,@RequestBody LessonDTO lessonDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
-        
+
         LessonDTO checkDTO = new LessonDTO();
         //레슨id값 할당
         checkDTO.setLessonId(lessonId);
@@ -92,13 +94,16 @@ public class LessonController {
 
             return ResponseEntity.ok("강습 삭제 완료");
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("강습 삭제 실패");
+        else{
+            ResponseEntity.status(401);
+        }
+        return ResponseEntity.ok("등록된 강습 삭제 완료");
     }
 
     /*
      * 해당하는 날짜에 존재하는 강습 정보 리스트 가져오기
      * */
-    @GetMapping("/lesson")
+    @GetMapping("/list")
     public ResponseEntity<List<LessonJoinDTO>> ableLesson(@RequestParam("lessonDate") String lessonDate) throws Exception {
         List<LessonJoinDTO> lessonListByDay = lessonService.ableLessonListByDay(lessonDate);
         return ResponseEntity.ok(lessonListByDay);

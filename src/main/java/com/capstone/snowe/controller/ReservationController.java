@@ -31,13 +31,11 @@ public class ReservationController {
     }
 
     @GetMapping("/listOnDate")
+    @ResponseBody
     public ReservationDTO getReservationListOnDate(@RequestParam String lessonDate, @AuthenticationPrincipal UserDetails user){
         ReservationDTO reservationDTO = new ReservationDTO();
-
         reservationDTO.setStudentId(user.getUsername());
         reservationDTO.setLessonDate(lessonDate);
-
-        System.out.println("DTO는?? ==> " + reservationDTO);
 
         return this.reservationService.getReservationListOnDate(reservationDTO);
     }

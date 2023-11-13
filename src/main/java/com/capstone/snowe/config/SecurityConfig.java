@@ -19,8 +19,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.util.Collections;
 
 @Configuration
-@RequiredArgsConstructor
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final TokenProvider tokenProvider;
@@ -48,6 +48,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
+                //cors 설정
                 .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
                 // srf를 disable
                 .csrf().disable()
@@ -63,12 +64,13 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/board/**").permitAll()
                         .requestMatchers("/board/add").hasAuthority("USER")
                         .requestMatchers("/admin/**").permitAll()
                         .requestMatchers("/lesson/**").hasAuthority("USER")
                         .requestMatchers("/member/**").permitAll()
+                        .requestMatchers("/board/**").permitAll()
                         .requestMatchers("/comment/**").permitAll()
+                        .requestMatchers("/reservation").hasAuthority("USER")
                         .requestMatchers("/teachers/**").hasAuthority("TEACHER")
                         .anyRequest().authenticated()
                 )// 그 외 인증 없이 접근X

@@ -1,8 +1,10 @@
 package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.TeacherDTO;
+import com.capstone.snowe.service.MemberService;
 import com.capstone.snowe.service.TeacherService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +20,9 @@ public class TeacherController {
     public void me() {
         System.out.println("강사권한확인");
     }
-
-
-    //강사 정보 수정하기(스키장 정보)
+    /*
+    * 강사 정보 수정하기(스키장 정보)
+    * */
     @PutMapping("/{id}")
     public ResponseEntity<String> updateTeacherStat(@PathVariable String id, @RequestBody TeacherDTO teacherDTO) throws Exception {
 

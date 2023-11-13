@@ -17,8 +17,8 @@ public class ReservationServiceImpl implements ReservationService {
      * 2. 맘에 드는 강사의 강습을 선택 후 예약하기
      * */
     @Override
-    public void LessonReservationByDay(String lessonId, String teacherId) {
-        this.reservationMapper.LessonReservationByDay(lessonId, teacherId);
+    public void LessonReservationByDay(ReservationDTO reservationDTO) {
+        this.reservationMapper.LessonReservationByDay(reservationDTO);
     }
 
     @Override

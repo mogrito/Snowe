@@ -22,9 +22,9 @@ public class ReservationController {
      * 2. 맘에 드는 강사의 강습을 선택 후 예약하기
      * */
     @PostMapping("/reserve")
-    public ResponseEntity<String> lessonReservation(@RequestParam String lessonId, @RequestParam String teacherId) throws Exception {
-
-        this.reservationService.LessonReservationByDay(lessonId,teacherId);
+    public ResponseEntity<String> lessonReservation(@RequestBody ReservationDTO reservationDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
+        reservationDTO.setStudentId(user.getUsername());
+        this.reservationService.LessonReservationByDay(reservationDTO);
 
         return ResponseEntity.ok("예약 완료");
     }

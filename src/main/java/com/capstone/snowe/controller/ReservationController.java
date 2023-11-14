@@ -38,4 +38,11 @@ public class ReservationController {
         return this.reservationService.getReservationListOnDate(reservationDTO);
     }
 
+//    @GetMapping("/reservlist")
+//    public List<ReservationDTO> getreservelist(@AuthenticationPrincipal UserDetails user){
+//        ReservationDTO reservationDTO = new ReservationDTO();
+//        reservationDTO.setStudentId(user.getUsername());
+//        return ;
+//    }
+
 }

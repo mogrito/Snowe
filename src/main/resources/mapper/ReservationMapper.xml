@@ -35,20 +35,21 @@
     <!-- ========================================= -->
     <select id="reservationDetail">
         SELECT
-            R.RESERVE_ID AS 예약번호,
-            L.LESSON_ID AS 강습번호,
-            T.NAME AS 강사이름,
-            M.NAME AS 수강생이름,
-            R.RESERVE_DATE AS 신청일,
-            L.LESSON_DATE AS 강습일,
-            C.STAT AS 강습상태,
-            D.DIV AS 강습구분
+            R.RESERVE_ID ,
+            L.LESSON_ID ,
+            T.NAME ,
+            M.NAME ,
+            L.LESSON_TITLE ,
+            R.RESERVE_DATE ,
+            L.LESSON_DATE ,
+            C.STAT ,
+            D.DIV
         FROM
             RESERVATION R
                 INNER JOIN LESSON L
                            ON R.LESSON_ID = L.LESSON_ID
                 INNER JOIN TEACHER T
-                           ON R.TEACHER_ID = T.ID
+                           ON R.TEACHER_ID = T.login_ID
                 INNER JOIN MEMBER M
                            ON R.STUDENT_ID = M.LOGIN_ID
                 INNER JOIN SKI_RESORT S
@@ -58,7 +59,7 @@
                 INNER JOIN (SELECT CODE, CODE_VALUE AS DIV FROM COMMON_CODE WHERE NO = '004') D
                            ON L.LESSON_DIV = D.CODE
         WHERE
-            STUDENT_ID = #{studentId}     -- #{LOGIN_ID} 현재 로그인중인 ID
+            STUDENT_ID = 'hjs990625';     -- #{LOGIN_ID} 현재 로그인중인 ID
         -- CANCLE_STAT = 'N'을 하지 않은 이유는 예약자가 본인이 취소한 예약도 볼 수 있기 때문
     </select>
 

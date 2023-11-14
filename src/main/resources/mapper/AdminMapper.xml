@@ -7,11 +7,30 @@
     <!-- 강사 임명하기 -->
     <!-- =========== -->
     <insert id="addTeacher" parameterType="com.capstone.snowe.dto.TeacherDTO">
-        INSERT INTO TEACHER(LOGIN_ID, NAME)
+        INSERT INTO TEACHER(
+                            LOGIN_ID,
+                            NAME,
+                            RESORT_ID,
+                            CLASSIFICATION,
+                            CLASS_LEVEL,
+                            INTRODUCE,
+                            CAREER,
+                            HISTORY,
+                            TEAM
+                            )
         SELECT LOGIN_ID,
-               NAME
-        FROM APPLY_TEACHER
-        WHERE LOGIN_ID = #{LOGIN_ID}
+                NAME,
+                RESORT_ID,
+                CLASSIFICATION,
+                CLASS_LEVEL,
+                INTRODUCE,
+                CAREER,
+                HISTORY,
+                TEAM
+        FROM
+            APPLY_TEACHER
+        WHERE
+            LOGIN_ID = #{loginId}
         -- 페이지에서 사람을 클릭해서 강사로 변경....하기?
     </insert>
 

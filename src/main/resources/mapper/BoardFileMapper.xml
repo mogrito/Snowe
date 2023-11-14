@@ -14,6 +14,17 @@
         UUID
     </sql>
 
+    <sql id="teacherFileColumns">
+        FILE_ID,
+        LOGIN_ID,
+        FILE_ONAME,
+        FILE_PATH,
+        FILE_SIZE,
+        FILE_TYPE,
+        UPLOAD_DATE,
+        FILE_SNAME,
+        UUID
+    </sql>
 
 
     <!-- ============== -->
@@ -59,7 +70,28 @@
                     #{fileSName},
                     #{uuid}
                )
+    </insert>
 
+    <!-- ============== -->
+    <!-- 강사신청 파일 업로드-->
+    <!-- member/apply    -->
+    <!-- ============== -->
+    <insert id="insertApplyTeacherFile" parameterType="com.capstone.snowe.dto.BoardFileDTO">
+        INSERT INTO
+        APPLY_TEACHER_FILE (
+        <include refid="teacherFileColumns"/>
+        )
+        VALUES (
+        T_FILE_SEQ.NEXTVAL,
+        #{loginId},
+        #{fileOName},
+        #{filePath},
+        #{fileSize},
+        #{fileType},
+        sysdate,
+        #{fileSName},
+        #{uuid}
+        )
     </insert>
 
 </mapper>

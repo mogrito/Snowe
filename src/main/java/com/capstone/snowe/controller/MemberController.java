@@ -60,10 +60,64 @@ public class MemberController {
 
     // 강사 신청
     @PostMapping("/apply")
-    public MemberDTO applyTeacher(MemberDTO memberDTO,@AuthenticationPrincipal UserDetails user){
-        memberService.apply(memberDTO,user);
+    public MemberDTO applyTeacher(@RequestBody TeacherDTO teacherDTO, @AuthenticationPrincipal UserDetails user) {
+
+        String classification = teacherDTO.getClassification();
+
+        switch (classification) {
+            case "스키" -> teacherDTO.setClassification("CL01");
+            case "보드" -> teacherDTO.setClassification("CL02");
+            default -> {
+            }
+        }
+
+        memberService.apply(teacherDTO, user);
+        System.out.println("파일은 없고 DTO는 이래요 ==>> " + teacherDTO);
         return null;
     }
+
+    /*@PostMapping("/apply")
+    public MemberDTO applyTeacher(@RequestPart(value = "teacher") TeacherDTO teacherDTO, @RequestPart(value="image", required = false) MultipartFile[] files, @AuthenticationPrincipal UserDetails user){
+        // 파일이 없을 시
+        if (files == null || files.length == 0) {
+            memberService.apply(teacherDTO, user);
+            System.out.println("파일은 없고 DTO는 이래요 ==>> " + teacherDTO);
+            return null;
+        }
+
+        // 저장경로
+        String uploadFolder = "C:\\upload\\teacher";
+
+        // 폴더 생성
+        File filePath = new File(uploadFolder);
+
+        if (filePath.exists() == false) {
+            filePath.mkdirs();
+        }
+
+        for (MultipartFile multipartFile : files) {
+
+
+            // 파일이름 저장
+            String fileName = multipartFile.getOriginalFilename();
+
+            // 파일이름에 UUID
+            String uuid = UUID.randomUUID().toString();
+
+            fileName = uuid + "_" + fileName;
+
+            // 파일 위치
+            File fileData = new File(filePath, fileName);
+
+            try {
+                multipartFile.transferTo(fileData);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        }
+        return null;
+    }*/
 
 
     // ME API

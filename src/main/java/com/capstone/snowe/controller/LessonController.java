@@ -27,6 +27,7 @@ public class LessonController {
     @PostMapping("/add")
     public ResponseEntity<String> lessonInsert(@RequestBody LessonDTO lessonDTO, @AuthenticationPrincipal UserDetails user) throws Exception{
         lessonDTO.setLoginId(user.getUsername());
+
         String div = lessonDTO.getLessonDiv();
         System.out.println(lessonDTO);
         switch (div) {

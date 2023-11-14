@@ -37,15 +37,30 @@
     </insert>
 
     <!-- 강사 자격 신청 -->
-    <insert id="apply" parameterType="com.capstone.snowe.dto.MemberDTO">
+    <insert id="apply" parameterType="com.capstone.snowe.dto.TeacherDTO">
         INSERT INTO APPLY_TEACHER (
             login_id,
             name,
-            APPLY_DATE
+            CLASSIFICATION,
+            CLASS_LEVEL,
+            INTRODUCE,
+            RESORT_ID,
+            HISTORY,
+            CAREER,
+            TEAM
         ) VALUES (
             #{loginId}
             , #{name}
-            , SYSDATE
+            ,#{classification}
+            ,#{classLevel}
+            ,#{introduce}
+            ,(select code
+              from common_code
+              where no = '005'
+              and code_value = #{resortName})
+            ,#{history}
+            ,#{career}
+            ,#{team}
         )
     </insert>
 

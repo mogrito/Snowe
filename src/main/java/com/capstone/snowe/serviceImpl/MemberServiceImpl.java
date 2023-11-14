@@ -40,6 +40,7 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
     }
     public UserDetails me(@AuthenticationPrincipal UserDetails user){
         MemberDTO member = memberMapper.findByLoginId(user.getUsername());
+        System.out.println("member ==> "+ member);
         // 아래 정보를 제외한 정보는 null 처리
         MemberDTO memberInfo = new MemberDTO();
         // 이름
@@ -55,10 +56,12 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
     }
 
     @Override
-    public void apply(MemberDTO memberDTO,@AuthenticationPrincipal UserDetails user) {
+    public void apply(TeacherDTO teacherDTO,@AuthenticationPrincipal UserDetails user) {
         MemberDTO member = memberMapper.findByLoginId(user.getUsername());
-
-        memberMapper.apply(member);
+        teacherDTO.setLoginId(member.getLoginId());
+        teacherDTO.setName(member.getName());
+        System.out.println(teacherDTO);
+        memberMapper.apply(teacherDTO);
     }
 
     @Override

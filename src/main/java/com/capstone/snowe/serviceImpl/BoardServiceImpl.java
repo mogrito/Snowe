@@ -1,7 +1,6 @@
 package com.capstone.snowe.serviceImpl;
 
 import com.capstone.snowe.dto.BoardDTO;
-import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.dto.MemberDTO;
 import com.capstone.snowe.dto.RecommendDTO;
 import com.capstone.snowe.mapper.BoardFileMapper;
@@ -54,12 +53,6 @@ public class BoardServiceImpl implements BoardService {
         this.boardMapper.addBoard(boardDTO);
         System.out.println("BoardServiceImpl의 addBoard입니다 : " + boardDTO);
         return boardDTO.getBoardId();
-    }
-    // 게시글과 함께 파일 첨부
-    @Override
-    public void insertBoardFile(BoardFileDTO boardFileDTO) {
-        this.boardFileMapper.insertBoardFile(boardFileDTO);
-        System.out.println("BoardServiceImpl의 insertBoardFile입니다 : " + boardFileDTO);
     }
 
     @Override       //게시글 상세조회

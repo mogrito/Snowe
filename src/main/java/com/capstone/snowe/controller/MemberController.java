@@ -1,11 +1,9 @@
 package com.capstone.snowe.controller;
 
-import com.capstone.snowe.dto.LessonJoinDTO;
-import com.capstone.snowe.dto.MemberDTO;
-import com.capstone.snowe.dto.TeacherDTO;
-import com.capstone.snowe.dto.TokenDTO;
+import com.capstone.snowe.dto.*;
 import com.capstone.snowe.jwt.JwtFilter;
 import com.capstone.snowe.jwt.TokenProvider;
+import com.capstone.snowe.service.BoardFileService;
 import com.capstone.snowe.service.LessonService;
 import com.capstone.snowe.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -19,9 +17,13 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 
 @CrossOrigin
@@ -32,6 +34,7 @@ public class MemberController {
     private final LessonService lessonService;
     private final MemberService memberService;
     private final TokenProvider tokenProvider;
+    private final BoardFileService boardFileService;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 
@@ -59,7 +62,7 @@ public class MemberController {
     }
 
     // 강사 신청
-    @PostMapping("/apply")
+    /*@PostMapping("/apply")
     public MemberDTO applyTeacher(@RequestBody TeacherDTO teacherDTO, @AuthenticationPrincipal UserDetails user) {
 
         String classification = teacherDTO.getClassification();
@@ -74,16 +77,23 @@ public class MemberController {
         memberService.apply(teacherDTO, user);
         System.out.println("파일은 없고 DTO는 이래요 ==>> " + teacherDTO);
         return null;
-    }
+    }*/
 
-    /*@PostMapping("/apply")
-    public MemberDTO applyTeacher(@RequestPart(value = "teacher") TeacherDTO teacherDTO, @RequestPart(value="image", required = false) MultipartFile[] files, @AuthenticationPrincipal UserDetails user){
-        // 파일이 없을 시
-        if (files == null || files.length == 0) {
-            memberService.apply(teacherDTO, user);
-            System.out.println("파일은 없고 DTO는 이래요 ==>> " + teacherDTO);
-            return null;
+    @PostMapping("/apply")
+    public ResponseEntity<List<?>> applyTeacher(@RequestPart(value = "teacher") TeacherDTO teacherDTO, @RequestPart(value="image", required = false) MultipartFile[] files, @AuthenticationPrincipal UserDetails user){
+
+        String classification = teacherDTO.getClassification();
+
+        switch (classification) {
+            case "스키" -> teacherDTO.setClassification("CL01");
+            case "보드" -> teacherDTO.setClassification("CL02");
+            default -> {
+            }
         }
+        // 강사 요청 테이블 등록
+        memberService.apply(teacherDTO, user);
+
+        System.out.println("입력받은 teacherDTO => " + teacherDTO);
 
         // 저장경로
         String uploadFolder = "C:\\upload\\teacher";
@@ -95,30 +105,51 @@ public class MemberController {
             filePath.mkdirs();
         }
 
+
+        //이미지 리스트를 담은 객체
+        List<BoardFileDTO> list = new ArrayList<>();
+
         for (MultipartFile multipartFile : files) {
 
+            //이미지 정보 객체
+            BoardFileDTO boardFileDTO = new BoardFileDTO();
 
             // 파일이름 저장
-            String fileName = multipartFile.getOriginalFilename();
+            String fileOName = multipartFile.getOriginalFilename();
 
             // 파일이름에 UUID
             String uuid = UUID.randomUUID().toString();
 
-            fileName = uuid + "_" + fileName;
+            String fileSName = uuid + "_" + fileOName;
 
             // 파일 위치
-            File fileData = new File(filePath, fileName);
+            File fileData = new File(filePath, fileSName);
+
+            // 접속한 강사의 아이디 set
+            MemberDTO memberDTO = memberService.findMemberByLoginId(user.getUsername());
+            boardFileDTO.setLoginId(memberDTO.getLoginId());
+
+            boardFileDTO.setFileOName(fileOName);        // 파일이름(원본)
+            boardFileDTO.setFilePath(uploadFolder);     // 파일경로
+            boardFileDTO.setFileSize(multipartFile.getSize());  // 파일 사이즈
+            boardFileDTO.setFileType(multipartFile.getContentType());   // 파일타입
+            boardFileDTO.setFileSName(fileSName);       // 파일이름(저장)
+            boardFileDTO.setUuid(uuid);                 // uuid
 
             try {
                 multipartFile.transferTo(fileData);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-        }
-        return null;
-    }*/
+            boardFileService.insertApplyTeacherFile(boardFileDTO);
+            list.add(boardFileDTO);
 
+        }
+
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
 
     // ME API
     @GetMapping("/me")

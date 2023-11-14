@@ -1,7 +1,6 @@
 package com.capstone.snowe.service;
 
 import com.capstone.snowe.dto.BoardDTO;
-import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.dto.RecommendDTO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,8 +17,6 @@ public interface BoardService {
     List<BoardDTO> hotBoardByRecommend();       // 핫 게시물
 
     int addBoard(BoardDTO boardDTO,@AuthenticationPrincipal UserDetails user);    //게시글 작성
-
-    void insertBoardFile(BoardFileDTO boardFileDTO);        //파일 첨부
     
     BoardDTO getBoardId(int boardId);       //게시글 상세조회
 

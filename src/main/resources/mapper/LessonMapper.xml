@@ -36,10 +36,8 @@
                 #{lessonEnd},
                 #{lessonAge},
                 #{lessonIntroduce},
-                (select RESORT_ID
-                 from teacher
-                 where LOGIN_ID = #{loginId}
-               ))
+                (SELECT RESORT_ID FROM TEACHER where LOGIN_ID = #{loginId})
+               )
     </insert>
 
     <!-- =================  -->
@@ -82,8 +80,8 @@
             L.LESSON_TITLE,
             L.LESSON_CLASS,
             L.LESSON_LEVEL,
-            L.LESSON_DATE,
-            L.LESSON_DATE_END,
+            TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') AS LESSON_DATE,
+            TO_CHAR(L.LESSON_DATE_END, 'YYYY-MM-DD') AS LESSON_DATE_END,
             B.RESORT_NAME,
             L.RESERVE_COUNT,
             L.MAX_RESERVE_COUNT,

@@ -3,6 +3,7 @@ package com.capstone.snowe.controller;
 import com.capstone.snowe.dto.BoardDTO;
 import com.capstone.snowe.dto.BoardFileDTO;
 import com.capstone.snowe.dto.RecommendDTO;
+import com.capstone.snowe.service.BoardFileService;
 import com.capstone.snowe.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnails;
@@ -29,6 +30,7 @@ import java.util.*;
 public class BoardController {
 
     private final BoardService boardService;
+    private final BoardFileService boardFileService;
     private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
     /*
@@ -191,7 +193,7 @@ public class BoardController {
             logger.info("파일 타입 : " + boardFileDTO.getFileType());
 
 
-            boardService.insertBoardFile(boardFileDTO);
+            boardFileService.insertBoardFile(boardFileDTO);
             list.add(boardFileDTO);
         }
 

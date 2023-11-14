@@ -15,7 +15,7 @@
     </sql>
 
     <sql id="teacherFileColumns">
-        FILE_ID,
+        TEACHER_FILE_ID,
         LOGIN_ID,
         FILE_ONAME,
         FILE_PATH,
@@ -79,18 +79,18 @@
     <insert id="insertApplyTeacherFile" parameterType="com.capstone.snowe.dto.BoardFileDTO">
         INSERT INTO
         APPLY_TEACHER_FILE (
-        <include refid="teacherFileColumns"/>
+            <include refid="teacherFileColumns"/>
         )
         VALUES (
-        T_FILE_SEQ.NEXTVAL,
-        #{loginId},
-        #{fileOName},
-        #{filePath},
-        #{fileSize},
-        #{fileType},
-        sysdate,
-        #{fileSName},
-        #{uuid}
+            T_FILE_SEQ.NEXTVAL,
+            #{loginId},
+            #{fileOName},
+            #{filePath},
+            #{fileSize},
+            #{fileType},
+            sysdate,
+            #{fileSName},
+            #{uuid}
         )
     </insert>
 

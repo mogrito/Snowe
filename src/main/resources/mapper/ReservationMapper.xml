@@ -43,6 +43,7 @@
             R.RESERVE_DATE,
             L.LESSON_START,
             TO_CHAR(L.LESSON_DATE,'YYYY-MM-DD') as LESSON_DATE,
+            TO_CHAR(L.LESSON_DATE_END,'YYYY-MM-DD') as LESSON_DATE_END,
             C.LESSON_CODE,
             D.LESSON_DIV,
             R.CANCEL_STAT,
@@ -96,6 +97,7 @@
             a.lesson_id,
             a.cancel_stat,
             b.lesson_date,
+            b.lesson_date_end,
             b.lesson_title
 
         from reservation a

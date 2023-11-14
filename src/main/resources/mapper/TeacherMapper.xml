@@ -18,6 +18,49 @@
             ID = #{id} -- 현재 세션 ID 가져옴
     </update>
 
+    <!-- 강사가 본인 강습정보 확인 -->
+    <select id="lessonDetail" parameterType="String" resultType="com.capstone.snowe.dto.LessonDTO">
+        SELECT
+            LESSON_ID,
+            LOGIN_ID,
+            LESSON_TITLE,
+            LESSON_CLASS,
+            LESSON_LEVEL,
+            RESORT_ID,
+            LESSON_AGE,
+            LESSON_DATE,
+            LESSON_DATE_END,
+            LESSON_START,
+            LESSON_END,
+            RESERVE_COUNT,
+            MAX_RESERVE_COUNT,
+            LESSON_DIV,
+            LESSON_INTRODUCE
+        FROM
+            LESSON
+        WHERE
+            DEL_YN = 'N'
+          AND LOGIN_ID = #{loginId}
+
+        </select>
+
+    <!-- 강습별 신청한 인원 -->
+    <select id="studentByLessonId" parameterType="com.capstone.snowe.dto.MemberDTO" resultType="com.capstone.snowe.dto.MemberDTO">
+        SELECT
+            L.LESSON_ID,
+            R.STUDENT_ID,
+            M.NAME,
+            M.NICKNAME,
+            M.EMAIL
+        FROM
+            LESSON L
+                INNER JOIN RESERVATION R ON L.LESSON_ID = R.LESSON_ID
+                INNER JOIN MEMBER M ON R.STUDENT_ID = M.LOGIN_ID
+        WHERE
+            L.LOGIN_ID = #{loginId}
+            and L.LESSON_ID = #{lessonId}
+            and R.CANCEL_STAT = 'N'
+    </select>
 
 
 </mapper>

@@ -27,6 +27,7 @@ public class ReservationController {
         reservationDTO.setStudentId(user.getUsername());
         this.reservationService.LessonReservationByDay(reservationDTO);
 
+        System.out.println("reservationDTO => " + reservationDTO);
         return ResponseEntity.ok("예약 완료");
     }
     /*

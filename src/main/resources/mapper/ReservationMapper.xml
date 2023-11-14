@@ -28,7 +28,6 @@
         WHERE
             L.LESSON_DATE > SYSDATE     -- 강습일자가 현재날짜보다 이후일때
           AND L.LESSON_STAT = 'LS01'  -- 강습 상태가 신청가능일때
-          AND L.LOGIN_ID = #{teacherId} -- 선택한 강사 아이디 가져와서
           AND L.LESSON_ID = #{lessonId} -- 선택한 강습의 아이디가 일치하는지
     </insert>
 

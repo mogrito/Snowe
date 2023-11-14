@@ -30,4 +30,5 @@ public class LessonDTO {
     private LocalDate lessonRegDate;
     private String lessonAge;
     private String lessonIntroduce;
+    private String resortId;
 }

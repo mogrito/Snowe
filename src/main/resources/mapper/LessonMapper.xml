@@ -20,7 +20,8 @@
                            LESSON_START,
                            LESSON_END,
                            LESSON_AGE,
-                           LESSON_INTRODUCE)
+                           LESSON_INTRODUCE,
+                           RESORT_ID)
         VALUES (
                 #{loginId}, -- 토큰이 갖고있는 회원 ID
                 TO_DATE(#{lessonDate}, 'YYYY-MM-DD'),
@@ -34,8 +35,11 @@
                 #{lessonStart},
                 #{lessonEnd},
                 #{lessonAge},
-                #{lessonIntroduce}
-               )
+                #{lessonIntroduce},
+                (select RESORT_ID
+                 from teacher
+                 where LOGIN_ID = #{loginId}
+               ))
     </insert>
 
     <!-- =================  -->

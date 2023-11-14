@@ -6,6 +6,8 @@ import com.capstone.snowe.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ReservationServiceImpl implements ReservationService {
@@ -25,5 +27,15 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationDTO getReservationListOnDate(ReservationDTO reservationDTO) {
         return this.reservationMapper.reservationListOnDate(reservationDTO);
 
+    }
+
+    @Override
+    public List<ReservationDTO> reservationDetail(ReservationDTO reservationDTO) {
+        return this.reservationMapper.reservationDetail(reservationDTO);
+    }
+
+    @Override
+    public void cancelReservation(ReservationDTO reservationDTO) {
+        this.reservationMapper.cancelReservation(reservationDTO);
     }
 }

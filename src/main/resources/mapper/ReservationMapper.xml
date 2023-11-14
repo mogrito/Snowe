@@ -12,13 +12,15 @@
                                 TEACHER_ID,
                                 STUDENT_ID,
                                 LESSON_ID,
-                                RESERVE_DATE)
+                                RESERVE_DATE,
+                                RESORT_ID)
         SELECT
             'R' || LPAD(RESERVE_SEQ.NEXTVAL, 8, 0) AS RESERVE_ID,
             T.LOGIN_ID AS TEACHER_ID,
             #{studentId} AS STUDENT_ID,
             L.LESSON_ID AS LESSON_ID,
-            SYSDATE AS RESERVE_DATE
+            SYSDATE AS RESERVE_DATE,
+            L.RESORT_ID
         FROM
             LESSON L
                 INNER JOIN TEACHER T
@@ -27,23 +29,25 @@
             L.LESSON_DATE > SYSDATE     -- 강습일자가 현재날짜보다 이후일때
           AND L.LESSON_STAT = 'LS01'  -- 강습 상태가 신청가능일때
           AND L.LOGIN_ID = #{teacherId} -- 선택한 강사 아이디 가져와서
-          AND L.LESSON_ID = #{lessonId}   -- 선택한 강습의 아이디가 일치하는지
+          AND L.LESSON_ID = #{lessonId} -- 선택한 강습의 아이디가 일치하는지
     </insert>
 
     <!-- ========================================= -->
     <!-- 개인정보 화면에서 본인이 예약한 예약내역 보여주기 -->
     <!-- ========================================= -->
-    <select id="reservationDetail">
+    <select id="reservationDetail" parameterType="ReservationDTO" resultType="com.capstone.snowe.dto.ReservationDTO">
         SELECT
-            R.RESERVE_ID ,
-            L.LESSON_ID ,
-            T.NAME ,
-            M.NAME ,
-            L.LESSON_TITLE ,
-            R.RESERVE_DATE ,
-            L.LESSON_DATE ,
-            C.STAT ,
-            D.DIV
+            R.RESERVE_ID,
+            L.LESSON_ID,
+            T.NAME,
+            L.LESSON_TITLE,
+            R.RESERVE_DATE,
+            L.LESSON_START,
+            TO_CHAR(L.LESSON_DATE,'YYYY-MM-DD') as LESSON_DATE,
+            C.LESSON_CODE,
+            D.LESSON_DIV,
+            R.CANCEL_STAT,
+            E.RESORT_ID
         FROM
             RESERVATION R
                 INNER JOIN LESSON L
@@ -52,21 +56,21 @@
                            ON R.TEACHER_ID = T.login_ID
                 INNER JOIN MEMBER M
                            ON R.STUDENT_ID = M.LOGIN_ID
-                INNER JOIN SKI_RESORT S
-                           ON T.RESORT_ID = S.RESORT_ID
-                INNER JOIN (SELECT CODE, CODE_VALUE AS STAT FROM COMMON_CODE WHERE NO = '002') C
+                INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_ID FROM COMMON_CODE WHERE NO = '005') E
+                           ON R.RESORT_ID = E.CODE
+                INNER JOIN (SELECT CODE, CODE_VALUE AS LESSON_CODE FROM COMMON_CODE WHERE NO = '002') C
                            ON R.LESSON_CODE = C.CODE
-                INNER JOIN (SELECT CODE, CODE_VALUE AS DIV FROM COMMON_CODE WHERE NO = '004') D
+                INNER JOIN (SELECT CODE, CODE_VALUE AS LESSON_DIV FROM COMMON_CODE WHERE NO = '004') D
                            ON L.LESSON_DIV = D.CODE
         WHERE
-            STUDENT_ID = 'hjs990625';     -- #{LOGIN_ID} 현재 로그인중인 ID
-        -- CANCLE_STAT = 'N'을 하지 않은 이유는 예약자가 본인이 취소한 예약도 볼 수 있기 때문
+            STUDENT_ID = #{studentId}
+            and R.CANCEL_STAT = 'N'
     </select>
 
     <!-- =========== -->
     <!-- 예약 취소하기 -->
     <!-- =========== -->
-    <update id="cancleReservation" parameterType="com.capstone.snowe.dto.ReservationDTO">
+    <update id="cancelReservation" parameterType="com.capstone.snowe.dto.ReservationDTO">
         UPDATE
             RESERVATION
         SET
@@ -77,7 +81,7 @@
         WHERE
             RESERVE_ID = #{reserveId}
           AND STUDENT_ID = #{studentId}
-          AND CANCEL_STAT = 'N';
+          AND CANCEL_STAT = 'N'
     </update>
 
 

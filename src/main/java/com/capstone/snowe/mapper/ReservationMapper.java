@@ -3,6 +3,8 @@ package com.capstone.snowe.mapper;
 import com.capstone.snowe.dto.ReservationDTO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
 public interface ReservationMapper {
 
@@ -13,4 +15,8 @@ public interface ReservationMapper {
     void LessonReservationByDay(ReservationDTO reservationDTO);
 
     ReservationDTO reservationListOnDate(ReservationDTO reservationDTO);
+
+    List<ReservationDTO> reservationDetail(ReservationDTO reservationDTO);
+
+    void cancelReservation(ReservationDTO reservationDTO);
 }

@@ -35,7 +35,6 @@
                 #{lessonEnd},
                 #{lessonAge},
                 #{lessonIntroduce}
-
                )
     </insert>
 

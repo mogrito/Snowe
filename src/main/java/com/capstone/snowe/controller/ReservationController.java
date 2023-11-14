@@ -8,6 +8,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -38,11 +40,19 @@ public class ReservationController {
         return this.reservationService.getReservationListOnDate(reservationDTO);
     }
 
-//    @GetMapping("/reservlist")
-//    public List<ReservationDTO> getreservelist(@AuthenticationPrincipal UserDetails user){
-//        ReservationDTO reservationDTO = new ReservationDTO();
-//        reservationDTO.setStudentId(user.getUsername());
-//        return ;
-//    }
-
+    @GetMapping("/reserveList")
+    public List<ReservationDTO> getreservelist(@AuthenticationPrincipal UserDetails user){
+        ReservationDTO reservationDTO = new ReservationDTO();
+        reservationDTO.setStudentId(user.getUsername());
+        System.out.println("예약DTO:" +reservationDTO);
+        return this.reservationService.reservationDetail(reservationDTO);
+    }
+    @PostMapping("/reserveCancel")
+    public void cancelReserve(@RequestParam String reserveId, @AuthenticationPrincipal UserDetails user){
+        ReservationDTO reservationDTO = new ReservationDTO();
+        reservationDTO.setStudentId(user.getUsername());
+        reservationDTO.setReserveId(reserveId);
+        System.out.println(reserveId +"예약 취소");
+        this.reservationService.cancelReservation(reservationDTO);
+    }
 }

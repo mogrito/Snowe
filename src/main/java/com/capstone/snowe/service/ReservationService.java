@@ -2,6 +2,8 @@ package com.capstone.snowe.service;
 
 import com.capstone.snowe.dto.ReservationDTO;
 
+import java.util.List;
+
 public interface ReservationService {
 
     /*
@@ -12,4 +14,8 @@ public interface ReservationService {
 
 
     ReservationDTO getReservationListOnDate(ReservationDTO reservationDTO);
+
+    List<ReservationDTO> reservationDetail(ReservationDTO reservationDTO);
+
+    void cancelReservation(ReservationDTO reservationDTO);
 }

@@ -1,8 +1,6 @@
 package com.capstone.snowe.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -10,14 +8,15 @@ import java.time.LocalDate;
 public class ReservationDTO {
 
     private String reserveId;
-    private String teacherId;
+    private String name;
     private String studentId;
     private String lessonId;
     private String lessonCode;
+    private String resortId;
     private LocalDate reserveDate;
     private LocalDate cancelDate;
+    private String lessonStart;
     private String cancelStat;
     private String lessonDate;
-    private String name;
     private String lessonTitle;
 }

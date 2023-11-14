@@ -6,25 +6,42 @@
 
 
     <!-- ======================================= -->
-    <!-- 강사 설정 (본인의 활동 스키장이 어딘지 설정) -->
-    <!-- 강사 설명이 될 수도 있고 다른 정보들이 추가될 수도 있음 -->
+    <!-- 리뷰 작성 -->
     <!-- ======================================= -->
-    <insert id="review">
-        INSERT INTO REVIEW(REVIEW_ID, LOGIN_ID, TEACHER_ID, LESSON_ID, RATING, REVIEW_COMMENT, REG_DATE)
+    <insert id="addReview" parameterType="com.capstone.snowe.dto.ReviewDTO">
+        INSERT INTO LESSON_REVIEW(
+                           REVIEW_ID,
+                           TEACHER_ID,
+                           STUDENT_ID,
+                           LESSON_ID,
+                           REVIEW,
+                           REVIEW_DATE
+                           )
         SELECT
             REVIEW_SEQ.NEXTVAL,
-            #{loginId},
-            #{teacher},
-            #{rating},
-            #{reviewComment},
+            #{teacherId},
+            #{studentId},
+            #{lessonId},
+            #{review},
             sysdate
         FROM
             LESSON L
-            INNER INTO TEACHER T ON L.LOGIN_ID = T.LOGIN_ID
+            INNER JOIN TEACHER T ON L.LOGIN_ID = T.LOGIN_ID
         WHERE
             L.LESSON_ID = #{lessonId}
           AND T.LOGIN_ID = #{teacherId}
     </insert>
+
+
+    <select id="getReview" parameterType="String" resultType="com.capstone.snowe.dto.ReviewDTO">
+        SELECT
+            STUDENT_ID,
+            TEACHER_ID,
+            REVIEW_DATE,
+            REVIEW
+        FROM LESSON_REVIEW
+        where TEACHER_ID = #{teacherId}
+    </select>
 
 
 

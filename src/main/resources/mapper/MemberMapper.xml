@@ -99,13 +99,16 @@
         SELECT
             a.login_Id,
             a.name,
-            c.resort_name,
+            c.resort_id,
             d.classification,
             a.introduce,
-            a.class_level
+            a.class_level,
+            a.career,
+            a.history,
+            a.team
         FROM
             teacher a
-                INNER JOIN (select code_value as resort_name,code
+                INNER JOIN (select code_value as resort_id,code
                             from common_code
                             where no ='005') c
                            on a.resort_id = c.code
@@ -119,13 +122,16 @@
         SELECT
             a.login_Id,
             a.name,
-            c.resort_name,
-            c.classification,
+            c.resort_id,
+            d.classification,
             a.introduce,
-            a.class_level
+            a.class_level,
+            a.career,
+            a.history,
+            a.team
         FROM
             teacher a
-                INNER JOIN (select code_value as resort_name,code
+                INNER JOIN (select code_value as resort_id,code
                             from common_code
                             where no ='005') c
                            on a.resort_id = c.code
@@ -136,16 +142,18 @@
     </select>
 
     <select id="getSkiTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
-        SELECT
             a.login_Id,
             a.name,
-            c.resort_name,
-            c.classification,
+            c.resort_id,
+            d.classification,
             a.introduce,
-            a.class_level
+            a.class_level,
+            a.career,
+            a.history,
+            a.team
         FROM
             teacher a
-                INNER JOIN (select code_value as resort_name,code
+                INNER JOIN (select code_value as resort_id,code
                             from common_code
                             where no ='005') c
                            on a.resort_id = c.code

@@ -1,14 +1,11 @@
-package com.capstone.snowe.mapper;
+package com.capstone.snowe.service;
 
 import com.capstone.snowe.dto.ReviewDTO;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
-public interface ReviewMapper {
+public interface ReviewService {
     void addReview(ReviewDTO reviewDTO);
 
     List<ReviewDTO> getReview(String teacherId);
-
 }

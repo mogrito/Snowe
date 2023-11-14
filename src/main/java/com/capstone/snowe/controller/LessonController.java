@@ -3,6 +3,7 @@ package com.capstone.snowe.controller;
 import com.capstone.snowe.dto.LessonDTO;
 import com.capstone.snowe.mapper.MemberMapper;
 import com.capstone.snowe.service.LessonService;
+import com.capstone.snowe.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class LessonController {
 
     private final LessonService lessonService;
     private final MemberMapper memberMapper;
+    private final ReviewService reviewService;
 
 
 
@@ -93,7 +95,5 @@ public class LessonController {
         }
         return ResponseEntity.ok("등록된 강습 삭제 완료");
     }
-
-
 
 }

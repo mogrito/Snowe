@@ -9,6 +9,7 @@ public class ReservationDTO {
 
     private String reserveId;
     private String name;
+    private String teacherId;
     private String studentId;
     private String lessonId;
     private String lessonCode;

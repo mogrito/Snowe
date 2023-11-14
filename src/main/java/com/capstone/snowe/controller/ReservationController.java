@@ -29,7 +29,9 @@ public class ReservationController {
 
         return ResponseEntity.ok("예약 완료");
     }
-
+    /*
+     * 날짜별 강습 가져오기
+     * */
     @GetMapping("/listOnDate")
     @ResponseBody
     public ReservationDTO getReservationListOnDate(@RequestParam String lessonDate, @AuthenticationPrincipal UserDetails user){
@@ -39,7 +41,9 @@ public class ReservationController {
 
         return this.reservationService.getReservationListOnDate(reservationDTO);
     }
-
+    /*
+     * 본인 예약 내역
+     * */
     @GetMapping("/reserveList")
     public List<ReservationDTO> getreservelist(@AuthenticationPrincipal UserDetails user){
         ReservationDTO reservationDTO = new ReservationDTO();
@@ -47,6 +51,9 @@ public class ReservationController {
         System.out.println("예약DTO:" +reservationDTO);
         return this.reservationService.reservationDetail(reservationDTO);
     }
+    /*
+     * 예약취소
+     * */
     @PostMapping("/reserveCancel")
     public void cancelReserve(@RequestParam String reserveId, @AuthenticationPrincipal UserDetails user){
         ReservationDTO reservationDTO = new ReservationDTO();

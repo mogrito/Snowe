@@ -18,4 +18,5 @@ public class ReviewDTO {
     private String lessonId;
     private String review;
     private LocalDate reviewDate;
+    private String lessonTitle;
 }

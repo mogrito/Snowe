@@ -15,7 +15,8 @@
                            STUDENT_ID,
                            LESSON_ID,
                            REVIEW,
-                           REVIEW_DATE
+                           REVIEW_DATE,
+                           LESSON_TITLE
                            )
         SELECT
             REVIEW_SEQ.NEXTVAL,
@@ -37,9 +38,14 @@
         SELECT
             STUDENT_ID,
             TEACHER_ID,
+            a.LESSON_ID,
             REVIEW_DATE,
-            REVIEW
-        FROM LESSON_REVIEW
+            REVIEW,
+            (SELECT LESSON_TITLE
+             FROM LESSON
+             WHERE LESSON_ID = a.LESSON_ID) AS LESSON_TITLE
+        FROM LESSON_REVIEW a
+                 INNER JOIN lesson b ON a.lesson_id = b.lesson_id
         where TEACHER_ID = #{teacherId}
     </select>
 

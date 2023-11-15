@@ -34,4 +34,20 @@
         -- 페이지에서 사람을 클릭해서 강사로 변경....하기?
     </insert>
 
+    <!-- =========== -->
+    <!-- 전체 신청 목록 -->
+    <!-- =========== -->
+    <select id="getApply" resultType="com.capstone.snowe.dto.TeacherDTO">
+        select *
+        from apply_teacher
+    </select>
+
+    <!-- =========== -->
+    <!-- 승인 되지 않은 신청 목록 -->
+    <!-- =========== -->
+    <select id="getApplyN" resultType="com.capstone.snowe.dto.TeacherDTO">
+        select *
+        from apply_teacher
+        where stat =  'N'
+    </select>
 </mapper>

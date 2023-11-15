@@ -28,6 +28,7 @@ dependencies {
     implementation 'net.coobird:thumbnailator:0.4.14'    /* 썸네일 */
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2' // 구현 의존성 추가
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
 tasks.named('test') {

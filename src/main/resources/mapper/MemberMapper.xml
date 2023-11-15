@@ -137,11 +137,12 @@
                            on a.resort_id = c.code
                 INNER JOIN (select code_value as classification,code
                             from common_code
-                            where no ='006' and code = 'CL02' ) c
-                           on a.classification = c.code
+                            where no ='006' and code = 'CL02' ) d
+                           on a.classification = d.code
     </select>
 
     <select id="getSkiTeacher" parameterType="string" resultType="com.capstone.snowe.dto.TeacherDTO">
+        SELECT
             a.login_Id,
             a.name,
             c.resort_id,
@@ -159,8 +160,8 @@
                            on a.resort_id = c.code
                 INNER JOIN (select code_value as classification,code
                             from common_code
-                            where no ='006' and code = 'CL01' ) c
-                           on a.classification = c.code
+                            where no ='006' and code = 'CL01' ) d
+                           on a.classification = d.code
     </select>
 
 </mapper>

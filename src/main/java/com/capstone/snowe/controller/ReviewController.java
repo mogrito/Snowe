@@ -20,6 +20,8 @@ public class ReviewController {
     @PostMapping("/addReview")
     public void addReview(@RequestBody ReviewDTO reviewDTO, @AuthenticationPrincipal UserDetails user) {
         reviewDTO.setStudentId(user.getUsername());
+
+        System.out.println("들어오는 리뷰DTO=> " + reviewDTO);
         this.reviewService.addReview(reviewDTO);
     }
 

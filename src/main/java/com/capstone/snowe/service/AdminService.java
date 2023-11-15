@@ -12,7 +12,7 @@ public interface AdminService {
     void addTeacher(String loginId);
 
     /*
-     * 전체 신청 목록
+     * 승인된 강사 목록
      * */
     List<TeacherDTO> getApply();
 

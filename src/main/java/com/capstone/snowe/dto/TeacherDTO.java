@@ -18,4 +18,7 @@ public class TeacherDTO {
     private String history;
     private String career;
     private String team;
+    private String stat;
+    private String applyDate;
+
 }

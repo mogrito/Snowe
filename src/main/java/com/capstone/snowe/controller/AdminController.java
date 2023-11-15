@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
@@ -39,7 +40,7 @@ public class AdminController {
         return ResponseEntity.ok("강사 설정 완료");
     }
     /*
-     * 전체 신청 목록
+     * 승인된 강사 목록
      * */
 
 

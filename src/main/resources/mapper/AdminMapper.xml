@@ -35,19 +35,37 @@
     </insert>
 
     <!-- =========== -->
-    <!-- 전체 신청 목록 -->
+    <!-- 승인된 강사 목록 -->
     <!-- =========== -->
     <select id="getApply" resultType="com.capstone.snowe.dto.TeacherDTO">
         select *
         from apply_teacher
+        where stat =  'Y'
     </select>
 
     <!-- =========== -->
     <!-- 승인 되지 않은 신청 목록 -->
     <!-- =========== -->
     <select id="getApplyN" resultType="com.capstone.snowe.dto.TeacherDTO">
-        select *
-        from apply_teacher
-        where stat =  'N'
+        SELECT
+            A.LOGIN_ID,
+            A.NAME,
+            C.CLASSIFICATION,
+            A.CLASS_LEVEL,
+            R.RESORT_NAME,
+            A.HISTORY,
+            A.CAREER,
+            A.TEAM,
+            A.INTRODUCE,
+            TO_CHAR(A.APPLY_DATE,'YYYY-MM-DD') AS APPLY_DATE,
+            A.STAT
+        FROM
+            APPLY_TEACHER A
+                INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_NAME FROM COMMON_CODE WHERE NO ='005') R
+                           ON A.RESORT_ID = R.CODE
+                INNER JOIN (SELECT CODE, CODE_VALUE AS CLASSIFICATION FROM COMMON_CODE WHERE NO = '006') C
+                           ON A.CLASSIFICATION = C.CODE
+        WHERE
+            A.STAT = 'N'
     </select>
 </mapper>

@@ -24,7 +24,8 @@
             #{studentId},
             #{lessonId},
             #{review},
-            sysdate
+            sysdate,
+            #{lessonTitle}
         FROM
             LESSON L
             INNER JOIN TEACHER T ON L.LOGIN_ID = T.LOGIN_ID

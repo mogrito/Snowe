@@ -1,67 +1,69 @@
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Admin Page</title>
-</head>
-<body>
+    <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Admin Page</title>
+    </head>
+    <body>
+    <form th:action="@{/admin/adminpage}" method="get">
+        <button type="submit">불러오기</button>
+    </form>
+    <h2>전체 강사 신청 목록</h2>
+    <table border="1">
+        <tr>
+            <th>강사 ID</th>
+            <th>이름</th>
+            <th>소속 리조트</th>
+            <th>분류</th>
+            <th>소개</th>
+            <th>클래스 레벨</th>
+            <th>경력</th>
+            <th>팀</th>
+            <th>동작</th>
+        </tr>
+        <tr th:each="teacher : ${teachers}">
+            <td th:text="${teacher.loginId}"></td>
+            <td th:text="${teacher.name}"></td>
+            <td th:text="${teacher.resortName}"></td>
+            <td th:text="${teacher.classification}"></td>
+            <td th:text="${teacher.introduce}"></td>
+            <td th:text="${teacher.classLevel}"></td>
+            <td th:text="${teacher.history}"></td>
+            <td th:text="${teacher.team}"></td>
+            <td>
+                <a th:href="@{'/addteacher?loginId=' + ${teacher.loginId}}" th:text="'승인'"></a>
+                <a th:href="@{'/rejectteacher?loginId=' + ${teacher.loginId}}" th:text="'거절'"></a>
+            </td>
+        </tr>
+    </table>
 
-<h2>전체 강사 신청 목록</h2>
-<table border="1">
-    <tr>
-        <th>강사 ID</th>
-        <th>이름</th>
-        <th>소속 리조트</th>
-        <th>분류</th>
-        <th>소개</th>
-        <th>클래스 레벨</th>
-        <th>경력</th>
-        <th>팀</th>
-        <th>동작</th>
-    </tr>
-    <tr th:each="teacher : ${teachers}">
-        <td th:text="${teacher.loginId}"></td>
-        <td th:text="${teacher.name}"></td>
-        <td th:text="${teacher.resortName}"></td>
-        <td th:text="${teacher.classification}"></td>
-        <td th:text="${teacher.introduce}"></td>
-        <td th:text="${teacher.classLevel}"></td>
-        <td th:text="${teacher.history}"></td>
-        <td th:text="${teacher.team}"></td>
-        <td>
-            <a th:href="@{'/addteacher?loginId=' + ${teacher.loginId}}" th:text="'승인'"></a>
-            <a th:href="@{'/rejectteacher?loginId=' + ${teacher.loginId}}" th:text="'거절'"></a>
-        </td>
-    </tr>
-</table>
+    <h2>미승인 강사 신청 목록</h2>
+    <table border="1">
+        <tr>
+            <th>강사 ID</th>
+            <th>이름</th>
+            <th>소속 리조트</th>
+            <th>분류</th>
+            <th>소개</th>
+            <th>클래스 레벨</th>
+            <th>경력</th>
+            <th>팀</th>
+            <th>동작</th>
+        </tr>
+        <tr th:each="teacher : ${teachersN}">
+            <td th:text="${teacher.loginId}"></td>
+            <td th:text="${teacher.name}"></td>
+            <td th:text="${teacher.resortName}"></td>
+            <td th:text="${teacher.classification}"></td>
+            <td th:text="${teacher.introduce}"></td>
+            <td th:text="${teacher.classLevel}"></td>
+            <td th:text="${teacher.history}"></td>
+            <td th:text="${teacher.team}"></td>
+            <td>
+                <a th:href="@{'/addteacher?loginId=' + ${teacher.loginId}}" th:text="'승인'"></a>
+                <a th:href="@{'/rejectteacher?loginId=' + ${teacher.loginId}}" th:text="'거절'"></a>
+            </td>
+        </tr>
+    </table>
 
-<h2>미승인 강사 신청 목록</h2>
-<table border="1">
-    <tr>
-        <th>강사 ID</th>
-        <th>이름</th>
-        <th>소속 리조트</th>
-        <th>분류</th>
-        <th>소개</th>
-        <th>클래스 레벨</th>
-        <th>경력</th>
-        <th>팀</th>
-        <th>동작</th>
-    </tr>
-    <tr th:each="teacher : ${teachersN}">
-        <td th:text="${teacher.loginId}"></td>
-        <td th:text="${teacher.name}"></td>
-        <td th:text="${teacher.resortName}"></td>
-        <td th:text="${teacher.classification}"></td>
-        <td th:text="${teacher.introduce}"></td>
-        <td th:text="${teacher.classLevel}"></td>
-        <td th:text="${teacher.history}"></td>
-        <td th:text="${teacher.team}"></td>
-        <td>
-            <a th:href="@{'/addteacher?loginId=' + ${teacher.loginId}}" th:text="'승인'"></a>
-            <a th:href="@{'/rejectteacher?loginId=' + ${teacher.loginId}}" th:text="'거절'"></a>
-        </td>
-    </tr>
-</table>
-
-</body>
-</html>
+    </body>
+    </html>

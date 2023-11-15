@@ -83,7 +83,7 @@
             L.LESSON_INTRODUCE,
             TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') AS LESSON_DATE,
             TO_CHAR(L.LESSON_DATE_END, 'YYYY-MM-DD') AS LESSON_DATE_END,
-            B.RESORT_NAME,
+            B.RESORT_ID,
             L.RESERVE_COUNT,
             L.MAX_RESERVE_COUNT,
             L.LESSON_START,
@@ -94,7 +94,7 @@
             LESSON L
                 INNER JOIN TEACHER T
                            ON L.LOGIN_ID = T.LOGIN_ID
-                INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_NAME FROM COMMON_CODE WHERE NO = '005') B
+                INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_ID FROM COMMON_CODE WHERE NO = '005') B
                            ON T.RESORT_ID = B.CODE
                 INNER JOIN (SELECT CODE, CODE_VALUE AS DIV FROM COMMON_CODE WHERE NO = '004') D
                            ON L.LESSON_DIV = D.CODE

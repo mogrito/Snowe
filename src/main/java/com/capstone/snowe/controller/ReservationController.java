@@ -49,7 +49,9 @@ public class ReservationController {
     public List<ReservationDTO> getreservelist(@AuthenticationPrincipal UserDetails user){
         ReservationDTO reservationDTO = new ReservationDTO();
         reservationDTO.setStudentId(user.getUsername());
+
         System.out.println("예약DTO:" +reservationDTO);
+
         return this.reservationService.reservationDetail(reservationDTO);
     }
     /*

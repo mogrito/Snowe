@@ -1,7 +1,6 @@
 package com.capstone.snowe.mapper;
 
 import com.capstone.snowe.dto.LessonDTO;
-import com.capstone.snowe.dto.MemberDTO;
 import com.capstone.snowe.dto.TeacherDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -25,5 +24,5 @@ public interface TeacherMapper {
      * 강습 신청 인원
      *
      * */
-    List<MemberDTO> studentByLessonId(MemberDTO memberDTO);
+    List<LessonDTO> studentByLessonId(LessonDTO lessonDTO);
 }

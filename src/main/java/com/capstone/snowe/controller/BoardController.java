@@ -72,11 +72,15 @@ public class BoardController {
 
     //    String uploadPath = "C:\\picture\\";
 
-    @PostMapping(value = "/add", consumes = {"multipart/form-data"})
-    public ResponseEntity<List<?>> add(@RequestPart(value = "board") BoardDTO boardDTO, @RequestPart(value="image", required = false)MultipartFile[] files, @AuthenticationPrincipal UserDetails user) throws Exception {
-        logger.info(String.valueOf(boardDTO));
+    @PostMapping("/boardAdd")
+    public ResponseEntity<String> boardAdd(@RequestBody BoardDTO boardDTO, @AuthenticationPrincipal UserDetails user) throws Exception{
+        this.boardService.addBoard(boardDTO, user);
 
-        int boardId = boardService.addBoard(boardDTO, user);
+        return ResponseEntity.ok("게시글 등록 완료");
+    }
+
+    @PostMapping(value = "/fileAdd", consumes = {"multipart/form-data"})
+    public ResponseEntity<List<?>> fileAdd(@RequestPart(value="image", required = false) MultipartFile[] files) throws Exception {
 
         // 이미지 파일이 없을 시,
         if (files == null || files.length == 0) {
@@ -85,30 +89,6 @@ public class BoardController {
         }
 
         logger.info("파일이 있어요 " + files);
-
-
-        //이미지 파일 체크
-//        for (MultipartFile multipartFile : files) {
-//            File checkFile = new File(multipartFile.getOriginalFilename());
-//            //String type = null;
-//
-//            try {
-//                type = Files.probeContentType(checkFile.toPath());
-//                logger.info("MIME TYPE : " + type);
-//                if (!type.startsWith("image")) {
-//                    List<BoardFileDTO> list = null;
-//                    return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
-//                }
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            /*if (!type.startsWith("image")) {
-//                List<BoardFileDTO> list = null;
-//                return new ResponseEntity<>(list, HttpStatus.BAD_REQUEST);
-//            }*/
-//        }
 
         //파일 저장 경로 선언
         String uploadFolder = "C:\\upload";
@@ -139,8 +119,7 @@ public class BoardController {
             //파일이름
             String fileOName = multipartFile.getOriginalFilename();
 
-
-            boardFileDTO.setBoardId(boardId);
+            //boardFileDTO.setBoardId(boardID);
             boardFileDTO.setFileOName(fileOName);
             boardFileDTO.setFilePath(String.valueOf(filePath));
             boardFileDTO.setFileSize(multipartFile.getSize());
@@ -184,7 +163,7 @@ public class BoardController {
             logger.info("파일타입 : " + multipartFile.getContentType());
             logger.info("파일크기 : " + multipartFile.getSize());
             logger.info("====================저장될 값======================");
-            logger.info("파일에 해당하는 게시글 번호 : " + boardDTO.getBoardId());
+            logger.info("파일에 해당하는 게시글 번호 : " + boardFileDTO.getBoardId());
             logger.info("저장될 SName이름 : " + boardFileDTO.getFileSName());
             logger.info("저장될 OName이름 : " + boardFileDTO.getFileOName());
             logger.info("uuid : " + boardFileDTO.getUuid());

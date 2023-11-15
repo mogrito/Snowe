@@ -48,7 +48,6 @@ public class BoardServiceImpl implements BoardService {
 
         System.out.println("유저의 로그인 아이디 => " + member.getLoginId());
         System.out.println("유저의 이름과 닉네임 => " + member.getUsername());
-        System.out.println("Received JSON: " + boardDTO);
 
         this.boardMapper.addBoard(boardDTO);
         System.out.println("BoardServiceImpl의 addBoard입니다 : " + boardDTO);

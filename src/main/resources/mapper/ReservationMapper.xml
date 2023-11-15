@@ -43,6 +43,7 @@
             R.TEACHER_ID,
             R.RESERVE_DATE,
             L.LESSON_START,
+            L.LESSON_END,
             TO_CHAR(L.LESSON_DATE,'YYYY-MM-DD') as LESSON_DATE,
             TO_CHAR(L.LESSON_DATE_END,'YYYY-MM-DD') as LESSON_DATE_END,
             C.LESSON_CODE,

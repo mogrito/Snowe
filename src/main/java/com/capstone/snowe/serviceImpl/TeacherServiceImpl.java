@@ -1,7 +1,6 @@
 package com.capstone.snowe.serviceImpl;
 
 import com.capstone.snowe.dto.LessonDTO;
-import com.capstone.snowe.dto.MemberDTO;
 import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.mapper.TeacherMapper;
 import com.capstone.snowe.service.TeacherService;
@@ -39,7 +38,7 @@ public class TeacherServiceImpl implements TeacherService {
      *
      * */
     @Override
-    public List<MemberDTO> studentByLessonId(MemberDTO memberDTO) {
-        return this.teacherMapper.studentByLessonId(memberDTO);
+    public List<LessonDTO> studentByLessonId(LessonDTO lessonDTO) {
+        return this.teacherMapper.studentByLessonId(lessonDTO);
     }
 }

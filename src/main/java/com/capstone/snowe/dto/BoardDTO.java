@@ -34,6 +34,10 @@ public class BoardDTO {
 
     private String category;        // 카테고리
 
+    private String filePath;        // 파일경로
+    
+    private String fileSName;       // 파일의 저장이름
+
     private List<BoardFileDTO> boardFile;   // DB에 전달하기 위해 생성
 
 

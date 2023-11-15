@@ -21,31 +21,35 @@
     <!-- 강사가 본인 강습정보 확인 -->
     <select id="lessonDetail" parameterType="String" resultType="com.capstone.snowe.dto.LessonDTO">
         SELECT
-            LESSON_ID,
-            LOGIN_ID,
-            LESSON_TITLE,
-            LESSON_CLASS,
-            LESSON_LEVEL,
-            RESORT_ID,
-            LESSON_AGE,
-            LESSON_DATE,
-            LESSON_DATE_END,
-            LESSON_START,
-            LESSON_END,
-            RESERVE_COUNT,
-            MAX_RESERVE_COUNT,
-            LESSON_DIV,
-            LESSON_INTRODUCE
+            L.LESSON_ID,
+            L.LOGIN_ID,
+            L.LESSON_TITLE,
+            L.LESSON_CLASS,
+            L.LESSON_LEVEL,
+            R.RESORT_ID,
+            L.LESSON_AGE,
+            TO_CHAR(L.LESSON_DATE,'YYYY-MM-DD') as LESSON_DATE,
+            TO_CHAR(L.LESSON_DATE_END,'YYYY-MM-DD') as LESSON_DATE_END,
+            L.LESSON_START,
+            L.LESSON_END,
+            L.RESERVE_COUNT,
+            L.MAX_RESERVE_COUNT,
+            D.LESSON_DIV,
+            L.LESSON_INTRODUCE
         FROM
-            LESSON
+            LESSON L
+                INNER JOIN (SELECT CODE, CODE_VALUE AS LESSON_DIV FROM COMMON_CODE WHERE NO = '004') D
+                           ON L.LESSON_DIV = D.CODE
+                INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_ID FROM COMMON_CODE WHERE NO = '005') R
+                           ON L.RESORT_ID = R.CODE
         WHERE
-            DEL_YN = 'N'
-          AND LOGIN_ID = #{loginId}
+            L.DEL_YN = 'N'
+          AND L.LOGIN_ID = #{loginId}
 
         </select>
 
     <!-- 강습별 신청한 인원 -->
-    <select id="studentByLessonId" parameterType="com.capstone.snowe.dto.MemberDTO" resultType="com.capstone.snowe.dto.MemberDTO">
+    <select id="studentByLessonId" parameterType="com.capstone.snowe.dto.LessonDTO" resultType="com.capstone.snowe.dto.LessonDTO">
         SELECT
             L.LESSON_ID,
             R.STUDENT_ID,

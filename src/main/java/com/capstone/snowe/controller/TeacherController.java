@@ -1,7 +1,6 @@
 package com.capstone.snowe.controller;
 
 import com.capstone.snowe.dto.LessonDTO;
-import com.capstone.snowe.dto.MemberDTO;
 import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.service.TeacherService;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +42,7 @@ public class TeacherController {
     @GetMapping("/lessonList")
     public List<LessonDTO> lessonDetail (@AuthenticationPrincipal UserDetails user) {
         String loginId = user.getUsername();
+
         return this.teacherService.lessonDetail(loginId);
     }
 
@@ -51,13 +51,13 @@ public class TeacherController {
      *
      * */
     @GetMapping("/student-List")
-    public List<MemberDTO> studentByLessonId(@RequestParam String lessonId, @AuthenticationPrincipal UserDetails user) {
-        MemberDTO memberDTO = new MemberDTO();
+    public List<LessonDTO> studentByLessonId(@RequestParam String lessonId, @AuthenticationPrincipal UserDetails user) {
+        LessonDTO lessonDTO = new LessonDTO();
 
-        memberDTO.setStudentId(user.getUsername());
-        memberDTO.setLessonId(lessonId);
+        lessonDTO.setLoginId(user.getUsername());
+        lessonDTO.setLessonId(lessonId);
 
-        System.out.println(memberDTO);
-        return this.teacherService.studentByLessonId(memberDTO);
+        System.out.println("강습을 등록한 회원은 ==> "+lessonDTO);
+        return this.teacherService.studentByLessonId(lessonDTO);
     }
 }

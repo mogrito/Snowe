@@ -14,7 +14,7 @@
         VIEW_COUNT,
         COMMENT_COUNT,
         DEL_YN,
-        category
+        CATEGORY
     </sql>
 <!--,
         MODIFIED_DATE,
@@ -95,12 +95,24 @@
     <!-- 게시글 상세보기, 게시글 번호 가져오기 -->
     <select id = "getBoardId" parameterType="int" resultType="com.capstone.snowe.dto.BoardDTO">
         SELECT
-            <include refid="postColumns" />
+            B.board_id,
+            B.title,
+            B.content,
+            B.login_id,
+            B.create_date,
+            B.recommend_count,
+            B.view_count,
+            B.comment_count,
+            B.del_yn,
+            B.category,
+            F.FILE_PATH,
+            F.FILE_SNAME
         FROM
-            BOARD
+            BOARD B
+                LEFT OUTER JOIN BOARD_FILE F ON B.BOARD_ID = F.BOARD_ID
         WHERE
-            BOARD_ID = #{boardId}
-            AND DEL_YN = 'N'
+            B.BOARD_ID = #{boardId}
+            AND B.DEL_YN = 'N'
     </select>
 
     <!-- 게시글 수정 -->

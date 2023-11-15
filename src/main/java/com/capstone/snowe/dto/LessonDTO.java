@@ -32,6 +32,10 @@ public class LessonDTO {
     private String lessonAge;
     private String lessonIntroduce;
     private String resortId;
+    private String studentId;
+    private String name;
+    private String nickName;
+    private String email;
 
 
 }

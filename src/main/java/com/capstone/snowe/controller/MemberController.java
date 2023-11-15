@@ -1,6 +1,9 @@
 package com.capstone.snowe.controller;
 
-import com.capstone.snowe.dto.*;
+import com.capstone.snowe.dto.LessonJoinDTO;
+import com.capstone.snowe.dto.MemberDTO;
+import com.capstone.snowe.dto.TeacherDTO;
+import com.capstone.snowe.dto.TokenDTO;
 import com.capstone.snowe.jwt.JwtFilter;
 import com.capstone.snowe.jwt.TokenProvider;
 import com.capstone.snowe.service.BoardFileService;
@@ -17,13 +20,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 
 @CrossOrigin
@@ -78,8 +77,28 @@ public class MemberController {
         System.out.println("파일은 없고 DTO는 이래요 ==>> " + teacherDTO);
         return null;
     }*/
-
     @PostMapping("/apply")
+    public ResponseEntity<String> applyTeacher(@RequestBody TeacherDTO teacherDTO, @AuthenticationPrincipal UserDetails user) {
+
+        String classification = teacherDTO.getClassification();
+
+        switch (classification) {
+            case "스키" -> teacherDTO.setClassification("CL01");
+            case "보드" -> teacherDTO.setClassification("CL02");
+            default -> {
+            }
+        }
+        // 강사 요청 테이블 등록
+        System.out.println("강사 신청 => " + teacherDTO);
+        memberService.apply(teacherDTO, user);
+
+        System.out.println("입력받은 teacherDTO => " + teacherDTO);
+        return ResponseEntity.ok("강사 신청 완료");
+    }
+
+
+
+    /*@PostMapping("/apply")
     public ResponseEntity<List<?>> applyTeacher(@RequestPart(value = "teacher") TeacherDTO teacherDTO, @RequestPart(value="image", required = false) MultipartFile[] files, @AuthenticationPrincipal UserDetails user){
 
         String classification = teacherDTO.getClassification();
@@ -91,6 +110,7 @@ public class MemberController {
             }
         }
         // 강사 요청 테이블 등록
+        System.out.println("강사 신청 => " +teacherDTO);
         memberService.apply(teacherDTO, user);
 
         System.out.println("입력받은 teacherDTO => " + teacherDTO);
@@ -143,13 +163,14 @@ public class MemberController {
                 e.printStackTrace();
             }
 
+            System.out.println("강사 신청 파일 => " + boardFileDTO);
             boardFileService.insertApplyTeacherFile(boardFileDTO);
             list.add(boardFileDTO);
 
         }
 
         return new ResponseEntity<>(list, HttpStatus.OK);
-    }
+    }*/
 
     // ME API
     @GetMapping("/me")

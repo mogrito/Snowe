@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +20,7 @@ public class CommentDTO {
 
     private String loginId;      //댓글 작성자
 
-    private Date createDate;    //댓글 작성일자
+    private String createDate;    //댓글 작성일자
 
     private int recommendCount;     //댓글 추천수
 

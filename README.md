@@ -1,4 +1,4 @@
-# Project Title
+# 스키장 편의기능 & 강사예약 통합 앱
 
 One Paragraph of project description goes here
 

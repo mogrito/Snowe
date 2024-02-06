@@ -12,6 +12,7 @@ import java.time.LocalDate;
 public class LessonDTO {
 
 
+
     private String loginId;
     private String lessonDate;
     private String lessonDateEnd;
@@ -28,4 +29,13 @@ public class LessonDTO {
     private LocalDate delDate;
     private String delYn;
     private LocalDate lessonRegDate;
+    private String lessonAge;
+    private String lessonIntroduce;
+    private String resortId;
+    private String studentId;
+    private String name;
+    private String nickName;
+    private String email;
+
+
 }

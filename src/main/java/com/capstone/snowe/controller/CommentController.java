@@ -3,6 +3,7 @@ package com.capstone.snowe.controller;
 import com.capstone.snowe.dto.CommentDTO;
 import com.capstone.snowe.service.BoardService;
 import com.capstone.snowe.service.CommentService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,12 @@ import java.util.List;
 /* 리액트, 부트 연동 */
 @CrossOrigin
 @RestController
+@RequiredArgsConstructor
 //@RequestMapping("/comment")
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
-    @Autowired
-    private BoardService boardService;
+    private final CommentService commentService;
+    private final BoardService boardService;
     private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 
     /*

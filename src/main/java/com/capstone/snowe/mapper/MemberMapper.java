@@ -18,7 +18,7 @@ public interface MemberMapper {
     /**
      * 강사 자격 신청
      */
-    void apply(MemberDTO member);
+    void apply(TeacherDTO teacherDTO);
 
 
     /**

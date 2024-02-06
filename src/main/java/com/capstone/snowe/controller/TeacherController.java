@@ -1,10 +1,15 @@
 package com.capstone.snowe.controller;
 
+import com.capstone.snowe.dto.LessonDTO;
 import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.service.TeacherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin
 @RestController
@@ -28,5 +33,31 @@ public class TeacherController {
         this.teacherService.updateTeacherStat(teacherDTO);
 
         return ResponseEntity.ok("정보가 수정되었습니다.");
+    }
+
+    /*
+     * 강사가 본인의 강습 정보
+     *
+     * */
+    @GetMapping("/lessonList")
+    public List<LessonDTO> lessonDetail (@AuthenticationPrincipal UserDetails user) {
+        String loginId = user.getUsername();
+
+        return this.teacherService.lessonDetail(loginId);
+    }
+
+    /*
+     * 강습 신청 인원
+     *
+     * */
+    @GetMapping("/student-List")
+    public List<LessonDTO> studentByLessonId(@RequestParam String lessonId, @AuthenticationPrincipal UserDetails user) {
+        LessonDTO lessonDTO = new LessonDTO();
+
+        lessonDTO.setLoginId(user.getUsername());
+        lessonDTO.setLessonId(lessonId);
+
+        System.out.println("강습을 등록한 회원은 ==> "+lessonDTO);
+        return this.teacherService.studentByLessonId(lessonDTO);
     }
 }

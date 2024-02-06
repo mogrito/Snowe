@@ -18,7 +18,10 @@
                            LESSON_CLASS,
                            LESSON_LEVEL,
                            LESSON_START,
-                           LESSON_END)
+                           LESSON_END,
+                           LESSON_AGE,
+                           LESSON_INTRODUCE,
+                           RESORT_ID)
         VALUES (
                 #{loginId}, -- 토큰이 갖고있는 회원 ID
                 TO_DATE(#{lessonDate}, 'YYYY-MM-DD'),
@@ -30,7 +33,10 @@
                 #{lessonClass}, -- 스키 or 보드
                 #{lessonLevel}, -- 난이도
                 #{lessonStart},
-                #{lessonEnd}
+                #{lessonEnd},
+                #{lessonAge},
+                #{lessonIntroduce},
+                (SELECT RESORT_ID FROM TEACHER where LOGIN_ID = #{loginId})
                )
     </insert>
 
@@ -41,14 +47,11 @@
         UPDATE
             LESSON
         SET
-            TITLE = #{title},
-            LESSON_CLASS = #{lessonClass},
-            LESSON_LEVEL = #{lessonLevel},
-            LESSON_DATE = TO_CHAR(#{lessonDate}, 'YYYY-MM-DD'),
-            LESSON_DIV = #{lessonDiv},
+            LESSON_TITLE = #{lessonTitle},
             MAX_RESERVE_COUNT = #{maxReserveCount}
         WHERE
             LESSON_ID = #{lessonId}
+            AND LOGIN_ID = #{loginId}
     </update>
 
     <!-- ====================-->
@@ -62,38 +65,9 @@
             DEL_DATE = SYSDATE
         WHERE
             LESSON_ID = #{lessonId}
+          AND LOGIN_ID = #{loginId}
           AND DEL_YN = 'N'
     </update>
-
-    <!-- 확인용, 테스트옹 전체 강습목록 -->
-    <select id="lessonList" resultType="com.capstone.snowe.dto.LessonJoinDTO">
-        SELECT
-        SELECT
-            L.LESSON_ID,
-            L.LOGIN_ID,
-            T.NAME,
-            L.LESSON_TITLE,
-            L.LESSON_CLASS,
-            L.LESSON_LEVEL,
-            L.LESSON_DATE,
-            B.RESORT_NAME,
-            L.RESERVE_COUNT,
-            L.MAX_RESERVE_COUNT,
-            D.DIV,
-            S.STAT
-        FROM
-            LESSON L
-                INNER JOIN TEACHER T
-                           ON L.LOGIN_ID = T.LOGIN_ID
-                INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_NAME FROM COMMON_CODE WHERE NO = '005') B
-                           ON T.RESORT_ID = B.CODE
-                INNER JOIN (SELECT CODE, CODE_VALUE AS DIV FROM COMMON_CODE WHERE NO = '004') D
-                           ON L.LESSON_DIV = D.CODE
-                INNER JOIN (SELECT CODE, CODE_VALUE AS STAT FROM COMMON_CODE WHERE NO = '003') S
-                           ON L.LESSON_STAT = S.CODE
-        WHERE
-            L.LESSON_STAT = 'LS01';     -- 강습상태가 신청가능이면
-    </select>
 
     <!-- ================================== -->
     <!-- 해당 날짜에 존재하는 강사의 강의 보여주기 -->
@@ -106,9 +80,10 @@
             L.LESSON_TITLE,
             L.LESSON_CLASS,
             L.LESSON_LEVEL,
-            L.LESSON_DATE,
-            L.LESSON_DATE_END,
-            B.RESORT_NAME,
+            L.LESSON_INTRODUCE,
+            TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') AS LESSON_DATE,
+            TO_CHAR(L.LESSON_DATE_END, 'YYYY-MM-DD') AS LESSON_DATE_END,
+            B.RESORT_ID,
             L.RESERVE_COUNT,
             L.MAX_RESERVE_COUNT,
             L.LESSON_START,
@@ -119,7 +94,7 @@
             LESSON L
                 INNER JOIN TEACHER T
                            ON L.LOGIN_ID = T.LOGIN_ID
-                INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_NAME FROM COMMON_CODE WHERE NO = '005') B
+                INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_ID FROM COMMON_CODE WHERE NO = '005') B
                            ON T.RESORT_ID = B.CODE
                 INNER JOIN (SELECT CODE, CODE_VALUE AS DIV FROM COMMON_CODE WHERE NO = '004') D
                            ON L.LESSON_DIV = D.CODE
@@ -128,6 +103,17 @@
         WHERE
             L.LESSON_STAT = 'LS01'    -- 강습상태가 신청가능이면
           AND TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') = #{lessonDate}
+    </select>
+
+    <!-- 강의를 올린 강사만 수정하거나 취소할 수 있게 아이디 가져옴 -->
+    <select id="selectLoginIdByLessonId" resultType="int">
+        SELECT
+            COUNT(LOGIN_ID)
+        FROM
+            LESSON
+        WHERE
+            LESSON_ID = #{lessonId}
+            AND LOGIN_ID = #{loginId}
     </select>
 
 </mapper>

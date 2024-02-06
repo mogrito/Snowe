@@ -28,4 +28,6 @@ public class LessonJoinDTO {
     private LocalDate delDate;
     private String delYn;
     private LocalDate lessonRegDate;
+    private String lessonIntroduce;
+    private String resortId;
 }

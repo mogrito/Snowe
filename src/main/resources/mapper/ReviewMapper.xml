@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.capstone.snowe.mapper.ReviewMapper">
+
+
+
+    <!-- ======================================= -->
+    <!-- 리뷰 작성 -->
+    <!-- ======================================= -->
+    <insert id="addReview" parameterType="com.capstone.snowe.dto.ReviewDTO">
+        INSERT INTO LESSON_REVIEW(
+                           REVIEW_ID,
+                           TEACHER_ID,
+                           STUDENT_ID,
+                           LESSON_ID,
+                           REVIEW,
+                           REVIEW_DATE,
+                           LESSON_TITLE
+                           )
+        SELECT
+            REVIEW_SEQ.NEXTVAL,
+            #{teacherId},
+            #{studentId},
+            #{lessonId},
+            #{review},
+            sysdate,
+            #{lessonTitle}
+        FROM
+            LESSON L
+            INNER JOIN TEACHER T ON L.LOGIN_ID = T.LOGIN_ID
+        WHERE
+            L.LESSON_ID = #{lessonId}
+          AND T.LOGIN_ID = #{teacherId}
+    </insert>
+
+
+    <select id="getReview" parameterType="String" resultType="com.capstone.snowe.dto.ReviewDTO">
+        SELECT
+            STUDENT_ID,
+            TEACHER_ID,
+            a.LESSON_ID,
+            REVIEW_DATE,
+            REVIEW,
+            (SELECT LESSON_TITLE
+             FROM LESSON
+             WHERE LESSON_ID = a.LESSON_ID) AS LESSON_TITLE
+        FROM LESSON_REVIEW a
+                 INNER JOIN lesson b ON a.lesson_id = b.lesson_id
+        where TEACHER_ID = #{teacherId}
+    </select>
+
+
+
+</mapper>

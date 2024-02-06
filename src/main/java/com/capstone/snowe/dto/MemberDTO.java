@@ -29,6 +29,7 @@ public class MemberDTO implements UserDetails {
     private LocalDateTime createdDate;     // 생성일시
     private LocalDateTime modifiedDate;    // 최종 수정일시
 
+
     // 비밀번호 암호화
     public void encodingPassword(PasswordEncoder passwordEncoder) {
         if (StringUtils.isEmpty(password)) {

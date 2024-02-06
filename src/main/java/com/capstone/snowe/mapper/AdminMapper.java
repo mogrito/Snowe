@@ -1,16 +1,24 @@
 package com.capstone.snowe.mapper;
 
+import com.capstone.snowe.dto.TeacherDTO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface AdminMapper {
     /*
      * 관리자가 강사를 추가
      * */
-    void addTeacher(String id);
+    void addTeacher(String loginId);
+    /*
+     * 전체 신청 목록
+     * */
+
+    List<TeacherDTO> getApply();
 
     /*
-     * 강사가 추가되면 member테이블의 perCode를 수정
+     * 승인 되지 않은 신청 목록
      * */
-    void perCodeUpdate(String id);
+    List<TeacherDTO> getApplyN();
 }

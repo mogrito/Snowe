@@ -48,8 +48,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                //cors 설정
-                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
                 // srf를 disable
                 .csrf().disable()
                 .exceptionHandling()
@@ -64,13 +62,14 @@ public class SecurityConfig {
 
                 .and()
                 .authorizeHttpRequests((authz) -> authz
-                        .requestMatchers("/board/add").permitAll()
+                        .requestMatchers("/board/add").hasAuthority("USER")
+
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/lesson/**").hasAuthority("TEACHER")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/member/**").permitAll()
-                        .requestMatchers("/board/**").permitAll()
-                        .requestMatchers("/comment/**").permitAll()
-                        .requestMatchers("/reservation").hasAuthority("USER")
+                        .requestMatchers("/board/**").hasAuthority("USER")
+                        .requestMatchers("/comment/**").hasAuthority("USER")
                         .requestMatchers("/teachers/**").hasAuthority("TEACHER")
                         .anyRequest().authenticated()
                 )// 그 외 인증 없이 접근X

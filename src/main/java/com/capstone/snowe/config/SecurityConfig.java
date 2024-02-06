@@ -15,12 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.Collections;
 
 @Configuration
@@ -44,7 +39,7 @@ public class SecurityConfig {
             CorsConfiguration config = new CorsConfiguration();
             config.setAllowedHeaders(Collections.singletonList("*"));
             config.setAllowedMethods(Collections.singletonList("*"));
-            config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:3000")); // 허용할 origin
+            config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:19006")); //  origin
             config.setAllowCredentials(true);
             return config;
         };
@@ -53,7 +48,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .cors(corsConfigurer -> corsConfigurer.configurationSource(corsConfigurationSource()))
                 // srf를 disable
                 .csrf().disable()
                 .exceptionHandling()
@@ -69,9 +63,10 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/board/add").hasAuthority("USER")
+                        .requestMatchers("/lesson/**").hasAuthority("TEACHER")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                        .requestMatchers("/lesson").hasAuthority("TEACHER")
                         .requestMatchers("/member/**").permitAll()
+                        .requestMatchers("/reservation").hasAuthority("USER")
                         .requestMatchers("/board/**").hasAuthority("USER")
                         .requestMatchers("/comment/**").hasAuthority("USER")
                         .anyRequest().authenticated()

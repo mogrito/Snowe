@@ -1,5 +1,6 @@
 package com.capstone.snowe.serviceImpl;
 
+import com.capstone.snowe.dto.ReservationDTO;
 import com.capstone.snowe.mapper.ReservationMapper;
 import com.capstone.snowe.service.ReservationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,10 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void updateReserveCountAndLessonStat(String lessonId) {
         this.reservationMapper.updateReserveCountAndLessonStat(lessonId);
+    }
+
+    @Override
+    public ReservationDTO getReservationListOnDate(ReservationDTO reservationDTO) {
+        return this.reservationMapper.reservationListOnDate(reservationDTO);
     }
 }

@@ -63,14 +63,12 @@ public class SecurityConfig {
                 .and()
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers("/board/add").hasAuthority("USER")
-
-                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/lesson/**").hasAuthority("TEACHER")
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .requestMatchers("/member/**").permitAll()
+                        .requestMatchers("/reservation").hasAuthority("USER")
                         .requestMatchers("/board/**").hasAuthority("USER")
                         .requestMatchers("/comment/**").hasAuthority("USER")
-                        .requestMatchers("/teachers/**").hasAuthority("TEACHER")
                         .anyRequest().authenticated()
                 )// 그 외 인증 없이 접근X
 

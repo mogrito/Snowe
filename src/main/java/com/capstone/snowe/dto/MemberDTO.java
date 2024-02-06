@@ -29,6 +29,8 @@ public class MemberDTO implements UserDetails {
     private LocalDateTime createdDate;     // 생성일시
     private LocalDateTime modifiedDate;    // 최종 수정일시
 
+
+    // 비밀번호 암호화
     public void encodingPassword(PasswordEncoder passwordEncoder) {
         if (StringUtils.isEmpty(password)) {
             return;
@@ -37,11 +39,12 @@ public class MemberDTO implements UserDetails {
         password = passwordEncoder.encode(password);
         System.out.println("encoder="+password);
     }
+
     public void clearPassword() {
         this.password = "";
     }
 
-
+    // UserDetails 에서 제공 하는 권한 설정 , DB의 role 을 받아와 권한을 설정함
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
@@ -49,7 +52,7 @@ public class MemberDTO implements UserDetails {
         return authorities;
     }
 
-
+    // UserDetails 오버라이드
     @Override
     public String getUsername() {
         return null;

@@ -3,32 +3,10 @@
 
 <mapper namespace="com.capstone.snowe.mapper.TeacherMapper">
 
-    <!-- =========== -->
-    <!-- 강사 임명하기 -->
-    <!-- =========== -->
-    <insert id="addTeacher" parameterType="com.capstone.snowe.dto.TeacherDTO">
-        INSERT INTO TEACHER(ID, NAME)
-        SELECT LOGIN_ID,
-               NAME
-        FROM MEMBER
-        WHERE LOGIN_ID = #{id}
-        -- 페이지에서 사람을 클릭해서 강사로 변경....하기?
-    </insert>
 
-    <!-- =============================================== -->
-    <!-- 강사 임명 후 MEMBER테이블 회원코드를 강사(1)로 업데이트-->
-    <!-- =============================================== -->
-    <update id="perCodeUpdate" parameterType="com.capstone.snowe.dto.MemberDTO">
-        UPDATE
-            MEMBER
-        SET
-            PER_CODE = 1
-        WHERE
-            LOGIN_ID = #{id}
-    </update>
 
     <!-- ======================================= -->
-    <!-- 강사 설정 (본인 나와바리 스키장이 어딘지 설정) -->
+    <!-- 강사 설정 (본인의 활동 스키장이 어딘지 설정) -->
     <!-- 강사 설명이 될 수도 있고 다른 정보들이 추가될 수도 있음 -->
     <!-- ======================================= -->
     <update id="updateTeacherStat" parameterType="com.capstone.snowe.dto.TeacherDTO">
@@ -40,6 +18,53 @@
             ID = #{id} -- 현재 세션 ID 가져옴
     </update>
 
+    <!-- 강사가 본인 강습정보 확인 -->
+    <select id="lessonDetail" parameterType="String" resultType="com.capstone.snowe.dto.LessonDTO">
+        SELECT
+            L.LESSON_ID,
+            L.LOGIN_ID,
+            L.LESSON_TITLE,
+            L.LESSON_CLASS,
+            L.LESSON_LEVEL,
+            R.RESORT_ID,
+            L.LESSON_AGE,
+            TO_CHAR(L.LESSON_DATE,'YYYY-MM-DD') as LESSON_DATE,
+            TO_CHAR(L.LESSON_DATE_END,'YYYY-MM-DD') as LESSON_DATE_END,
+            L.LESSON_START,
+            L.LESSON_END,
+            L.RESERVE_COUNT,
+            L.MAX_RESERVE_COUNT,
+            D.LESSON_DIV,
+            L.LESSON_INTRODUCE
+        FROM
+            LESSON L
+                INNER JOIN (SELECT CODE, CODE_VALUE AS LESSON_DIV FROM COMMON_CODE WHERE NO = '004') D
+                           ON L.LESSON_DIV = D.CODE
+                INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_ID FROM COMMON_CODE WHERE NO = '005') R
+                           ON L.RESORT_ID = R.CODE
+        WHERE
+            L.DEL_YN = 'N'
+          AND L.LOGIN_ID = #{loginId}
+
+        </select>
+
+    <!-- 강습별 신청한 인원 -->
+    <select id="studentByLessonId" parameterType="com.capstone.snowe.dto.LessonDTO" resultType="com.capstone.snowe.dto.LessonDTO">
+        SELECT
+            L.LESSON_ID,
+            R.STUDENT_ID,
+            M.NAME,
+            M.NICKNAME,
+            M.EMAIL
+        FROM
+            LESSON L
+                INNER JOIN RESERVATION R ON L.LESSON_ID = R.LESSON_ID
+                INNER JOIN MEMBER M ON R.STUDENT_ID = M.LOGIN_ID
+        WHERE
+            L.LOGIN_ID = #{loginId}
+            and L.LESSON_ID = #{lessonId}
+            and R.CANCEL_STAT = 'N'
+    </select>
 
 
 </mapper>

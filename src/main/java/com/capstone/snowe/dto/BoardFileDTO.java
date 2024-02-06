@@ -20,6 +20,7 @@ public class BoardFileDTO {
     private Date uploadDate;
     private String fileSName;
     private String uuid;
+    private String loginId;
 
 /*    @Builder
     public BoardFileDTO(String fileOName, String fileSName, long fileSize) {

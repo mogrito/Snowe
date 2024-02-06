@@ -1,23 +1,25 @@
 package com.capstone.snowe.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class ReservationDTO {
 
     private String reserveId;
+    private String name;
     private String teacherId;
     private String studentId;
     private String lessonId;
     private String lessonCode;
-    private Date reserveDate;
-    private Date cancleDate;
-    private String cancleStat;
-
+    private String resortId;
+    private LocalDate reserveDate;
+    private LocalDate cancelDate;
+    private String lessonStart;
+    private String lessonEnd;
+    private String cancelStat;
+    private String lessonDate;
+    private String lessonDateEnd;
+    private String lessonTitle;
 }

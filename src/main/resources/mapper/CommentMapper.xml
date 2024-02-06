@@ -20,7 +20,14 @@
     <!-- =================== -->
     <select id = "getCommentByBoard" resultType="com.capstone.snowe.dto.CommentDTO">
         SELECT
-            <include refid="postColumns"/>
+            COMMENT_ID,
+            BOARD_ID,
+            PARENT_COMMENT_ID,
+            CONTENT,
+            LOGIN_ID,
+            TO_CHAR(CREATE_DATE,'YYYY-MM-DD') AS CREATE_DATE,
+            RECOMMEND_COUNT,
+            DEL_YN
         FROM
             COMMENTS
         WHERE

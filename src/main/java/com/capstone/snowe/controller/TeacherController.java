@@ -1,44 +1,63 @@
 package com.capstone.snowe.controller;
 
+import com.capstone.snowe.dto.LessonDTO;
 import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.service.TeacherService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-/* 리액트, 부트 연동 */
+import java.util.List;
+
 @CrossOrigin
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/teachers")
 public class TeacherController {
 
-    @Autowired
-    private TeacherService teacherService;
+    private final TeacherService teacherService;
 
-    /*
-    * 강사 추가하기
-    * */
-    @PostMapping("/teachers/{id}")
-    public ResponseEntity<String> addTeachers(@PathVariable String id) throws Exception {
-        // teacher테이블에 추가
-        this.teacherService.addTeacher(id);
-        /*
-        * teacher테이블에 추가 후
-        * member테이블의 per_code(회원구분)을 1(강사)로 변경
-        * */
-        this.teacherService.perCodeUpdate(id);
-
-        return ResponseEntity.ok("강사 설정 완료");
+    @GetMapping("/me")
+    public void me() {
+        System.out.println("강사권한확인");
     }
-
     /*
     * 강사 정보 수정하기(스키장 정보)
     * */
-    @PutMapping("/teachers/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<String> updateTeacherStat(@PathVariable String id, @RequestBody TeacherDTO teacherDTO) throws Exception {
 
-        teacherDTO.setId(id);
+        teacherDTO.setLoginId(id);
         this.teacherService.updateTeacherStat(teacherDTO);
 
         return ResponseEntity.ok("정보가 수정되었습니다.");
+    }
+
+    /*
+     * 강사가 본인의 강습 정보
+     *
+     * */
+    @GetMapping("/lessonList")
+    public List<LessonDTO> lessonDetail (@AuthenticationPrincipal UserDetails user) {
+        String loginId = user.getUsername();
+
+        return this.teacherService.lessonDetail(loginId);
+    }
+
+    /*
+     * 강습 신청 인원
+     *
+     * */
+    @GetMapping("/student-List")
+    public List<LessonDTO> studentByLessonId(@RequestParam String lessonId, @AuthenticationPrincipal UserDetails user) {
+        LessonDTO lessonDTO = new LessonDTO();
+
+        lessonDTO.setLoginId(user.getUsername());
+        lessonDTO.setLessonId(lessonId);
+
+        System.out.println("강습을 등록한 회원은 ==> "+lessonDTO);
+        return this.teacherService.studentByLessonId(lessonDTO);
     }
 }

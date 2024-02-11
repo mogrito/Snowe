@@ -26,7 +26,8 @@ dependencies {
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'  // API 의존성 추가
     implementation 'net.coobird:thumbnailator:0.4.14'    /* 썸네일 */
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis' // redis
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2' // 구현 의존성 추가
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.5'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }

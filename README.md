@@ -9,6 +9,7 @@
 - [Springboot](https://spring.io/projects/spring-boot)
 - [Springsecurity](https://spring.io/projects/spring-security)
 - [Mybatis](https://mybatis.org/mybatis-3/)
+- [Redis]
 
 What things you need to install the software and how to install them
 

@@ -104,8 +104,7 @@
             a.introduce,
             a.class_level,
             a.career,
-            a.history,
-            a.team
+            a.history
         FROM
             teacher a
                 INNER JOIN (select code_value as resort_id,code
@@ -114,7 +113,7 @@
                            on a.resort_id = c.code
                 INNER JOIN (select code_value as classification,code
                             from common_code
-                            where no ='006') d
+                            where no ='006' and code = 'CL02' ) d
                            on a.classification = d.code
     </select>
 

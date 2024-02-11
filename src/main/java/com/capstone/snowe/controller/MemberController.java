@@ -10,6 +10,7 @@ import com.capstone.snowe.service.BoardFileService;
 import com.capstone.snowe.service.LessonService;
 import com.capstone.snowe.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -233,7 +234,7 @@ public class MemberController {
                 case "Ski":
                     return memberService.getSkiTeacher(ridingClass);
                 case "All":
-                    System.out.println(memberService.getAllTeacher(ridingClass));
+//                    System.out.println(memberService.getAllTeacher(ridingClass));
                     return memberService.getAllTeacher(ridingClass);
                 default:
                     break;

@@ -5,13 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class TeacherDTO {
     private String loginId;
-    private String teacherId;
+//    private String teacherId;
     private String name;
-    private String resortName;
+    private String resortId;
     private String classification;
     private String introduce;
     private String classLevel;

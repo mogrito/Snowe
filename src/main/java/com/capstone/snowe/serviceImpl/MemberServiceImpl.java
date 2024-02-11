@@ -5,6 +5,7 @@ import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.mapper.MemberMapper;
 import com.capstone.snowe.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -96,8 +97,12 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
         return memberMapper.checkNickname(nickname);
     }
 
+    // 모든 강사 정보 불러오기
+    // 2024.02.11 redis cache 적용
     @Override
+    @Cacheable(value = "TeacherDTO", key = "#ridingClass", cacheManager = "cacheManager", unless = "#ridingClass==''")
     public List<TeacherDTO> getAllTeacher(String ridingClass) {
+        System.out.println("강사조회서비스 호출");
         return memberMapper.getAllTeacher(ridingClass);
     }
 

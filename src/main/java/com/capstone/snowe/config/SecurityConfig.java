@@ -41,6 +41,7 @@ public class SecurityConfig {
             config.setAllowedMethods(Collections.singletonList("*"));
             config.setAllowedOriginPatterns(Collections.singletonList("http://localhost:19006")); //  origin
             config.setAllowCredentials(true);
+
             return config;
         };
     }
@@ -71,7 +72,6 @@ public class SecurityConfig {
                         .requestMatchers("/comment/**").hasAuthority("USER")
                         .anyRequest().authenticated()
                 )// 그 외 인증 없이 접근X
-
                 .apply(new JwtSecurityConfig(tokenProvider)); // JwtFilter를 addFilterBefore로 등록했던 JwtSecurityConfig class 적용
 
         return httpSecurity.build();

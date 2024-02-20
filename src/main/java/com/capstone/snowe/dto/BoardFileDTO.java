@@ -12,27 +12,22 @@ import java.util.Date;
 public class BoardFileDTO {
 
     private int fileId;
+
     private int boardId;
+
     private String fileOName;
+
     private String filePath;
+
     private long fileSize;
+
     private String fileType;
+
     private Date uploadDate;
+
     private String fileSName;
+
     private String uuid;
+
     private String loginId;
-
-/*    @Builder
-    public BoardFileDTO(String fileOName, String fileSName, long fileSize) {
-        this.fileOName = fileOName;
-        this.fileSName = fileSName;
-        this.fileSize = fileSize;
-    }
-
-    public void setBoardId(int boardId) {
-        this.boardId = boardId;
-    }*/
-
-
-
 }

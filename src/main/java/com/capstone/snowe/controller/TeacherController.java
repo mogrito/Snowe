@@ -4,6 +4,8 @@ import com.capstone.snowe.dto.LessonDTO;
 import com.capstone.snowe.dto.TeacherDTO;
 import com.capstone.snowe.service.TeacherService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,17 +20,19 @@ import java.util.List;
 public class TeacherController {
 
     private final TeacherService teacherService;
+    private static final Logger logger = LoggerFactory.getLogger(TeacherController.class);
 
+    //me API
     @GetMapping("/me")
     public void me() {
-        System.out.println("강사권한확인");
+        logger.info("강사권한확인");
     }
+
     /*
     * 강사 정보 수정하기(스키장 정보)
     * */
     @PutMapping("/{id}")
     public ResponseEntity<String> updateTeacherStat(@PathVariable String id, @RequestBody TeacherDTO teacherDTO) throws Exception {
-
         teacherDTO.setLoginId(id);
         this.teacherService.updateTeacherStat(teacherDTO);
 
@@ -37,7 +41,6 @@ public class TeacherController {
 
     /*
      * 강사가 본인의 강습 정보
-     *
      * */
     @GetMapping("/lessonList")
     public List<LessonDTO> lessonDetail (@AuthenticationPrincipal UserDetails user) {
@@ -53,11 +56,10 @@ public class TeacherController {
     @GetMapping("/student-List")
     public List<LessonDTO> studentByLessonId(@RequestParam String lessonId, @AuthenticationPrincipal UserDetails user) {
         LessonDTO lessonDTO = new LessonDTO();
-
         lessonDTO.setLoginId(user.getUsername());
         lessonDTO.setLessonId(lessonId);
 
-        System.out.println("강습을 등록한 회원은 ==> "+lessonDTO);
+        logger.info("teacherDTO : " + lessonDTO);
         return this.teacherService.studentByLessonId(lessonDTO);
     }
 }

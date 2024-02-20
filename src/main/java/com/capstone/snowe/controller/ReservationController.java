@@ -3,6 +3,8 @@ package com.capstone.snowe.controller;
 import com.capstone.snowe.dto.ReservationDTO;
 import com.capstone.snowe.service.ReservationService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,19 +17,20 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/reservation")
 public class ReservationController {
-
+    private static final Logger logger = LoggerFactory.getLogger(LessonController.class);
     private final ReservationService reservationService;
 
     /*
-     * 1. 캘린더에서 날짜를 선택
-     * 2. 맘에 드는 강사의 강습을 선택 후 예약하기
+     * 1. 캘린더 에서 날짜를 선택
+     * 2. 맘에 드는 강사의 강습을 선택 후 예약 하기
      * */
     @PostMapping("/reserve")
     public ResponseEntity<String> lessonReservation(@RequestBody ReservationDTO reservationDTO, @AuthenticationPrincipal UserDetails user) throws Exception {
         reservationDTO.setStudentId(user.getUsername());
         this.reservationService.LessonReservationByDay(reservationDTO);
 
-        System.out.println("reservationDTO => " + reservationDTO);
+        logger.info("reservationDTO : " + reservationDTO);
+
         return ResponseEntity.ok("예약 완료");
     }
     /*
@@ -50,19 +53,20 @@ public class ReservationController {
         ReservationDTO reservationDTO = new ReservationDTO();
         reservationDTO.setStudentId(user.getUsername());
 
-        System.out.println("예약DTO:" +reservationDTO);
+        System.out.println("reservationDTO:" +reservationDTO);
 
         return this.reservationService.reservationDetail(reservationDTO);
     }
     /*
-     * 예약취소
+     * 예약 취소
      * */
     @PostMapping("/reserveCancel")
     public void cancelReserve(@RequestParam String reserveId, @AuthenticationPrincipal UserDetails user){
         ReservationDTO reservationDTO = new ReservationDTO();
         reservationDTO.setStudentId(user.getUsername());
         reservationDTO.setReserveId(reserveId);
-        System.out.println(reserveId +"예약 취소");
+        logger.info(reserveId + "취소");
+
         this.reservationService.cancelReservation(reservationDTO);
     }
 }

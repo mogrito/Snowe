@@ -4,7 +4,7 @@
 
 
     <!-- =========== -->
-    <!-- 강사 임명하기 -->
+    <!-- 강사자격 부여하기 -->
     <!-- =========== -->
     <insert id="addTeacher" parameterType="com.capstone.snowe.dto.TeacherDTO">
         INSERT INTO TEACHER(
@@ -31,7 +31,6 @@
             APPLY_TEACHER
         WHERE
             LOGIN_ID = #{loginId}
-        -- 페이지에서 사람을 클릭해서 강사로 변경....하기?
     </insert>
 
     <!-- =========== -->

@@ -12,22 +12,40 @@ import java.time.LocalDate;
 public class LessonJoinDTO {
 
     private String loginId;
+
     private String name;
+
     private String lessonDate;
+
     private String lessonDateEnd;
+
     private String lessonStat;
+
     private String lessonId;
+
     private String Div;
+
     private int reserveCount;
+
     private int maxReserveCount;
+
     private String lessonTitle;
+
     private String lessonClass;
+
     private String lessonLevel;
+
     private String lessonStart;
+
     private String lessonEnd;
+
     private LocalDate delDate;
+
     private String delYn;
+
     private LocalDate lessonRegDate;
+
     private String lessonIntroduce;
+
     private String resortId;
 }

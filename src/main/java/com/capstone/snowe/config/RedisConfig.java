@@ -29,7 +29,6 @@ public class RedisConfig {
         return new LettuceConnectionFactory(host, port);
     }
 
-    @SuppressWarnings("deprecation")
     @Bean
     public CacheManager cacheManager() {
         RedisCacheManager.RedisCacheManagerBuilder builder = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(redisConnectionFactory());
@@ -38,6 +37,7 @@ public class RedisConfig {
                 .prefixCacheNameWith("Test:") // Key Prefix로 "Test:"를 앞에 붙여 저장
                 .entryTtl(Duration.ofMinutes(30)); // 캐시 수명 30분
         builder.cacheDefaults(configuration);
+
         return builder.build();
     }
 }

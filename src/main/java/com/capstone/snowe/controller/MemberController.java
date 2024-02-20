@@ -10,6 +10,8 @@ import com.capstone.snowe.service.BoardFileService;
 import com.capstone.snowe.service.LessonService;
 import com.capstone.snowe.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,7 +36,7 @@ public class MemberController {
     private final LessonService lessonService;
     private final MemberService memberService;
     private final TokenProvider tokenProvider;
-    private final BoardFileService boardFileService;
+    private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
 
@@ -43,62 +45,40 @@ public class MemberController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody MemberDTO memberDTO){
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(memberDTO.getLoginId(), memberDTO.getPassword());
-        System.out.println(memberDTO.getLoginId() + " " +memberDTO.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(memberDTO.getLoginId(), memberDTO.getPassword());
+
+        logger.info("loginId , password: " + memberDTO.getLoginId(),memberDTO.getPassword());
         // authenticate 메소드가 실행이 될 때 CustomUserDetailsService class의 loadUserByUsername 메소드가 실행
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         // 해당 객체를 SecurityContextHolder에 저장하고
         SecurityContextHolder.getContext().setAuthentication(authentication);
         // authentication 객체를 createToken 메소드를 통해서 JWT Token을 생성
         String jwt = tokenProvider.createToken(authentication);
-
         HttpHeaders httpHeaders = new HttpHeaders();
         // response header에 jwt token에 넣어줌
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
-        // tokenDto를 이용해 response body에도 넣어서 리턴
+        // tokenDTO를 response body에 넣어서 return
         return new ResponseEntity<>(new TokenDTO(jwt), httpHeaders, HttpStatus.OK);
     }
 
-    // 강사 신청
-    /*@PostMapping("/apply")
-    public MemberDTO applyTeacher(@RequestBody TeacherDTO teacherDTO, @AuthenticationPrincipal UserDetails user) {
-
-        String classification = teacherDTO.getClassification();
-
-        switch (classification) {
-            case "스키" -> teacherDTO.setClassification("CL01");
-            case "보드" -> teacherDTO.setClassification("CL02");
-            default -> {
-            }
-        }
-
-        memberService.apply(teacherDTO, user);
-        System.out.println("파일은 없고 DTO는 이래요 ==>> " + teacherDTO);
-        return null;
-    }*/
     @PostMapping("/apply")
-    public ResponseEntity<String> applyTeacher(@RequestBody TeacherDTO teacherDTO, @AuthenticationPrincipal UserDetails user) {
+    public ResponseEntity<String> applyTeacher(@RequestBody TeacherDTO teacherDTO, @AuthenticationPrincipal UserDetails user)throws Exception {
 
         String classification = teacherDTO.getClassification();
 
         switch (classification) {
             case "스키" -> teacherDTO.setClassification("CL01");
             case "보드" -> teacherDTO.setClassification("CL02");
-            default -> {
-            }
         }
         // 강사 요청 테이블 등록
-        System.out.println("강사 신청 => " + teacherDTO);
         memberService.apply(teacherDTO, user);
 
-        System.out.println("입력받은 teacherDTO => " + teacherDTO);
         return ResponseEntity.ok("강사 신청 완료");
     }
 
 
-
+    //TODO: 강사 이미지 등록 구현
     /*@PostMapping("/apply")
     public ResponseEntity<List<?>> applyTeacher(@RequestPart(value = "teacher") TeacherDTO teacherDTO, @RequestPart(value="image", required = false) MultipartFile[] files, @AuthenticationPrincipal UserDetails user){
 
@@ -176,6 +156,7 @@ public class MemberController {
     // ME API
     @GetMapping("/me")
     public UserDetails me(@AuthenticationPrincipal UserDetails userDetails) {
+
         return memberService.me(userDetails);
     }
 
@@ -184,6 +165,7 @@ public class MemberController {
     @PostMapping("/signup")
     @ResponseBody
     public MemberDTO signup(@RequestBody final MemberDTO params) {
+
         return memberService.signup(params);
     }
 
@@ -191,6 +173,7 @@ public class MemberController {
     @GetMapping("/members/{loginId}")
     @ResponseBody
     public MemberDTO findMemberByLoginId(@PathVariable final String loginId) {
+
         return memberService.findMemberByLoginId(loginId);
     }
 
@@ -198,7 +181,7 @@ public class MemberController {
     @GetMapping("/member-count")
     @ResponseBody
     public String countMemberByLoginId(@RequestParam final String loginId) {
-        System.out.println(loginId);
+        logger.info("loginId : " + loginId);
         int count = memberService.countMemberByLoginId(loginId);
 
         if (count > 0) {
@@ -212,10 +195,10 @@ public class MemberController {
     @GetMapping("/member-nickname")
     @ResponseBody
     public String checkNickname(@RequestParam final String nickname) {
-        System.out.println(nickname);
-        int nickcount = memberService.checkNickname(nickname);
+        logger.info("nickname : " + nickname);
+        int nickCount = memberService.checkNickname(nickname);
 
-        if (nickcount > 0) {
+        if (nickCount > 0) {
             return "duplicate"; // 중복된 아이디일 경우
         } else {
             return "not-duplicate"; // 중복되지 않은 아이디일 경우
@@ -228,13 +211,11 @@ public class MemberController {
         if (ridingClass != null) {
             switch (ridingClass) {
                 case "Board":
-                    System.out.println(ridingClass);
-                    System.out.println(memberService.getBoardTeacher(ridingClass));
+                    logger.info("ridingClass : " + ridingClass);
                     return memberService.getBoardTeacher(ridingClass);
                 case "Ski":
                     return memberService.getSkiTeacher(ridingClass);
                 case "All":
-//                    System.out.println(memberService.getAllTeacher(ridingClass));
                     return memberService.getAllTeacher(ridingClass);
                 default:
                     break;
@@ -252,6 +233,7 @@ public class MemberController {
     @GetMapping("/list")
     public ResponseEntity<List<LessonJoinDTO>> ableLesson(@RequestParam("lessonDate") String lessonDate) throws Exception {
         List<LessonJoinDTO> lessonListByDay = lessonService.ableLessonListByDay(lessonDate);
+
         return ResponseEntity.ok(lessonListByDay);
     }
 }

@@ -27,8 +27,8 @@ public class BoardFileController {
 
     /*
      * 이미지 불러오기
+     * // 1. 사진만 불러오는 기능
      * */
-    // 1. 사진만 불러오는 기능
     @GetMapping("/display/{fileOName}")
     public ResponseEntity<byte[]> getImage(@PathVariable String fileOName) {
         logger.info("getImage().........." + fileOName);
@@ -44,10 +44,11 @@ public class BoardFileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return result;
     }
 
-    // 2. 게시글의 사진 가져옴. but, 여러 개의 사진은 못 가져옴
+    // 2. 게시글의 사진 가져옴. TODO:여러 개의 사진은 가져오지 못함.
     @GetMapping("/file")
     public ResponseEntity<byte[]> getImage2(@RequestParam int boardId) {
         List<BoardFileDTO> boardFiles = boardFileService.getFileByBoard(boardId);
@@ -88,7 +89,7 @@ public class BoardFileController {
         return result;
     }
 
-    // 3. 게시글에 해당하는 여러 개의 파일 불러오기
+    // TODO: 오류수정필요, 바이트부분 오류
     /*@GetMapping("/file")
     public List<ResponseEntity<byte[]>> getImage2(@RequestParam int boardId) {
 
@@ -134,7 +135,7 @@ public class BoardFileController {
         return results;
     }*/
 
-    // 리스트로 안 받아옴
+    // TODO:리스트로 받아와지지 않음
     /*@GetMapping("/file")
     public ResponseEntity<Resource> getImage2(@RequestParam int boardId) {
         BoardFileDTO boardFile = boardFileService.getFileByBoard(boardId);

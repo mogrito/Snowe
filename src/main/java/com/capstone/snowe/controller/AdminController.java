@@ -37,15 +37,16 @@ public class AdminController {
     public ResponseEntity<String> addTeachers(@RequestParam String loginId) throws Exception {
         // teacher테이블에 추가
         this.adminService.addTeacher(loginId);
+
         return ResponseEntity.ok("강사 설정 완료");
     }
+
     /*
      * 승인된 강사 목록
      * */
-
-
     @GetMapping("/getApply")
     public List<TeacherDTO> getApply(){
+
         return this.adminService.getApply();
     }
 
@@ -54,6 +55,7 @@ public class AdminController {
      * */
     @GetMapping("/getApplyN")
     public List<TeacherDTO> getApplyN(){
+
         return this.adminService.getApplyN();
     }
 }

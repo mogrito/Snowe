@@ -10,32 +10,49 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LessonDTO {
-
-
-
     private String loginId;
+
     private String lessonDate;
+
     private String lessonDateEnd;
+
     private String lessonStat;
+
     private String lessonId;
+
     private String lessonDiv;
+
     private int reserveCount;
+
     private int maxReserveCount;
+
     private String lessonTitle;
+
     private String lessonClass;
+
     private String lessonLevel;
+
     private String lessonStart;
+
     private String lessonEnd;
+
     private LocalDate delDate;
+
     private String delYn;
+
     private LocalDate lessonRegDate;
+
     private String lessonAge;
+
     private String lessonIntroduce;
+
     private String resortId;
+
     private String studentId;
+
     private String name;
+
     private String nickName;
+
     private String email;
-
-
 }

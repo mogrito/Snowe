@@ -12,11 +12,18 @@ import java.time.LocalDate;
 public class ReviewDTO {
 
     private String reviewId;
+
     private String loginId;
+
     private String teacherId;
+
     private String studentId;
+
     private String lessonId;
+
     private String review;
+
     private LocalDate reviewDate;
+
     private String lessonTitle;
 }

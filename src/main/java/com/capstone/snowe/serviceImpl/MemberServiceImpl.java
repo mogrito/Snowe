@@ -116,7 +116,4 @@ public class MemberServiceImpl implements MemberService , UserDetailsService {
         return memberMapper.getSkiTeacher(ridingClass);
     }
 
-    private void encodePassword(MemberDTO params) {
-        params.encodingPassword(passwordEncoder);
-    }
 }

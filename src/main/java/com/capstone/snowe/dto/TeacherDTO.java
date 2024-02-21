@@ -13,6 +13,8 @@ public class TeacherDTO {
 
     private String resortId;
 
+    private String resortName;
+
     private String classification;
 
     private String introduce;

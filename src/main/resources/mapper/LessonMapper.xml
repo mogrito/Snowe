@@ -73,36 +73,60 @@
     <!-- 해당 날짜에 존재하는 강사의 강의 보여주기 -->
     <!-- ================================== -->
     <select id = "ableLessonListByDay" parameterType="String" resultType="com.capstone.snowe.dto.LessonJoinDTO">
-        SELECT
-            L.LESSON_ID,
-            L.LOGIN_ID,
-            T.NAME,
-            L.LESSON_TITLE,
-            L.LESSON_CLASS,
-            L.LESSON_LEVEL,
-            L.LESSON_INTRODUCE,
-            TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') AS LESSON_DATE,
-            TO_CHAR(L.LESSON_DATE_END, 'YYYY-MM-DD') AS LESSON_DATE_END,
-            B.RESORT_ID,
-            L.RESERVE_COUNT,
-            L.MAX_RESERVE_COUNT,
-            L.LESSON_START,
-            L.LESSON_END,
-            D.DIV,
-            S.STAT
-        FROM
-            LESSON L
-                INNER JOIN TEACHER T
-                           ON L.LOGIN_ID = T.LOGIN_ID
-                INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_ID FROM COMMON_CODE WHERE NO = '005') B
-                           ON T.RESORT_ID = B.CODE
-                INNER JOIN (SELECT CODE, CODE_VALUE AS DIV FROM COMMON_CODE WHERE NO = '004') D
-                           ON L.LESSON_DIV = D.CODE
-                INNER JOIN (SELECT CODE, CODE_VALUE AS STAT FROM COMMON_CODE WHERE NO = '003') S
-                           ON L.LESSON_STAT = S.CODE
-        WHERE
-            L.LESSON_STAT = 'LS01'    -- 강습상태가 신청가능이면
-          AND TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') = #{lessonDate}
+--         SELECT
+--             L.LESSON_ID,
+--             L.LOGIN_ID,
+--             T.NAME,
+--             L.LESSON_TITLE,
+--             L.LESSON_CLASS,
+--             L.LESSON_LEVEL,
+--             L.LESSON_INTRODUCE,
+--             TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') AS LESSON_DATE,
+--             TO_CHAR(L.LESSON_DATE_END, 'YYYY-MM-DD') AS LESSON_DATE_END,
+--             B.RESORT_ID,
+--             L.RESERVE_COUNT,
+--             L.MAX_RESERVE_COUNT,
+--             L.LESSON_START,
+--             L.LESSON_END,
+--             D.DIV,
+--             S.STAT
+--         FROM
+--             LESSON L
+--                 INNER JOIN TEACHER T
+--                            ON L.LOGIN_ID = T.LOGIN_ID
+--                 INNER JOIN (SELECT CODE, CODE_VALUE AS RESORT_ID FROM COMMON_CODE WHERE NO = '005') B
+--                            ON T.RESORT_ID = B.CODE
+--                 INNER JOIN (SELECT CODE, CODE_VALUE AS DIV FROM COMMON_CODE WHERE NO = '004') D
+--                            ON L.LESSON_DIV = D.CODE
+--                 INNER JOIN (SELECT CODE, CODE_VALUE AS STAT FROM COMMON_CODE WHERE NO = '003') S
+--                            ON L.LESSON_STAT = S.CODE
+--         WHERE
+--             L.LESSON_STAT = 'LS01'    -- 강습상태가 신청가능이면
+--           AND TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') = #{lessonDate} // TODO: 데이터보정필요
+
+--          TEST
+            SELECT
+                L.LESSON_ID,
+                L.LOGIN_ID,
+--                 T.NAME,
+                L.LESSON_TITLE,
+                L.LESSON_CLASS,
+                L.LESSON_LEVEL,
+                L.LESSON_INTRODUCE,
+                TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') AS LESSON_DATE,
+                TO_CHAR(L.LESSON_DATE_END, 'YYYY-MM-DD') AS LESSON_DATE_END,
+                L.RESERVE_COUNT,
+                L.MAX_RESERVE_COUNT,
+                L.LESSON_START,
+                L.LESSON_END,
+                L.LESSON_DIV
+            FROM
+                LESSON L
+--                     INNER JOIN TEACHER T
+--                                ON L.LOGIN_ID = T.LOGIN_ID
+            WHERE
+                L.LESSON_STAT = 'LS01'    -- 강습상태가 신청가능이면
+                AND TO_CHAR(L.LESSON_DATE, 'YYYY-MM-DD') = #{lessonDate}
     </select>
 
     <!-- 강의를 올린 강사만 수정하거나 취소할 수 있게 아이디 가져옴 -->

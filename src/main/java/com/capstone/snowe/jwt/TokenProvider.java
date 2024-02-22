@@ -28,8 +28,7 @@ public class TokenProvider implements InitializingBean {
     private final String secret;
     private final long tokenValidityInMilliseconds;
     private Key key;
-
-    // application.properties 에서 설장한 값들 가져오기
+    
     public TokenProvider(
             @Value("${jwt.secret}") String secret,
             @Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds) {
@@ -37,7 +36,7 @@ public class TokenProvider implements InitializingBean {
         this.tokenValidityInMilliseconds = tokenValidityInSeconds*10;
     }
 
-    // 빈이 생성되고 주입을 받은 후에 secret값을 Base64 Decode해서 key 변수에 할당하기 위해
+    // secret값을 Decode해서 key 변수에 할당
     @Override
     public void afterPropertiesSet() {
         byte[] keyBytes = Decoders.BASE64.decode(secret);
@@ -56,8 +55,8 @@ public class TokenProvider implements InitializingBean {
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities) // 정보 저장
-                .signWith(key, SignatureAlgorithm.HS512) // 사용할 암호화 알고리즘과 , signature 에 들어갈 secret값 세팅
-//                .setExpiration(validity) // set Expire Time 해당 옵션 안넣으면 expire안함 TEST 용으로 비활성화
+                .signWith(key, SignatureAlgorithm.HS512) // 사용할 암호화 알고리즘 , signature 에 들어갈 secret 세팅
+//                .setExpiration(validity) // TEST 용으로 만료 비활성화
                 .compact();
     }
 

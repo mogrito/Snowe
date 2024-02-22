@@ -71,8 +71,8 @@ public class SecurityConfig {
                         .requestMatchers("/board/**").hasAuthority("USER")
                         .requestMatchers("/comment/**").hasAuthority("USER")
                         .anyRequest().authenticated()
-                )// 그 외 인증 없이 접근X
-                .apply(new JwtSecurityConfig(tokenProvider)); // JwtFilter를 addFilterBefore로 등록했던 JwtSecurityConfig class 적용
+                )
+                .apply(new JwtSecurityConfig(tokenProvider)); //JwtSecurityConfig class 적용
 
         return httpSecurity.build();
     }
